@@ -10,6 +10,11 @@ public abstract class EventReceiver<T> : MonoBehaviour where T : MonoBehaviour
 {
     protected EventSystemInGameScene m_eventSystemInGameScene;
 
+    private void Awake()
+    {
+        m_eventSystemInGameScene = GameObject.FindGameObjectWithTag("GameController").GetComponent<EventSystemInGameScene>();
+    }
+
     //// イベント登録
     //protected abstract void OnEnable();
     //// イベント解除

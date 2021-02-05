@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GetWeaponEvent : MonoBehaviour, IEventCollision
 {
@@ -8,10 +9,7 @@ public class GetWeaponEvent : MonoBehaviour, IEventCollision
 
     public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
-        // テスト用
-        gameObject.SetActive(false);
         eventSystem.ExecuteGetWeaponEvent(m_weaponsType);
-       
     }
 }
 

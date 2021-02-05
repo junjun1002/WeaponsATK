@@ -15,6 +15,8 @@ public class EventSystemInGameScene : MonoBehaviour
 
     public void ExecuteGetWeaponEvent(WeaponsType weaponsType)
     {
+        Debug.Log("武器だよ！");
         GetWeaponEvent?.Invoke(weaponsType);
+        Debug.Log(weaponsType + "を装備した");
     }
 }
