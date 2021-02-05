@@ -13,7 +13,7 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
         Debug.Log("何か当たってるよ！collisionだよ！");
         if (collision.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
         {
-            Debug.Log("武器かな？");
+            Debug.Log("貴様敵やないかい？");
             eventCollision.CollisionEvent(m_eventSystemInGameScene);
         }
     }
