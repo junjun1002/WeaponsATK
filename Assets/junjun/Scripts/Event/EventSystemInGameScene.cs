@@ -5,17 +5,16 @@ using UnityEngine;
 
 public class EventSystemInGameScene : MonoBehaviour
 {
-    //public event Action  
+    public event Action<int, EnemyType> AttackEnemyEvent;
+    public event Action<WeaponsType> GetWeaponEvent;
 
-    // Start is called before the first frame update
-    void Start()
+    public void ExecuteAttackEnemyEvent(int score,EnemyType enemyType)
     {
-        
+        AttackEnemyEvent?.Invoke(score, enemyType);     
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ExecuteGetWeaponEvent(WeaponsType weaponsType)
     {
-        
+        GetWeaponEvent?.Invoke(weaponsType);
     }
 }

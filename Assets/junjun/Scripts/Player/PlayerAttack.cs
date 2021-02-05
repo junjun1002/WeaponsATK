@@ -5,19 +5,19 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     // Playerの装備している武器の種類
-    [SerializeField] WeaponsType m_weaponsType;
+    [SerializeField] public ProfessionType m_professionType;
     // 拳を握ってるかどうか
     public bool m_holdFist = false;
     // Start is called before the first frame update
     void Start()
     {
-        m_weaponsType = WeaponsType.None;
+        m_professionType = ProfessionType.Gladiator;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (m_weaponsType == WeaponsType.None)
+        if (m_professionType == ProfessionType.Gladiator)
         {
             if (OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger))
             {
@@ -26,13 +26,12 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 }
-
-
 /// <summary>
-/// Playerが持ってる武器の種類
-/// （後々杖とか追加して魔法とか追加するかも）
+/// Playerの職業
+/// 持つ武器で変わる
+/// 後々魔法使いとかも作りたい
 /// </summary>
-public enum WeaponsType
+public enum ProfessionType
 {
-    None, Sword, Gun
+    Gladiator, Warrior,Gunner
 }
