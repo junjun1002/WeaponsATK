@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
 {
     /// <summary>
-    /// 武器とか
+    /// 敵とか
     /// </summary>
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
