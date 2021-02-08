@@ -6,7 +6,7 @@ using UnityEngine;
 public class EventSystemInGameScene : MonoBehaviour
 {
     public event Action<int, EnemyType> EnemyEvent;
-    public event Action<WeaponsType> GetWeaponEvent;
+    //public event Action<WeaponsType> GetWeaponEvent;
 
     public void ExecuteEnemyEvent(int score,EnemyType enemyType)
     {
@@ -23,9 +23,9 @@ public class EventSystemInGameScene : MonoBehaviour
         }
     }
 
-    public void ExecuteGetWeaponEvent(WeaponsType weaponsType)
-    {
-        GetWeaponEvent?.Invoke(weaponsType);
-        Debug.Log(weaponsType + "を装備した");
-    }
+    //public void ExecuteGetWeaponEvent(WeaponsType weaponsType)
+    //{
+    //    GetWeaponEvent?.Invoke(weaponsType);
+    //    Debug.Log(weaponsType + "を装備した");
+    //}
 }
