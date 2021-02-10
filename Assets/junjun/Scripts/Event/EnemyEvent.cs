@@ -6,6 +6,7 @@ public class EnemyEvent : MonoBehaviour,IEventCollision
 {
     [SerializeField] EnemyType m_enemyType;
     [SerializeField] int m_score;
+    [SerializeField] int m_hp;
 
     public void CollisionEvent(EventSystemInGameScene eventSystem)
     {

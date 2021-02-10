@@ -5,16 +5,28 @@ using UnityEngine;
 public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
 {
     /// <summary>
-    /// 敵とか
+    /// 敵に攻撃したとき
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("何か当たってるよ！collisionだよ！");
+        if (other.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
+        {
+            Debug.Log("貴様敵やないかい？");
+            eventCollision.CollisionEvent(m_eventSystemInGameScene);
+        }
+    }
+
+    /// <summary>
+    /// 敵に攻撃されたとき
     /// </summary>
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("何か当たってるよ！collisionだよ！");
-        if (collision.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
+        if (collision.gameObject.tag == "Spider")
         {
-            Debug.Log("貴様敵やないかい？");
-            eventCollision.CollisionEvent(m_eventSystemInGameScene);
+            m_eventSystemInGameScene.ExecuteGameOver();
         }
     }
 }

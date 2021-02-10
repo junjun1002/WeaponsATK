@@ -4,11 +4,16 @@ using UnityEngine;
 
 public abstract class WeaponsBase : MonoBehaviour
 {
-    [SerializeField] WeaponsType m_weaponsType;
+    [SerializeField] public WeaponsType m_weaponsType;
 
     private void Start()
     {
         gameObject.SetActive(false);
+    }
+
+    public void GenerateWeapon()
+    {
+        gameObject.SetActive(true);
     }
 }
 
