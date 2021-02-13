@@ -27,6 +27,7 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
         if (collision.gameObject.tag == "Spider")
         {
             m_eventSystemInGameScene.ExecuteGameOver();
+            Debug.Log("GameOverだよん(笑)");
         }
     }
 }

@@ -466,6 +466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_handPos: {fileID: 218554105}
+  m_sword: {fileID: 1294812550}
 --- !u!136 &1639924322
 CapsuleCollider:
   m_ObjectHideFlags: 0

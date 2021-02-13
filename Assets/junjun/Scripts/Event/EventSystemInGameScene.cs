@@ -6,8 +6,8 @@ using UnityEngine;
 public class EventSystemInGameScene : MonoBehaviour
 {
     public event Action<int, EnemyType> EnemyEvent;
-    public event Action GameOver;
-    public event Action GameClear;
+    public event Action GameOverEvent;
+    public event Action GameClearEvent;
     //public event Action<WeaponsType> GetWeaponEvent;
 
     public void ExecuteEnemyEvent(int score,EnemyType enemyType)
@@ -27,12 +27,14 @@ public class EventSystemInGameScene : MonoBehaviour
 
     public void ExecuteGameOver()
     {
-
+        GameOverEvent?.Invoke();
+        GameState.Instance.GameOver();
     }
 
     public void ExecuteGameClear()
     {
-
+        GameClearEvent?.Invoke();
+        GameState.Instance.GameClear();
     }
 
     //public void ExecuteGetWeaponEvent(WeaponsType weaponsType)
