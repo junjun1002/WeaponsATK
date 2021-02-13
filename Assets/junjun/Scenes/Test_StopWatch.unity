@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 1191436225}
   - component: {fileID: 1191436224}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TimerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -355,7 +355,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 610901bc9e6731942ada533958a0f522, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -367,7 +367,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 0:0.0
 --- !u!222 &1191436225
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -384,15 +384,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1191436223}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 71}
+  m_LocalScale: {x: 5.993709, y: 5.993709, z: 5.993709}
   m_Children: []
   m_Father: {fileID: 1853998429}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.4, y: 87}
+  m_AnchoredPosition: {x: 394, y: 56}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1392472296
@@ -727,7 +727,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 610901bc9e6731942ada533958a0f522, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -779,10 +779,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7bd8361d31a964bac4f2390bdfc783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_text: {fileID: 1191436224}
-  m_stopTimer: 0
-  m_timer: 0
-  timerState: 0
+  m_stopTimer: 1
+  m_timerText: {fileID: 1191436224}
+  m_timerState: 0
 --- !u!4 &2047263977
 Transform:
   m_ObjectHideFlags: 0

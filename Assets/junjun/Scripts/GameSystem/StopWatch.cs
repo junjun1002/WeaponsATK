@@ -6,27 +6,39 @@ using UnityEngine.UI;
 
 public class StopWatch : MonoBehaviour
 {
-    [SerializeField] Text m_text;
     [SerializeField] float m_stopTimer;
+    //　タイマー表示用テキスト
+    [SerializeField] Text m_timerText;
 
-    public float m_timer;
-    public bool timerState;
+    public bool m_timerState;
+    private int m_minute;
+    private float m_seconds;
+    //　前のUpdateの時の秒数
+    private float m_oldSeconds;
 
-    private void Update()
+    void Update()
     {
-        if (timerState)
+        if (m_timerState)
         {
-            if ()
+            if (m_minute < m_stopTimer)
             {
-
+                m_seconds += Time.deltaTime;
+                if (m_seconds >= 60f)
+                {
+                    m_minute++;
+                    m_seconds = m_seconds - 60;
+                }
+                //　値が変わった時だけテキストUIを更新
+                if (m_seconds != m_oldSeconds)
+                {
+                    m_timerText.text = m_minute.ToString() + ":" + m_seconds.ToString("f1");
+                }
+                m_oldSeconds = m_seconds;
             }
-            m_timer += Time.deltaTime;
-            m_text.text = m_timer.ToString();
         }
     }
-
     public void StopWatchState()
     {
-        timerState = true;
+        m_timerState = true;
     }
 }
