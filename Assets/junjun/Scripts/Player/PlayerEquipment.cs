@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerEquipment : MonoBehaviour
 {
+    // 武器を装備する位置
     [SerializeField] GameObject m_handPos;
+    // 剣のオブジェクト
     [SerializeField] GameObject m_sword;
     private WeaponsType m_weaponsType;
     private void Update()

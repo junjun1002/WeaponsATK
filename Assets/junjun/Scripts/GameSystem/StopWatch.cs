@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +9,7 @@ public class StopWatch : MonoBehaviour
     //　タイマー表示用テキスト
     [SerializeField] Text m_timerText;
 
-    public bool m_timerState;
+    public bool m_timerStart;
     private int m_minute;
     private float m_seconds;
     //　前のUpdateの時の秒数
@@ -18,7 +17,7 @@ public class StopWatch : MonoBehaviour
 
     void Update()
     {
-        if (m_timerState)
+        if (m_timerStart)
         {
             if (m_minute < m_stopTimer)
             {
@@ -39,6 +38,6 @@ public class StopWatch : MonoBehaviour
     }
     public void StopWatchState()
     {
-        m_timerState = true;
+        m_timerStart = true;
     }
 }

@@ -10,7 +10,7 @@ public class PlayerEventHandller : EventReceiver<PlayerEventHandller>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("何か当たってるよ！collisionだよ！");
+        Debug.Log("何か当たってるよ！Triggerだよ！");
         if (other.gameObject.TryGetComponent<IEventCollision>(out var eventCollision))
         {
             Debug.Log("貴様敵やないかい？");
