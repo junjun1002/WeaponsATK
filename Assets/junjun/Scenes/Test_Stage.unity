@@ -188,8 +188,86 @@ PrefabInstance:
       propertyPath: m_Name
       value: OVRPlayerControllerWithFog
       objectReference: {fileID: 0}
+    - target: {fileID: 8363202147446034698, guid: cfa510c081a27184fb18d9ff4a40adb0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfa510c081a27184fb18d9ff4a40adb0, type: 3}
+--- !u!1001 &1139736770
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 133648, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_Name
+      value: GhostTiger
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.2398996
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 15.842291
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 423334, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9572582, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 07000c6a789bbf44f85b1383a4755f06, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 50e69483c4f78d14ca2fd8ab45a04677, type: 3}
 --- !u!1 &2070347220
 GameObject:
   m_ObjectHideFlags: 0
