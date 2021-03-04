@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: mat_sheild
+  m_Shader: {fileID: -6465566751694194690, guid: 1d68423ff37ce2c4f94e82509f36fb34,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_9D4D5DE7:
+        m_Texture: {fileID: 2800000, guid: 5d994d7bdcdc10243b19589c968eb426, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_F196DD74: 0.5
+    - Vector1_FE5EFCCF: 2.19
+    m_Colors:
+    - Color_A0016624: {r: 0.28435388, g: 0.8392157, b: 0.8490566, a: 0}
+    - Vector4_C92D333C: {r: 0.06, g: 0.02, b: 0.6, a: 0.2}
