@@ -106,7 +106,7 @@ Material:
     - _OutlineColor: {r: 0, g: 1, b: 0.95862055, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
---- !u!114 &7086705356573645662
+--- !u!114 &7553993234537425981
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

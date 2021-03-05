@@ -23,7 +23,4 @@ public class EnemyEvent : MonoBehaviour,IEventCollision
 }
 
 
-public enum EnemyType
-{
-    PunchingBag, Spider
-}
+
