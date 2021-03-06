@@ -5,26 +5,25 @@ using UnityEngine;
 public abstract class EnemyBase : MonoBehaviour
 {
     // enemyの種類
-    [SerializeField] EnemyType m_enemyType;
-    // 攻撃後のクールタイム
-    [SerializeField] float m_coolTime;
+    [SerializeField] protected EnemyType m_enemyType;
     // 移動速度
     [SerializeField] float m_speed = 1.0f;
     // Player
-    [SerializeField] GameObject m_player;
+    [SerializeField] protected GameObject m_player;
     // 敵のアニメーション
-    [SerializeField] Animator m_anim;
+    [SerializeField] protected Animator m_anim;
     // 敵が止まる距離
-    [SerializeField] float m_atkRange = 20;
+    [SerializeField] protected float m_atkRange = 20;
     // enemyの状態
     protected EnemyState m_enemyState;
     // 攻撃準備ができてるか
     protected bool m_readyToATK = true;
 
+    protected float m_distance;
+    protected bool m_run = false;
+
     protected Rigidbody m_rb;
 
-
-    int m_diff;
     virtual protected void Start()
     {
         m_enemyState = EnemyState.Idle;
@@ -37,57 +36,21 @@ public abstract class EnemyBase : MonoBehaviour
         // 常にplayerの方向を向く
         transform.LookAt(m_player.transform);
         // playerと自分の距離を測る
-        float distance = Vector3.Distance(transform.position, m_player.transform.position);
-        // playerとの距離が攻撃範囲よりも遠い時
-        if (distance >= m_atkRange)
-        {
-            // playerを追いかける状態の時
-            if (m_enemyState == EnemyState.Chase)
-            {
-                Debug.Log("いくお");
-                MoveToPlayer();
-            }
-            // 殺意湧きました。どうしてやろうか
-            if (m_anim)
-            {
-                m_anim.SetBool("killing", true);
-                int randam = Random.Range(0, 2);
-                m_anim.SetInteger("randam", randam);
-                Debug.Log(randam);
-                if (randam == 0)
-                {
-                    // playerを追いかける状態に入る
-                    m_enemyState = EnemyState.Chase;
-                }
-                if (randam == 1)
-                {
-                    // playerに遠距離攻撃を行う
-                    m_enemyState = EnemyState.RangedATK;
-                }
-            }
-           
-        }
-        // playerが攻撃範囲内にいるとき
-        if (distance <= m_atkRange)
-        {
-            if (m_anim)
-            {
-                m_anim.SetBool("killing", false);
-                m_enemyState = EnemyState.Idle;
-            }
-        }
+        m_distance = Vector3.Distance(transform.position, m_player.transform.position);      
     }
-    
+
     /// <summary>
     /// playerを追いかける
     /// </summary>
-    void MoveToPlayer()
+    protected void MoveToPlayer()
     {
+        Debug.Log("よっしゃ走るで");
         Vector3 velocity = gameObject.transform.rotation * new Vector3(0, 0, m_speed);
         gameObject.transform.position += velocity * Time.deltaTime;
     }
     protected void ReadyInversion()
     {
+        Debug.Log("反転するお");
         if (m_readyToATK)
         {
             m_readyToATK = false;
@@ -96,6 +59,16 @@ public abstract class EnemyBase : MonoBehaviour
         {
             m_readyToATK = true;
         }
+    }
+
+    protected void ReadyRun()
+    {
+        m_run = true;
+    }
+
+    protected void RunStop()
+    {
+        m_run = false;
     }
 }
 
