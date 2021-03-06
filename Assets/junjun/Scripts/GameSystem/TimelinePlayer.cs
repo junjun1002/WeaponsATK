@@ -1,37 +1,40 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
 
+/// <summary>
+/// Timelineを管理するクラス
+/// </summary>
 public class TimelinePlayer : SingletonMonoBehavior<TimelinePlayer>
 {
-    public PlayableDirector playableDirector;
+    // 色んなTimeline見るのが楽しんよ
+    public PlayableDirector[] playableDirector;
 
     void Start()
     {
         //同じゲームオブジェクトにあるPlayableDirectorを取得する
-        playableDirector = GetComponent<PlayableDirector>();
-        PlayTimeline();
+        playableDirector = GetComponents<PlayableDirector>();
     }
 
     //再生する
-    void PlayTimeline()
+    public void PlayTimeline(PlayableDirector playableDirector)
     {
         playableDirector.Play();
     }
 
     //一時停止する
-    void PauseTimeline()
+    public void PauseTimeline(PlayableDirector playableDirector)
     {
         playableDirector.Pause();
     }
 
     //一時停止を再開する
-    void ResumeTimeline()
+    public void ResumeTimeline(PlayableDirector playableDirector)
     {
         playableDirector.Resume();
     }
 
     //停止する
-    void StopTimeline()
+    public void StopTimeline(PlayableDirector playableDirector)
     {
         playableDirector.Stop();
     }
