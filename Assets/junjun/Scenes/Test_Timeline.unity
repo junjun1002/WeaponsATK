@@ -252,7 +252,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 0}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -271,7 +271,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &1128093670
 SkinnedMeshRenderer:
@@ -762,7 +762,7 @@ Transform:
   - {fileID: 3791397096995476066}
   - {fileID: 1747552917}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1139374290
 Transform:
@@ -1696,10 +1696,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_enemyType: 2
-  m_speed: 20
+  m_speed: 10
   m_player: {fileID: 2023094281}
   m_anim: {fileID: 1132269604}
   m_atkRange: 20
+  m_readyToATK: 0
+  m_run: 1
+  m_outOfRangeMove: 1
   m_RangedATKDir: {fileID: 1500328663}
   m_RunDir: {fileID: 1478539170}
 --- !u!54 &1139736775
@@ -1748,7 +1751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1478539168
 Transform:
   m_ObjectHideFlags: 0
@@ -1761,7 +1764,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1478539169
 Animator:
@@ -1792,7 +1795,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: dfc4e29395f879d469d5a020e834f568, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -1803,7 +1806,7 @@ PlayableDirector:
     value: {fileID: 1132269604}
   - key: {fileID: 7348847770764557414, guid: dfc4e29395f879d469d5a020e834f568, type: 2}
     value: {fileID: 1132269604}
-  - key: {fileID: -3826644696187041050, guid: dfc4e29395f879d469d5a020e834f568, type: 2}
+  - key: {fileID: 7305193604233142514, guid: dfc4e29395f879d469d5a020e834f568, type: 2}
     value: {fileID: 1132269604}
   m_ExposedReferences:
     m_References: []
@@ -1867,10 +1870,6 @@ PlayableDirector:
     value: {fileID: 1747552918}
   - key: {fileID: -1926909346971430719, guid: 4b0f92db2b5906044913e31ed3e4823f, type: 2}
     value: {fileID: 1747552913}
-  - key: {fileID: -9014648554767955954, guid: 4b0f92db2b5906044913e31ed3e4823f, type: 2}
-    value: {fileID: 1132269604}
-  - key: {fileID: -8455224615826465258, guid: 4b0f92db2b5906044913e31ed3e4823f, type: 2}
-    value: {fileID: 1132269604}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1500328664
@@ -1885,7 +1884,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1747552913
 GameObject:
@@ -2051,7 +2050,7 @@ PrefabInstance:
     - target: {fileID: 5811259836536687312, guid: f7b65a6434474d844b80b26693bfa867,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5811259836536687312, guid: f7b65a6434474d844b80b26693bfa867,
         type: 3}
@@ -2311,7 +2310,7 @@ PrefabInstance:
     - target: {fileID: 7040882120710443320, guid: ae70589c24819254197eb4d19a4c3bff,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7040882120710443320, guid: ae70589c24819254197eb4d19a4c3bff,
         type: 3}

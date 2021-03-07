@@ -15,12 +15,14 @@ public abstract class EnemyBase : MonoBehaviour
     // 敵が止まる距離
     [SerializeField] protected float m_atkRange = 20;
     // enemyの状態
-    protected EnemyState m_enemyState;
+    public EnemyState m_enemyState;
     // 攻撃準備ができてるか
-    protected bool m_readyToATK = true;
+    public bool m_readyToATK = true;
 
     protected float m_distance;
-    protected bool m_run = false;
+    public bool m_run = false;
+    public bool m_outOfRangeMove = true;
+    protected Vector3 velocity;
 
     protected Rigidbody m_rb;
 
@@ -36,7 +38,7 @@ public abstract class EnemyBase : MonoBehaviour
         // 常にplayerの方向を向く
         transform.LookAt(m_player.transform);
         // playerと自分の距離を測る
-        m_distance = Vector3.Distance(transform.position, m_player.transform.position);      
+        m_distance = Vector3.Distance(transform.position, m_player.transform.position);
     }
 
     /// <summary>
@@ -45,7 +47,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected void MoveToPlayer()
     {
         Debug.Log("よっしゃ走るで");
-        Vector3 velocity = gameObject.transform.rotation * new Vector3(0, 0, m_speed);
+        velocity = gameObject.transform.rotation * new Vector3(0, 0, m_speed);
         gameObject.transform.position += velocity * Time.deltaTime;
     }
     protected void ReadyInversion()
@@ -65,10 +67,10 @@ public abstract class EnemyBase : MonoBehaviour
     {
         m_run = true;
     }
-
-    protected void RunStop()
+     
+    protected void OutOfRangeMoveOn()
     {
-        m_run = false;
+        m_outOfRangeMove = true;
     }
 }
 
@@ -77,7 +79,7 @@ public abstract class EnemyBase : MonoBehaviour
 /// </summary>
 public enum EnemyState
 {
-    Idle, Chase, Attack, RangedATK, CoolTime
+    Idle, Chase, Attack, RangedATK
 }
 
 /// <summary>
