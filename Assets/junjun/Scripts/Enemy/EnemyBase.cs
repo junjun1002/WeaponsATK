@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+using UnityEngine.AI;
 
 public abstract class EnemyBase : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected EnemyType m_enemyType;
     // 移動速度
     [SerializeField] float m_speed = 1.0f;
-    // Player
+    // Player(ターゲット)
     [SerializeField] protected GameObject m_player;
     // 敵のアニメーション
     [SerializeField] protected Animator m_anim;
@@ -17,11 +17,11 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected float m_atkRange = 20;
     // enemyの状態
     public EnemyState m_enemyState;
+    public NavMeshAgent m_agent;
 
     protected float m_distance;
 
     protected Rigidbody m_rb;
-    protected Tweener m_enemyDOMove;
 
     virtual protected void Start()
     {
@@ -44,7 +44,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected void MoveToPlayer()
     {
         Debug.Log("よっしゃ走るで");
-        m_enemyDOMove = transform.DOLocalMove(new Vector3(m_player.transform.position.x, 0f, m_player.transform.position.z), m_speed);
+        m_agent.SetDestination(m_player.transform.position);
     }
 
     /// <summary>
@@ -52,8 +52,8 @@ public abstract class EnemyBase : MonoBehaviour
     /// </summary>
     protected void MoveStop()
     {
-        m_enemyDOMove = transform.DOLocalMove(new Vector3(transform.position.x, 0f, transform.position.z), 0.1f);
-        m_enemyDOMove.Play();
+        Debug.Log("止まるドン");
+        m_agent.isStopped = true;
     }
 
     /// <summary>
