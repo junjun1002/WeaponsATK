@@ -2,37 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using DG.Tweening;
 
 public class Tiger : EnemyBase
 {
     [SerializeField] PlayableDirector m_RangedATKDir;
     [SerializeField] PlayableDirector m_RunDir;
+    int m_nextMove;
    
     protected override void Start()
     {
         base.Start();
+        m_nextMove = Random.Range(0, 2);
+        Debug.Log(m_nextMove);
     }
 
     protected override void Update()
     {
         base.Update();
+        if (m_distance <= m_atkRange)
+        {
+            m_enemyState = EnemyState.None;
+            MoveStop();
+        }
         switch (m_enemyState)
         {
-            case EnemyState.Idle:
-                velocity = Vector3.zero;
-                if (m_anim)
+            case EnemyState.None:
+                transform.position = transform.position;
+                m_anim.SetBool("chase", false);
+                if (m_distance <= m_atkRange)
                 {
+                    m_anim.SetBool("Punch", true);
+                }
+                if (m_distance >= m_atkRange)
+                {
+                    m_enemyState = EnemyState.Idle;
+                    NextMove();
+                }
+                break;
+
+            case EnemyState.Idle:
+                if (m_anim)
+                {               
+                    MoveStop();
                     m_anim.SetBool("chase", false);
-                    m_anim.SetBool("idle", true);
-                    int random = Random.Range(0, 2);
+                   
+                    
                     if (m_distance >= m_atkRange)
                     {
-                        if (random == 0)
+                        if (m_nextMove == 0)
                         {
+                            MoveStop();
                             m_enemyState = EnemyState.Chase;
                         }
-                        if (random == 1)
+                        if (m_nextMove == 1)
                         {
+                            MoveStop();
                             m_enemyState = EnemyState.RangedATK;
                         }
                     }
@@ -42,68 +67,33 @@ public class Tiger : EnemyBase
                     }
                 }
                 break;
+
             case EnemyState.Chase:
+                
                 m_anim.SetBool("chase", true);
-                MoveToPlayer();
                 if (m_distance <= m_atkRange)
                 {
                     m_anim.SetBool("chase", false);
                 }
                 break;
+
             case EnemyState.Attack:
+                m_anim.SetBool("Punch", true);
+                m_anim.SetBool("idle", true);
                 break;
+
             case EnemyState.RangedATK:
                 TimelinePlayer.Instance.PlayTimeline(m_RangedATKDir);
-                m_enemyState = EnemyState.Idle;
                 break;
            
             default:
                 break;
         }
-        //if (m_readyToATK)
-        //{
-        //    if (m_distance >= m_atkRange && m_outOfRangeMove == false)
-        //    {
-        //        m_outOfRangeMove = true;
-        //    }
-        //    // playerが攻撃範囲内にいるとき
-        //    if (m_distance <= m_atkRange)
-        //    {
-        //        velocity = Vector3.zero;
-        //        m_run = false;
-        //        m_enemyState = EnemyState.Idle;
-        //    }
-        //    if (m_enemyState == EnemyState.Chase)
-        //    {
-        //        if (m_run)
-        //        {
-        //            MoveToPlayer();
-        //        }
-        //    }
-        //    if (m_outOfRangeMove)
-        //    {
-        //        Debug.Log("んご");
-        //        m_outOfRangeMove = false;
-        //        // playerとの距離が攻撃範囲よりも遠い時
-        //        if (m_distance >= m_atkRange)
-        //        {                  
-        //            int randam = Random.Range(0, 2);
-        //            Debug.Log(randam);
-        //            if (randam == 0)
-        //            {
-        //                // playerを追いかける状態に入る
-        //                m_enemyState = EnemyState.Chase;
-        //                TimelinePlayer.Instance.PlayTimeline(m_RunDir);
-        //            }
-        //            if (randam == 1)
-        //            {
-        //                Debug.Log("AA");
-        //                // playerに遠距離攻撃を行う
-        //                m_enemyState = EnemyState.RangedATK;
-        //                TimelinePlayer.Instance.PlayTimeline(m_RangedATKDir);
-        //            }
-        //        }
-        //    }          
-        //}
+    }
+
+    void NextMove()
+    {
+        m_nextMove = Random.Range(0, 2);
+        Debug.Log(m_nextMove);
     }
 }

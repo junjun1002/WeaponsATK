@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public abstract class EnemyBase : MonoBehaviour
 {
@@ -16,15 +17,11 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected float m_atkRange = 20;
     // enemyの状態
     public EnemyState m_enemyState;
-    // 攻撃準備ができてるか
-    public bool m_readyToATK = true;
 
     protected float m_distance;
-    public bool m_run = false;
-    public bool m_outOfRangeMove = true;
-    protected Vector3 velocity;
 
     protected Rigidbody m_rb;
+    protected Tweener m_enemyDOMove;
 
     virtual protected void Start()
     {
@@ -47,30 +44,25 @@ public abstract class EnemyBase : MonoBehaviour
     protected void MoveToPlayer()
     {
         Debug.Log("よっしゃ走るで");
-        velocity = gameObject.transform.rotation * new Vector3(0, 0, m_speed);
-        gameObject.transform.position += velocity * Time.deltaTime;
-    }
-    protected void ReadyInversion()
-    {
-        Debug.Log("反転するお");
-        if (m_readyToATK)
-        {
-            m_readyToATK = false;
-        }
-        else
-        {
-            m_readyToATK = true;
-        }
+        m_enemyDOMove = transform.DOLocalMove(new Vector3(m_player.transform.position.x, 0f, m_player.transform.position.z), m_speed);
     }
 
-    protected void ReadyRun()
+    /// <summary>
+    /// 自分の動きを止める
+    /// </summary>
+    protected void MoveStop()
     {
-        m_run = true;
+        m_enemyDOMove = transform.DOLocalMove(new Vector3(transform.position.x, 0f, transform.position.z), 0.1f);
+        m_enemyDOMove.Play();
     }
-     
-    protected void OutOfRangeMoveOn()
+
+    /// <summary>
+    /// 状態をidleにチェンジ
+    /// </summary>
+    protected void EnemyStateIdle()
     {
-        m_outOfRangeMove = true;
+        Debug.Log("idle");
+        m_enemyState = EnemyState.Idle;
     }
 }
 
@@ -79,7 +71,7 @@ public abstract class EnemyBase : MonoBehaviour
 /// </summary>
 public enum EnemyState
 {
-    Idle, Chase, Attack, RangedATK
+    None, Idle, Chase, Attack, RangedATK
 }
 
 /// <summary>
