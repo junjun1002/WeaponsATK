@@ -7,7 +7,7 @@ using DG.Tweening;
 public class Tiger : EnemyBase
 {
     [SerializeField] PlayableDirector m_RangedATKDir;
-  
+
     int m_nextMove;
     int m_nextAttack;
 
@@ -42,6 +42,7 @@ public class Tiger : EnemyBase
                 break;
 
             case EnemyState.Idle:
+
                 if (m_anim)
                 {              
                     m_anim.SetBool("chase", false);
@@ -64,7 +65,7 @@ public class Tiger : EnemyBase
                 break;
 
             case EnemyState.Chase:
-
+                SoundManager.Instance.PlayTigerSE(SoundManager.Instance.m_runSE);
                 m_anim.SetBool("chase", true);
 
                 if (m_distance <= m_atkRange)

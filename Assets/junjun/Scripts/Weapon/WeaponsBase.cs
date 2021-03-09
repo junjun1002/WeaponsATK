@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(OVRGrabbable))]
 public abstract class WeaponsBase : MonoBehaviour
 {
     [SerializeField] public WeaponsType m_weaponsType;
 
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
+    Rigidbody m_rb;
+    private OVRGrabbable ovrGrabbalbe;
+    OVRInput.Controller controller;
 
-    public void GenerateWeapon()
+    void Start()
     {
-        gameObject.SetActive(true);
+        ovrGrabbalbe = GetComponent<OVRGrabbable>();
+        m_rb = GetComponent<Rigidbody>();
     }
 }
 

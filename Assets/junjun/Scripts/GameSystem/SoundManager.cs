@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : SingletonMonoBehavior<SoundManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    // シーンのBGM
+    [SerializeField] AudioSource m_bgm;
+    // シーンのSE
+    [SerializeField] AudioSource m_se;
+    // TigerのSE
+    [SerializeField] AudioSource m_tigerSE;
+
+    // Tiger用のSE
+    public AudioClip m_runSE;
+
+    protected override void Awake()
     {
-        
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void  PlayTigerSE(AudioClip SE)
     {
-        
+        m_tigerSE.PlayOneShot(SE);
     }
 }

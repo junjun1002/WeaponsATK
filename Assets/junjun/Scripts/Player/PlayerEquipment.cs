@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerEquipment : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class PlayerEquipment : MonoBehaviour
     // 剣のオブジェクト
     [SerializeField] GameObject m_sword;
     private WeaponsType m_weaponsType;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
