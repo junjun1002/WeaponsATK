@@ -45,6 +45,10 @@ public abstract class EnemyBase : MonoBehaviour
     {
         Debug.Log("よっしゃ走るで");
         m_agent.SetDestination(m_player.transform.position);
+        if (m_enemyState == EnemyState.Chase)
+        {
+            m_agent.isStopped = false;
+        }
     }
 
     /// <summary>
@@ -64,6 +68,15 @@ public abstract class EnemyBase : MonoBehaviour
         Debug.Log("idle");
         m_enemyState = EnemyState.Idle;
     }
+
+    /// <summary>
+    /// 状態をCoolTimeにする
+    /// </summary>
+    protected void EnemyStateCoolTime()
+    {     
+        m_enemyState = EnemyState.CoolTime;
+        Debug.Log(m_enemyState);
+    }
 }
 
 /// <summary>
@@ -71,7 +84,7 @@ public abstract class EnemyBase : MonoBehaviour
 /// </summary>
 public enum EnemyState
 {
-    None, Idle, Chase, Attack, RangedATK
+    None, Idle, Chase, Attack, RangedATK, CoolTime
 }
 
 /// <summary>
