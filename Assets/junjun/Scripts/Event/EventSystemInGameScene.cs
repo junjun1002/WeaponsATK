@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class EventSystemInGameScene : MonoBehaviour
 {
-    public event Action<int, EnemyType> EnemyEvent;
+    public event Action<EnemyType> EnemyEvent;
     public event Action GameOverEvent;
     public event Action GameClearEvent;
-    //public event Action<WeaponsType> GetWeaponEvent;
 
-    public void ExecuteEnemyEvent(int score,EnemyType enemyType)
+    public void ExecuteEnemyEvent(EnemyType enemyType)
     {
         if (enemyType == EnemyType.PunchingBag)
         {
@@ -19,9 +18,9 @@ public class EventSystemInGameScene : MonoBehaviour
         }
         else
         {
-            EnemyEvent?.Invoke(score, enemyType);
+            EnemyEvent?.Invoke(enemyType);
             Debug.Log(enemyType + "を倒した");
-            Debug.Log(score + "を手に入れた");
+            ExecuteGameClear();
         }
     }
 
@@ -36,10 +35,4 @@ public class EventSystemInGameScene : MonoBehaviour
         GameClearEvent?.Invoke();
         GameState.Instance.GameClear();
     }
-
-    //public void ExecuteGetWeaponEvent(WeaponsType weaponsType)
-    //{
-    //    GetWeaponEvent?.Invoke(weaponsType);
-    //    Debug.Log(weaponsType + "を装備した");
-    //}
 }

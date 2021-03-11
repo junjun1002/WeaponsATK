@@ -8,8 +8,8 @@ using UnityEngine.UI;
 /// </summary>
 public class UIManager : SingletonMonoBehavior<UIManager>
 {
-    [SerializeField] ImgsFillDynamic m_playerHP;
-    [SerializeField] ImgsFillDynamic m_playerSP;
+    [SerializeField] ImgsFillDynamic m_playerHPUI;
+    [SerializeField] ImgsFillDynamic m_playerSPUI;
     [SerializeField] float m_healValue;
     public float span = 5f;
 
@@ -19,13 +19,13 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(this.gameObject);
+      
     }
 
     private void Start()
     {
-        m_maxSP = m_playerSP.TargetValue;
-        m_currentSP = m_playerSP.TargetValue;
+        m_maxSP = m_playerSPUI.TargetValue;
+        m_currentSP = m_playerSPUI.TargetValue;
         StartCoroutine("Logging");
     }
 
@@ -44,14 +44,14 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     /// <param name="damage"></param>
     public void DecreasesHP(float damage)
     {
-        m_playerHP.SetValue(damage, false, Random.Range(0.01f, 0.5f));
+        m_playerHPUI.SetValue(damage, false, Random.Range(0.01f, 0.5f));
     }
 
     public void NaturalRecoverySP()
     {
         if (!(m_currentSP == m_maxSP))
         {
-            m_playerSP.SetValue(m_healValue, false, Random.Range(0.01f, 0.5f));
+            m_playerSPUI.SetValue(m_healValue, false, Random.Range(0.01f, 0.5f));
         }
     }
 
@@ -61,7 +61,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     /// <param name="useSP"></param>
     public void UseSP(float useSP)
     {
-        m_playerSP.SetValue(useSP, false, Random.Range(0.01f, 0.5f));
+        m_playerSPUI.SetValue(useSP, false, Random.Range(0.01f, 0.5f));
         m_currentSP -= useSP;
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-using DG.Tweening;
 
 public class Tiger : EnemyBase
 {
@@ -24,7 +23,7 @@ public class Tiger : EnemyBase
         switch (m_enemyState)
         {
             case EnemyState.None:
-                
+
                 m_anim.SetBool("chase", false);
                 m_anim.SetBool("punch", false);
                 if (m_distance <= m_atkRange)
@@ -44,7 +43,7 @@ public class Tiger : EnemyBase
             case EnemyState.Idle:
 
                 if (m_anim)
-                {              
+                {
                     m_anim.SetBool("chase", false);
                     m_anim.SetBool("punch", false);
                     m_anim.SetBool("biting", false);
@@ -53,7 +52,7 @@ public class Tiger : EnemyBase
                     if (m_distance >= m_atkRange)
                     {
                         if (m_nextMove == 0)
-                        {                          
+                        {
                             m_enemyState = EnemyState.Chase;
                         }
                         if (m_nextMove == 1)
@@ -65,7 +64,8 @@ public class Tiger : EnemyBase
                 break;
 
             case EnemyState.Chase:
-                SoundManager.Instance.PlayTigerSE(SoundManager.Instance.m_runSE);
+                LookAtPlayer();
+                
                 m_anim.SetBool("chase", true);
 
                 if (m_distance <= m_atkRange)
@@ -77,10 +77,12 @@ public class Tiger : EnemyBase
                 break;
 
             case EnemyState.Attack:
-                Debug.Log("食らいやがれぇぇええ！");                
+                LookAtPlayer();
+                Debug.Log("食らいやがれぇぇええ！");
                 break;
 
             case EnemyState.RangedATK:
+                LookAtPlayer();
                 TimelinePlayer.Instance.PlayTimeline(m_RangedATKDir);
                 break;
 

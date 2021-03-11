@@ -10,18 +10,18 @@ public class GameState : SingletonMonoBehavior<GameState>
     override protected void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
     }
     protected bool InGame { get; set; }
 
     public void GameOver()
     {
-
+        SceneLoder.Instance.LodeTitle();
     }
 
     public void GameClear()
     {
-
+        SceneLoder.Instance.LodeTitle();
     }
 
     

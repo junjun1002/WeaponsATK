@@ -5,37 +5,55 @@ using UnityEngine.AI;
 
 public abstract class EnemyBase : MonoBehaviour
 {
+    // 補完スピードを決める
+    [SerializeField] public float m_lookSpeed = 0.1f;
+    // HP
+    [SerializeField] public int m_hp;
     // enemyの種類
     [SerializeField] protected EnemyType m_enemyType;
-    // 移動速度
-    [SerializeField] float m_speed = 1.0f;
     // Player(ターゲット)
     [SerializeField] protected GameObject m_player;
     // 敵のアニメーション
     [SerializeField] protected Animator m_anim;
     // 敵が止まる距離
     [SerializeField] protected float m_atkRange = 20;
+    // 攻撃力
+    float m_atkPoint;
     // enemyの状態
     public EnemyState m_enemyState;
     public NavMeshAgent m_agent;
 
     protected float m_distance;
+    public PlayerStatus playerStatus;
 
-    protected Rigidbody m_rb;
+
 
     virtual protected void Start()
     {
         m_enemyState = EnemyState.Idle;
-        m_rb = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
+        m_atkPoint = Random.Range(0.05f, 0.08f);
     }
 
     virtual protected void Update()
     {
-        // 常にplayerの方向を向く
-        transform.LookAt(m_player.transform);
         // playerと自分の距離を測る
         m_distance = Vector3.Distance(transform.position, m_player.transform.position);
+        if (m_hp <= 0)
+        {
+            GameState.Instance.GameClear();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("くらえ");
+            m_atkPoint = Random.Range(0.05f, 0.08f);
+            UIManager.Instance.DecreasesHP(m_atkPoint);
+            playerStatus.m_playerHp -= m_atkPoint;
+        }
     }
 
     /// <summary>
@@ -76,6 +94,16 @@ public abstract class EnemyBase : MonoBehaviour
     {     
         m_enemyState = EnemyState.CoolTime;
         Debug.Log(m_enemyState);
+    }
+
+    protected void LookAtPlayer()
+    {
+        // ターゲット方向のベクトルを取得
+        Vector3 relativePos = m_player.transform.position - this.transform.position;
+        // 方向を、回転情報に変換
+        Quaternion rotation = Quaternion.LookRotation(relativePos);
+        // 現在の回転情報と、ターゲット方向の回転情報を補完する
+        transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, m_lookSpeed);
     }
 }
 

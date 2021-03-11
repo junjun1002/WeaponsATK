@@ -10,7 +10,7 @@ public class SceneLoder : SingletonMonoBehavior<SceneLoder>
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(gameObject);
+       // DontDestroyOnLoad(gameObject);
     }
     private void Start()
     {
@@ -19,6 +19,7 @@ public class SceneLoder : SingletonMonoBehavior<SceneLoder>
     public void LodeTitle()
     {
         //m_screenFade.FadeIn();
-        SceneManager.LoadSceneAsync("GameScene");
+        //SceneManager.LoadSceneAsync("GameScene");
+        SceneManager.LoadSceneAsync("Test_TigerBattle");
     }
 }

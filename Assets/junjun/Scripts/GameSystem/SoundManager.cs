@@ -17,7 +17,7 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     public void  PlayTigerSE(AudioClip SE)

@@ -5,19 +5,23 @@ using UnityEngine;
 public class EnemyEvent : MonoBehaviour,IEventCollision
 {
     [SerializeField] EnemyType m_enemyType;
-    [SerializeField] int m_score;
+  
     [SerializeField] int m_hp;
 
     public void CollisionEvent(EventSystemInGameScene eventSystem)
     {
         if (!(m_enemyType == EnemyType.PunchingBag))
         {
-            eventSystem.ExecuteEnemyEvent(m_score, m_enemyType);
-            gameObject.SetActive(false);
+            eventSystem.ExecuteEnemyEvent(m_enemyType);
+            if (m_hp <= 0)
+            {
+                gameObject.SetActive(false);
+            }    
         }
         else
         {
-            eventSystem.ExecuteEnemyEvent(m_score, m_enemyType);
+            Debug.Log("痛いンゴ");
+            eventSystem.ExecuteEnemyEvent(m_enemyType);
         }
     }
 }
