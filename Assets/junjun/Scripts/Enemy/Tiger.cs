@@ -5,7 +5,8 @@ using UnityEngine.Playables;
 
 public class Tiger : EnemyBase
 {
-    [SerializeField] PlayableDirector m_RangedATKDir;
+    [SerializeField] PlayableDirector m_rangedATKDir;
+    [SerializeField] PlayableDirector m_roarDir;
 
     int m_nextMove;
     int m_nextAttack;
@@ -47,7 +48,6 @@ public class Tiger : EnemyBase
                     m_anim.SetBool("chase", false);
                     m_anim.SetBool("punch", false);
                     m_anim.SetBool("biting", false);
-                    m_anim.SetBool("roar", false);
 
                     if (m_distance >= m_atkRange)
                     {
@@ -83,7 +83,7 @@ public class Tiger : EnemyBase
 
             case EnemyState.RangedATK:
                 LookAtPlayer();
-                TimelinePlayer.Instance.PlayTimeline(m_RangedATKDir);
+                TimelinePlayer.Instance.PlayTimeline(m_rangedATKDir);
                 break;
 
             case EnemyState.CoolTime:
@@ -129,7 +129,7 @@ public class Tiger : EnemyBase
             }
             if (m_nextAttack == 2)
             {
-                m_anim.SetBool("roar", true);
+                TimelinePlayer.Instance.PlayTimeline(m_roarDir);
             }
         }
     }
