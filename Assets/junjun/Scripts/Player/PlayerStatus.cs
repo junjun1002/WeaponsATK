@@ -21,5 +21,10 @@ public class PlayerStatus : MonoBehaviour
             GameState.Instance.GameOver();
             Debug.Log("GameOver");
         }
+
+        if (OVRInput.Get(OVRInput.Button.Start))
+        {
+            UIManager.Instance.ActiveUI();
+        }
     }
 }

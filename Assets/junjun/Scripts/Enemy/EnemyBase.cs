@@ -51,7 +51,7 @@ public abstract class EnemyBase : MonoBehaviour
         {
             Debug.Log("くらえ");
             m_atkPoint = Random.Range(0.05f, 0.08f);
-            UIManager.Instance.DecreasesHP(m_atkPoint);
+            UIManager.Instance.DecreasesHPUI(m_atkPoint);
             playerStatus.m_playerHp -= m_atkPoint;
         }
     }

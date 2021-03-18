@@ -21,7 +21,7 @@ public class StopWatch : MonoBehaviour
         {
             if (m_minute < m_stopTimer)
             {
-                m_seconds += Time.deltaTime;
+                m_seconds += Time.unscaledDeltaTime;
                 if (m_seconds >= 60f)
                 {
                     m_minute++;

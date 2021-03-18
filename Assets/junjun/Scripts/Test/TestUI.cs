@@ -12,13 +12,13 @@ public class TestUI : MonoBehaviour
         public void TestDamadeCause()
     {
         float DamageValue = Random.Range(0.02f, 0.1f);
-        UIManager.Instance.DecreasesHP(DamageValue);
+        UIManager.Instance.DecreasesHPUI(DamageValue);
         Debug.Log(DamageValue * 100 + "ダメージを与えた");
     }
 
     public void TestUseSP()
     {
-        UIManager.Instance.UseSP(m_useSP);
+        UIManager.Instance.UseSPUI(m_useSP);
         Debug.Log("SPを" + m_useSP * 100 + "消費した");
     }
 }
