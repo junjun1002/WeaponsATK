@@ -24,7 +24,7 @@ public abstract class EnemyBase : MonoBehaviour
     public NavMeshAgent m_agent;
 
     protected float m_distance;
-    public PlayerStatus playerStatus;
+    public VRPlayerController m_vrPlayercontroller;
 
 
 
@@ -52,7 +52,7 @@ public abstract class EnemyBase : MonoBehaviour
             Debug.Log("くらえ");
             m_atkPoint = Random.Range(0.05f, 0.08f);
             UIManager.Instance.DecreasesHPUI(m_atkPoint);
-            playerStatus.m_playerHp -= m_atkPoint;
+            m_vrPlayercontroller.m_playerHp -= m_atkPoint;
         }
     }
 

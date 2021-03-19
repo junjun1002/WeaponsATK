@@ -18,6 +18,7 @@ public class TimeState : SingletonMonoBehavior<TimeState>
 
     public void RestoredTime()
     {
+        Debug.Log("元の時間だどん");
         Time.timeScale = 1;
     }
 }

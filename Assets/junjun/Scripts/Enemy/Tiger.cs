@@ -78,7 +78,7 @@ public class Tiger : EnemyBase
 
             case EnemyState.Attack:
                 LookAtPlayer();
-                Debug.Log("食らいやがれぇぇええ！");
+                
                 break;
 
             case EnemyState.RangedATK:

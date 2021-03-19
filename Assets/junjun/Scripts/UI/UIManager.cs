@@ -10,9 +10,9 @@ public class UIManager : SingletonMonoBehavior<UIManager>
 {
     [SerializeField] ImgsFillDynamic m_playerHPUI;
     [SerializeField] ImgsFillDynamic m_playerSPUI;
-    [SerializeField] float m_healValue;
+    [SerializeField] int m_healValue;
     [SerializeField] GameObject m_menuWindow;
-    public float span = 5f;
+    public float m_span = 5f;
 
     [SerializeField] float m_stopTimer;
     //　タイマー表示用テキスト
@@ -23,6 +23,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     //　前のUpdateの時の秒数
     private float m_oldSeconds;
 
+    public VRPlayerController vRPlayerController;
 
     private float m_maxSP;
     private float m_currentSP;
@@ -37,29 +38,25 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     {
         m_maxSP = m_playerSPUI.TargetValue;
         m_currentSP = m_playerSPUI.TargetValue;
-        StartCoroutine("StopWatch");
         StartCoroutine("Logging");
     }
 
-    IEnumerator StopWatch()
+    private void Update()
     {
-        while (true)
+        if (m_minute < m_stopTimer)
         {
-            if (m_minute < m_stopTimer)
+            m_seconds += Time.unscaledDeltaTime;
+            if (m_seconds >= 60f)
             {
-                m_seconds += Time.unscaledDeltaTime;
-                if (m_seconds >= 60f)
-                {
-                    m_minute++;
-                    m_seconds = m_seconds - 60;
-                }
-                //　値が変わった時だけテキストUIを更新
-                if (m_seconds != m_oldSeconds)
-                {
-                    m_timerText.text = m_minute.ToString() + ":" + m_seconds.ToString("f1");
-                }
-                m_oldSeconds = m_seconds;
+                m_minute++;
+                m_seconds = m_seconds - 60;
             }
+            //　値が変わった時だけテキストUIを更新
+            if (m_seconds != m_oldSeconds)
+            {
+                m_timerText.text = m_minute.ToString() + ":" + m_seconds.ToString("f1");
+            }
+            m_oldSeconds = m_seconds;
         }
     }
 
@@ -67,8 +64,8 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     {
         while (true)
         {
-            yield return new WaitForSeconds(span);
-            Debug.LogFormat("{0}秒経過", span);
+            yield return new WaitForSeconds(m_span);
+            Debug.LogFormat("{0}秒経過", m_span);
             NaturalRecoverySPUI();
         }
     }
@@ -86,7 +83,8 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     {
         if (!(m_currentSP == m_maxSP))
         {
-            m_playerSPUI.SetValue(m_healValue, false, Random.Range(0.01f, 0.5f));
+            vRPlayerController.m_sp -= m_healValue;
+            m_playerSPUI.SetValue((float)m_healValue / 100, false, Random.Range(0.01f, 0.5f));
         }
     }
 
