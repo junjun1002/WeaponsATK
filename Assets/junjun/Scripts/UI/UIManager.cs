@@ -10,18 +10,10 @@ public class UIManager : SingletonMonoBehavior<UIManager>
 {
     [SerializeField] ImgsFillDynamic m_playerHPUI;
     [SerializeField] ImgsFillDynamic m_playerSPUI;
+    [SerializeField] GameObject m_uIPointer;
     [SerializeField] int m_healValue;
     [SerializeField] GameObject m_menuWindow;
     public float m_span = 5f;
-
-    [SerializeField] float m_stopTimer;
-    //　タイマー表示用テキスト
-    [SerializeField] Text m_timerText;
-
-    private int m_minute;
-    private float m_seconds;
-    //　前のUpdateの時の秒数
-    private float m_oldSeconds;
 
     public VRPlayerController vRPlayerController;
 
@@ -36,28 +28,10 @@ public class UIManager : SingletonMonoBehavior<UIManager>
 
     private void Start()
     {
+        m_uIPointer.SetActive(false);
         m_maxSP = m_playerSPUI.TargetValue;
         m_currentSP = m_playerSPUI.TargetValue;
         StartCoroutine("Logging");
-    }
-
-    private void Update()
-    {
-        if (m_minute < m_stopTimer)
-        {
-            m_seconds += Time.unscaledDeltaTime;
-            if (m_seconds >= 60f)
-            {
-                m_minute++;
-                m_seconds = m_seconds - 60;
-            }
-            //　値が変わった時だけテキストUIを更新
-            if (m_seconds != m_oldSeconds)
-            {
-                m_timerText.text = m_minute.ToString() + ":" + m_seconds.ToString("f1");
-            }
-            m_oldSeconds = m_seconds;
-        }
     }
 
     IEnumerator Logging()
@@ -102,10 +76,12 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     {
         if (m_activeUI)
         {
+            m_uIPointer.SetActive(false);
             m_menuWindow.SetActive(false);
         }
         else
         {
+            m_uIPointer.SetActive(true);
             m_menuWindow.SetActive(true);
         }
 

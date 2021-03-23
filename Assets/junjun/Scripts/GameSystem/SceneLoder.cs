@@ -16,10 +16,10 @@ public class SceneLoder : SingletonMonoBehavior<SceneLoder>
     {
         //m_screenFade = gameObject.GetComponent<OVRScreenFade>();
     }
-    public void LodeTitle()
+
+    public void Load(string sceneName)
     {
-        //m_screenFade.FadeIn();
-        //SceneManager.LoadSceneAsync("GameScene");
-        SceneManager.LoadSceneAsync("Test_TigerBattle");
+        //m_screenFade.FadeIn();      
+        SceneManager.LoadSceneAsync(sceneName);    
     }
 }

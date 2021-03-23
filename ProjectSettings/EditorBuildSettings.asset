@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Main/Scenes/Title.unity
+    guid: b309ebb0b6f3c284e8e09273cfe06a58
+  - enabled: 1
     path: Assets/junjun/Scenes/Test_TigerBattle.unity
     guid: b1b93005b4531744d8829c91e06c51d9
+  - enabled: 1
+    path: Assets/Main/Scenes/GameClear.unity
+    guid: 8eae6fcd29f53764ebd7fbfac43d9027
+  - enabled: 1
+    path: Assets/Main/Scenes/GameOver.unity
+    guid: d5b5bd1dd3da76740a805290954b0bfe
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 6f22c85ba384200419b74e23702ec4c6,
       type: 2}

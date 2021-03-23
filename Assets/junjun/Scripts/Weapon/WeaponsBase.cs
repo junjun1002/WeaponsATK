@@ -6,20 +6,15 @@ public abstract class WeaponsBase : MonoBehaviour
 {
     [SerializeField] public WeaponsType m_weaponsType;
     [SerializeField] public int m_power;
-    Tiger tiger;
+    public EnemyBase enemyBase;
 
-    private void Start()
-    {
-        tiger = GameObject.FindGameObjectWithTag("Tiger").GetComponent<Tiger>();
-        tiger.GetComponent<Tiger>();
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Tiger")
         {
             //左のコントローラーを0.5秒間振動させる
             StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
-            tiger.m_hp -= m_power;
+            enemyBase.m_hp -= m_power;
         }
     }
 

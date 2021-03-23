@@ -6,12 +6,12 @@ using UnityEngine.Playables;
 /// </summary>
 public class TimelinePlayer : SingletonMonoBehavior<TimelinePlayer>
 {
-    public PlayableDirector playableDirector;
+    //public PlayableDirector playableDirector;
 
     void Start()
     {
-        //同じゲームオブジェクトにあるPlayableDirectorを取得する
-        playableDirector = GetComponent<PlayableDirector>();
+        ////同じゲームオブジェクトにあるPlayableDirectorを取得する
+        //playableDirector = GetComponent<PlayableDirector>();
     }
 
     //再生する

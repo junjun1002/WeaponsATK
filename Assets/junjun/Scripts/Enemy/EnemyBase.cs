@@ -41,7 +41,7 @@ public abstract class EnemyBase : MonoBehaviour
         m_distance = Vector3.Distance(transform.position, m_player.transform.position);
         if (m_hp <= 0)
         {
-            GameState.Instance.GameClear();
+            GameManager.Instance.GameClear();
         }
     }
 

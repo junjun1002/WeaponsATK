@@ -6,16 +6,18 @@ public class VRPlayerController : MonoBehaviour
 {
     // SP
     [SerializeField] public int m_sp;
+   
 
     public float m_playerHp = 1f;
 
     [SerializeField] float m_zoneTime;
 
+
     private void Update()
     {
         if (m_playerHp <= 0)
         {
-            GameState.Instance.GameOver();
+            GameManager.Instance.GameOver();
             Debug.Log("GameOver");
         }
 
@@ -24,7 +26,7 @@ public class VRPlayerController : MonoBehaviour
             UIManager.Instance.ActiveUI();
         }
 
-        if (OVRInput.Get(OVRInput.Button.Three))
+        if (OVRInput.GetDown(OVRInput.Button.Three))
         {
             if (m_sp >= 30)
             {
@@ -33,10 +35,10 @@ public class VRPlayerController : MonoBehaviour
                 Debug.Log("Zone‚¾‚Ç‚ñ");
                 TimeState.Instance.SlowTime();
                 Invoke("StopZone", m_zoneTime);
-            }  
+            }
         }
     }
-    
+
     void StopZone()
     {
         TimeState.Instance.RestoredTime();
