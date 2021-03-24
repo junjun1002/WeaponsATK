@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
+/// <summary>
+/// jsonでデータをセーブとロードを行うクラス
+/// </summary>
 public class SaveAndLoad : SingletonMonoBehavior<SaveAndLoad>
 {
     [SerializeField] Text m_bestTime;
@@ -24,6 +27,11 @@ public class SaveAndLoad : SingletonMonoBehavior<SaveAndLoad>
         LoadTimeData();
     }
 
+    /// <summary>
+    /// ベストタイムが更新されたときにセーブする
+    /// </summary>
+    /// <param name="minite"></param>
+    /// <param name="second"></param>
     public void SaveTimeData(int minite, float second)
     {
         if ((timeData.bestMinute > minite) || (timeData.bestMinute == minite && timeData.bestSecond > second))
@@ -41,7 +49,10 @@ public class SaveAndLoad : SingletonMonoBehavior<SaveAndLoad>
         writer.Flush();
         writer.Close();
     }
-
+    
+    /// <summary>
+    /// ベストタイムをロード
+    /// </summary>
     public void LoadTimeData()
     {
         string datastr = "";

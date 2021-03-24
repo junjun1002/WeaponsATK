@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 武器の基底クラス
 public abstract class WeaponsBase : MonoBehaviour
 {
     [SerializeField] public WeaponsType m_weaponsType;
     [SerializeField] public int m_power;
     public EnemyBase enemyBase;
 
+    // Enemyにダメージを与えたときの処理
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Tiger")

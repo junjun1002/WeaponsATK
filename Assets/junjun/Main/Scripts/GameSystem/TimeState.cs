@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 時間を管理するクラス
+/// </summary>
 public class TimeState : SingletonMonoBehavior<TimeState>
 {
     [SerializeField] float m_slowTime;

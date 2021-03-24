@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 音の管理をするクラス
+/// （今後改良しまくりたいクラス）
+/// </summary>
 public class SoundManager : SingletonMonoBehavior<SoundManager>
 {
-    // シーンのBGM
-    [SerializeField] AudioSource m_bgm;
-    // シーンのSE
-    [SerializeField] AudioSource m_se;
     // TigerのSE
     [SerializeField] AudioSource m_tigerSE;
 

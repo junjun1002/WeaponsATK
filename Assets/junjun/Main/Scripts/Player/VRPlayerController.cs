@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Player‚ğ§Œä‚·‚éƒNƒ‰ƒX
 public class VRPlayerController : MonoBehaviour
 {
     // SP

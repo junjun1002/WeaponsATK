@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// シーンによって管理を変えるマネージャークラス
+/// </summary>
 public class GameManager : SingletonMonoBehavior<GameManager>
 {
+    // 各シーンの名前
     [SerializeField] string m_title = "Title";
-    [SerializeField] string m_battle = "Test_TigerBattle";
+    [SerializeField] string m_battle = "TigerBattle";
     [SerializeField] string m_gameClear = "GameClear";
     [SerializeField] string m_gameOver = "GameOver";
 
+    // タイマーが止まる時間
     [SerializeField] float m_stopTimer;
     //　タイマー表示用テキスト
     [SerializeField] Text m_timerText;
@@ -68,6 +73,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     {
         SceneLoder.Instance.Load(m_battle);
     }
+
     public void GameClear()
     {
         m_gameState = GameState.GameClear;

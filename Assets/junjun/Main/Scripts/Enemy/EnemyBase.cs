@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Enemyの基底クラス
+/// </summary>
 public abstract class EnemyBase : MonoBehaviour
 {
     // 補完スピードを決める
@@ -21,6 +24,7 @@ public abstract class EnemyBase : MonoBehaviour
     float m_atkPoint;
     // enemyの状態
     public EnemyState m_enemyState;
+
     public NavMeshAgent m_agent;
 
     protected float m_distance;
@@ -45,6 +49,10 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Plyerにダメージを与えるときの処理
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -96,6 +104,9 @@ public abstract class EnemyBase : MonoBehaviour
         Debug.Log(m_enemyState);
     }
 
+    /// <summary>
+    /// 滑らかにPlayerの方向を向くように
+    /// </summary>
     protected void LookAtPlayer()
     {
         // ターゲット方向のベクトルを取得

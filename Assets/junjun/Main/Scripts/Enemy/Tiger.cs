@@ -103,12 +103,18 @@ public class Tiger : EnemyBase
         }
     }
 
+    /// <summary>
+    /// Playerと距離が離れているときに次の行動に移るための関数（アニメーションイベントで呼ぶ）
+    /// </summary>
     void NextMove()
     {
         m_nextMove = Random.Range(0, 2);
         Debug.Log(m_nextMove);
     }
 
+    /// <summary>
+    /// Playerが攻撃範囲内にいるときに次に起こす行動を決める関数
+    /// </summary>
     protected void ChangeAnim()
     {
         if (m_distance <= m_atkRange)

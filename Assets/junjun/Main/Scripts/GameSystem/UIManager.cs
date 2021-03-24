@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Scene上のUIを
+/// Scene上のUIを管理するクラス
 /// </summary>
 public class UIManager : SingletonMonoBehavior<UIManager>
 {
@@ -34,6 +34,10 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         StartCoroutine("Logging");
     }
 
+    /// <summary>
+    /// SPの自然回復を非同期で行う
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Logging()
     {
         while (true)
@@ -53,6 +57,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         m_playerHPUI.SetValue(damage, false, Random.Range(0.01f, 0.5f));
     }
 
+    //SPが回復するときに呼ばれる
     public void NaturalRecoverySPUI()
     {
         if (!(m_currentSP == m_maxSP))
