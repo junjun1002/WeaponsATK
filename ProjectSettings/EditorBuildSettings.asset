@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Main/Scenes/Title.unity
     guid: b309ebb0b6f3c284e8e09273cfe06a58
   - enabled: 1
-    path: Assets/junjun/Scenes/Test_TigerBattle.unity
+    path: Assets/junjun/Main/Scenes/Test_TigerBattle.unity
     guid: b1b93005b4531744d8829c91e06c51d9
   - enabled: 1
     path: Assets/Main/Scenes/GameClear.unity
