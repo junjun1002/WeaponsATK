@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
+/// <summary>
+/// 虎の敵の継承クラス
+/// </summary>
 public class Tiger : EnemyBase
 {
+    /// <summary>遠距離攻撃のタイムライン</summary>
     [SerializeField] PlayableDirector m_rangedATKDir;
+    /// <summary>咆哮のタイムライン</summary>
     [SerializeField] PlayableDirector m_roarDir;
-
+    
+    /// <summary>次の行動の判定</summary>
     int m_nextMove;
+    /// <summary>次の攻撃の判定</summary>
     int m_nextAttack;
 
     protected override void Start()

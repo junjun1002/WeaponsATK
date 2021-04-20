@@ -8,25 +8,25 @@ using UnityEngine.AI;
 /// </summary>
 public abstract class EnemyBase : MonoBehaviour
 {
-    // 補完スピードを決める
+    ///<summary>補完スピードを決める</summary> 
     [SerializeField] public float m_lookSpeed = 0.1f;
-    // HP
+    ///<summar>HP</summar> 
     [SerializeField] public int m_hp;
-    // enemyの種類
+    ///<summary>enemyの種類</summary> 
     [SerializeField] protected EnemyType m_enemyType;
-    // Player(ターゲット)
+    ///<summary> Player(ターゲット)</summary>
     [SerializeField] protected GameObject m_player;
-    // 敵のアニメーション
+    ///<summary> 敵のアニメーション</summary>
     [SerializeField] protected Animator m_anim;
-    // 敵が止まる距離
+    ///<summary> 敵が止まる距離</summary>
     [SerializeField] protected float m_atkRange = 20;
-    // 攻撃力
+    ///<summary> 攻撃力</summary>
     float m_atkPoint;
-    // enemyの状態
+    ///<summary> enemyの状態</summary>
     public EnemyState m_enemyState;
 
     public NavMeshAgent m_agent;
-
+    /// <summary>PlayerとEnemyの距離 </summary>
     protected float m_distance;
     public VRPlayerController m_vrPlayercontroller;
 

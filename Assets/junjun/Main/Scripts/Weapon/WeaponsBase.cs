@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 武器の基底クラス
+/// <summary>
+///  武器の基底クラス
+/// </summary>
 public abstract class WeaponsBase : MonoBehaviour
 {
+    /// <summary>武器の種類</summary>
     [SerializeField] public WeaponsType m_weaponsType;
+    /// <summary>武器の攻撃力</summary>
     [SerializeField] public int m_power;
+
     public EnemyBase enemyBase;
 
-    // Enemyにダメージを与えたときの処理
+    /// <summary>
+    /// Enemyにダメージを与えたときの処理
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Tiger")

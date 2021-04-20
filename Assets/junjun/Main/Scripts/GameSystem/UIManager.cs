@@ -8,22 +8,30 @@ using UnityEngine.UI;
 /// </summary>
 public class UIManager : SingletonMonoBehavior<UIManager>
 {
+    /// <summary>HPのUI</summary>
     [SerializeField] ImgsFillDynamic m_playerHPUI;
+    /// <summary>SPのUI</summary>
     [SerializeField] ImgsFillDynamic m_playerSPUI;
+    /// <summary>VR空間内でUIを選択する用のポインター</summary>
     [SerializeField] GameObject m_uIPointer;
+    /// <summary>SPが回復する値</summary>
     [SerializeField] int m_healValue;
+    /// <summary>メニューのUI</summary>
     [SerializeField] GameObject m_menuWindow;
+    /// <summary>SPが自然回復する間隔 </summary>
     public float m_span = 5f;
 
     public VRPlayerController vRPlayerController;
 
+    /// <summary>最大SP量</summary>
     private float m_maxSP;
+    /// <summary>現在のSP</summary>
     private float m_currentSP;
+    /// <summary>UIがアクティブかどうかの判定</summary>
     private bool m_activeUI;
     protected override void Awake()
     {
         base.Awake();
-
     }
 
     private void Start()
@@ -57,7 +65,9 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         m_playerHPUI.SetValue(damage, false, Random.Range(0.01f, 0.5f));
     }
 
-    //SPが回復するときに呼ばれる
+    /// <summary>
+    /// Enemyにダメージを与えたときの処理
+    /// </summary>
     public void NaturalRecoverySPUI()
     {
         if (!(m_currentSP == m_maxSP))
@@ -77,6 +87,9 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         m_currentSP -= useSP;
     }
 
+    /// <summary>
+    /// UIアクティブ化を制御するクラス
+    /// </summary>
     public void ActiveUI()
     {
         if (m_activeUI)

@@ -14,6 +14,10 @@ public class SceneLoder : SingletonMonoBehavior<SceneLoder>
        // DontDestroyOnLoad(gameObject);
     }
 
+    /// <summary>
+    /// シーンをロードさせる関数
+    /// </summary>
+    /// <param name="sceneName"></param>
     public void Load(string sceneName)
     {    
         SceneManager.LoadSceneAsync(sceneName);    

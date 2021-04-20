@@ -8,20 +8,18 @@ using UnityEngine;
 /// </summary>
 public class SoundManager : SingletonMonoBehavior<SoundManager>
 {
-    // TigerのSE
-    [SerializeField] AudioSource m_tigerSE;
-
-    // Tiger用のSE
-    public AudioClip m_runSE;
-
     protected override void Awake()
     {
         base.Awake();
         //DontDestroyOnLoad(gameObject);
     }
 
-    public void  PlayTigerSE(AudioClip SE)
-    {
-        m_tigerSE.PlayOneShot(SE);
-    }
+    /// <summary>
+    /// SEを鳴らす関数（今のとここれで鳴らすものがない）
+    /// </summary>
+    /// <param name="SE"></param>
+    //public void  PlayTigerSE(AudioClip SE)
+    //{
+
+    //}
 }

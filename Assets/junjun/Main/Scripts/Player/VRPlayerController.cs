@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Playerを制御するクラス
+/// <summary>
+/// Playerを制御するクラス
+/// </summary>
 public class VRPlayerController : MonoBehaviour
 {
-    // SP
+    ///<summary> SP</summary>
     [SerializeField] public int m_sp;
    
-
+    /// <summary>HP</summary>
     public float m_playerHp = 1f;
-
+    /// <summary>スローモーションの効果時間</summary>
     [SerializeField] float m_zoneTime;
 
 
@@ -40,6 +42,9 @@ public class VRPlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// スローモーション状態を止める
+    /// </summary>
     void StopZone()
     {
         TimeState.Instance.RestoredTime();

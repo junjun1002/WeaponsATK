@@ -4,26 +4,32 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// シーンによって管理を変えるマネージャークラス
+/// ゲーム全体の管理をするマネージャークラス
 /// </summary>
 public class GameManager : SingletonMonoBehavior<GameManager>
 {
-    // 各シーンの名前
+    /// <summary>タイトルシーンの名前</summary>
     [SerializeField] string m_title = "Title";
+    /// <summary>バトルシーン名前</summary>
     [SerializeField] string m_battle = "TigerBattle";
+    /// <summary>ゲームクリアシーンの名前</summary>
     [SerializeField] string m_gameClear = "GameClear";
+    /// <summary>ゲームオーバーシーンの名前</summary>
     [SerializeField] string m_gameOver = "GameOver";
 
-    // タイマーが止まる時間
+    /// <summary>タイマーが止まる時間</summary>
     [SerializeField] float m_stopTimer;
-    //　タイマー表示用テキスト
+    /// <summary>タイマー表示用テキスト</summary>
     [SerializeField] Text m_timerText;
 
+    /// <summary>経過時間（分）</summary>
     private int m_minute;
+    /// <summary>経過時間（秒）</summary>
     private float m_seconds;
-    //　前のUpdateの時の秒数
+    /// <summary>前のUpdateの時の秒数</summary>
     private float m_oldSeconds;
 
+    /// <summary>ゲームの状態</summary>
     [SerializeField] GameState m_gameState;
     protected override void Awake()
     {
@@ -64,22 +70,34 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         }
     }
 
+    /// <summary>
+    /// タイトルシーンに遷移
+    /// </summary>
     public void ChangeTitleScene()
     {
         SceneLoder.Instance.Load(m_title);
     }
 
+    /// <summary>
+    /// ゲームシーンに遷移
+    /// </summary>
     public void ChangeGameScene()
     {
         SceneLoder.Instance.Load(m_battle);
     }
 
+    /// <summary>
+    /// ゲームクリア
+    /// </summary>
     public void GameClear()
     {
         m_gameState = GameState.GameClear;
         SceneLoder.Instance.Load(m_gameClear);
     }
 
+    /// <summary>
+    /// ゲームオーバー
+    /// </summary>
     public void GameOver()
     {
         m_gameState = GameState.GameOver;
@@ -87,6 +105,9 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     }
 }
 
+/// <summary>
+/// ゲームの状態を表すenum
+/// </summary>
 enum GameState
 {
     Title, InGame, GameClear, GameOver

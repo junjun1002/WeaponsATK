@@ -10,8 +10,12 @@ using System.IO;
 /// </summary>
 public class SaveAndLoad : SingletonMonoBehavior<SaveAndLoad>
 {
+    /// <summary>最速タイムを表示するテキスト</summary>
     [SerializeField] Text m_bestTime;
 
+    /// <summary>
+    /// ベストタイムを記録しているデータ
+    /// </summary>
     [Serializable]
     public class TimeData
     {
