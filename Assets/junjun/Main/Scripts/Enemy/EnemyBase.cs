@@ -131,5 +131,5 @@ public enum EnemyState
 /// </summary>
 public enum EnemyType
 {
-    PunchingBag, Spider, Tiger
+    PunchingBag, Spider, Golem, Goblins, Tiger
 }
