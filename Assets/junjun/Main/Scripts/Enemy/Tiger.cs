@@ -104,6 +104,8 @@ public class Tiger : EnemyBase
                     m_enemyState = EnemyState.Idle;
                 }
                 break;
+            case EnemyState.KnockBack:
+                break;
 
             default:
                 break;

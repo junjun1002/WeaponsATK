@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Cysharp.Threading.Tasks;
 
 /// <summary>
 /// Enemyの基底クラス
@@ -25,18 +27,23 @@ public abstract class EnemyBase : MonoBehaviour
     ///<summary> enemyの状態</summary>
     public EnemyState m_enemyState;
 
+
     public NavMeshAgent m_agent;
     /// <summary>PlayerとEnemyの距離 </summary>
     protected float m_distance;
+
     public VRPlayerController m_vrPlayercontroller;
+    public SkinnedMeshRenderer m_meshRenderer;
 
-
-
+    /// <summary>ノックバックする力</summary>
+    private Vector3 m_knockBackVelocity = Vector3.zero;
+    /// <summary>ノックバックする力</summary>
+    [SerializeField] protected float m_knockBackPower;
     virtual protected void Start()
     {
         m_enemyState = EnemyState.Idle;
         m_anim = GetComponent<Animator>();
-        m_atkPoint = Random.Range(0.05f, 0.08f);
+        m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
     }
 
     virtual protected void Update()
@@ -46,6 +53,11 @@ public abstract class EnemyBase : MonoBehaviour
         if (m_hp <= 0)
         {
             GameManager.Instance.GameClear();
+        }
+        // ノックバックする
+        if (m_knockBackVelocity != Vector3.zero)
+        {
+            m_agent.Move(m_knockBackVelocity * Time.deltaTime);
         }
     }
 
@@ -58,7 +70,7 @@ public abstract class EnemyBase : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("くらえ");
-            m_atkPoint = Random.Range(0.05f, 0.08f);
+            m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
             UIManager.Instance.DecreasesHPUI(m_atkPoint);
             m_vrPlayercontroller.m_playerHp -= m_atkPoint;
         }
@@ -116,6 +128,22 @@ public abstract class EnemyBase : MonoBehaviour
         // 現在の回転情報と、ターゲット方向の回転情報を補完する
         transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, m_lookSpeed);
     }
+
+    /// <summary>
+    /// ダメージを受けた時にノックバックする
+    /// </summary>
+    public virtual async void KnockBack()
+    {
+        Debug.Log("ノックバック");
+        m_knockBackVelocity = -transform.forward * m_knockBackPower;
+        m_meshRenderer.material.color = Color.red;
+        m_enemyState = EnemyState.KnockBack;
+        m_anim.SetBool("Hit", true);
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+        m_knockBackVelocity = Vector3.zero;
+        m_meshRenderer.material.color = Color.white;
+        m_enemyState = EnemyState.Idle;
+    }
 }
 
 /// <summary>
@@ -123,7 +151,7 @@ public abstract class EnemyBase : MonoBehaviour
 /// </summary>
 public enum EnemyState
 {
-    None, Idle, Chase, Attack, RangedATK, CoolTime
+    None, Idle, Chase, Attack, RangedATK, CoolTime, KnockBack
 }
 
 /// <summary>

@@ -27,6 +27,7 @@ public class Goblins : EnemyBase
                     m_anim.SetBool("Chase", false);
                     m_anim.SetBool("Attack", false);
                     m_anim.SetBool("Thrust", false);
+                    m_anim.SetBool("Hit", false);
                     if (m_distance >= m_atkRange)
                     {
                         m_enemyState = EnemyState.Chase;
@@ -54,6 +55,8 @@ public class Goblins : EnemyBase
                 break;
             case EnemyState.CoolTime:
                 m_enemyState = EnemyState.Idle;
+                break;
+            case EnemyState.KnockBack:
                 break;
             default:
                 break;

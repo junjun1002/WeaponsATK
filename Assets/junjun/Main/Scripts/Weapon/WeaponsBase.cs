@@ -20,11 +20,12 @@ public abstract class WeaponsBase : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Tiger")
+        if (other.gameObject.tag == "Enemy")
         {
             //左のコントローラーを0.5秒間振動させる
             StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
             enemyBase.m_hp -= m_power;
+            enemyBase.KnockBack();
         }
     }
 
