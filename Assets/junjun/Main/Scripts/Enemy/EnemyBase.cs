@@ -26,7 +26,8 @@ public abstract class EnemyBase : MonoBehaviour
     float m_atkPoint;
     ///<summary> enemyの状態</summary>
     public EnemyState m_enemyState;
-
+    /// <summary> 無敵状態の判定</summary>
+    private bool m_Invincible;
 
     public NavMeshAgent m_agent;
     /// <summary>PlayerとEnemyの距離 </summary>
@@ -132,8 +133,14 @@ public abstract class EnemyBase : MonoBehaviour
     /// <summary>
     /// ダメージを受けた時にノックバックする
     /// </summary>
-    public virtual async void KnockBack()
+    public async void KnockBack()
     {
+        /// 多段ヒットしないように攻撃を受けて少しの間は無敵化
+        if (m_Invincible)
+        {
+            return;
+        }
+        m_Invincible = true;
         Debug.Log("ノックバック");
         m_knockBackVelocity = -transform.forward * m_knockBackPower;
         m_meshRenderer.material.color = Color.red;
@@ -143,6 +150,7 @@ public abstract class EnemyBase : MonoBehaviour
         m_knockBackVelocity = Vector3.zero;
         m_meshRenderer.material.color = Color.white;
         m_enemyState = EnemyState.Idle;
+        m_Invincible = false;
     }
 }
 
