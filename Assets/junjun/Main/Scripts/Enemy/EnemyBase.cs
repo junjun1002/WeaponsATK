@@ -29,9 +29,9 @@ public abstract class EnemyBase : MonoBehaviour
     /// <summary> 無敵状態の判定</summary>
     private bool m_Invincible;
 
-    public NavMeshAgent m_agent;
     /// <summary>PlayerとEnemyの距離 </summary>
     protected float m_distance;
+    public NavMeshAgent m_agent;
 
     public VRPlayerController m_vrPlayercontroller;
     public SkinnedMeshRenderer m_meshRenderer;

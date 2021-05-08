@@ -20,6 +20,8 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     [SerializeField] GameObject m_menuWindow;
     /// <summary>SPが自然回復する間隔 </summary>
     public float m_span = 5f;
+    /// <summary>敵がダメージを受けた時に表示するテキスト</summary>
+    [SerializeField] GameObject m_damageText;
 
     public VRPlayerController vRPlayerController;
 
