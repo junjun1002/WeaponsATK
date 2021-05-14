@@ -19,7 +19,7 @@ public abstract class EnemyBase : MonoBehaviour
     ///<summary> Player(ターゲット)</summary>
     [SerializeField] protected GameObject m_player;
     ///<summary> 敵のアニメーション</summary>
-    [SerializeField] protected Animator m_anim;
+    [SerializeField] public Animator m_anim;
     ///<summary> 敵が止まる距離</summary>
     [SerializeField] protected float m_atkRange = 20;
     ///<summary> 攻撃力</summary>
