@@ -26,6 +26,9 @@ public abstract class WeaponsBase : MonoBehaviour
             StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
             enemyBase.m_hp -= m_power;
             enemyBase.KnockBack();
+
+            UIManager.Instance.m_damageText.text = m_power.ToString();
+            UIManager.Instance.PopUpText();
         }
     }
 

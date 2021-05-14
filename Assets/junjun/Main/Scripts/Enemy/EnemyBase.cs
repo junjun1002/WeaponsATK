@@ -129,7 +129,7 @@ public abstract class EnemyBase : MonoBehaviour
         // 現在の回転情報と、ターゲット方向の回転情報を補完する
         transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, m_lookSpeed);
     }
-
+    
     /// <summary>
     /// ダメージを受けた時にノックバックする
     /// </summary>

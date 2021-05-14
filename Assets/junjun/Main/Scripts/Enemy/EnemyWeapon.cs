@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyWeapon : MonoBehaviour
 {
+    /// <summary>敵のオブジェクト（親オブジェクト）</summary>
     [SerializeField] EnemyBase m_enemy;
 
     private void OnTriggerEnter(Collider other)
@@ -13,6 +14,10 @@ public class EnemyWeapon : MonoBehaviour
             Parry();
         }
     }
+
+    /// <summary>
+    /// Playerに盾で弾かれたときに呼ばれる関数
+    /// </summary>
     private void Parry()
     {
         if (m_enemy.m_enemyState == EnemyState.Attack)
