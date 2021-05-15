@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Cysharp.Threading.Tasks;
+using UnityEngine.UI;
 
 /// <summary>
 /// Enemyの基底クラス
@@ -40,11 +41,18 @@ public abstract class EnemyBase : MonoBehaviour
     private Vector3 m_knockBackVelocity = Vector3.zero;
     /// <summary>ノックバックする力</summary>
     [SerializeField] protected float m_knockBackPower;
+
+    /// <summary>EnemyのHPゲージImage</summary>
+    [SerializeField] Image m_enemyHpGauge;
+    /// <summary>EnemyのMaxHP</summary>
+    int m_enemyMaxHp;
+
     virtual protected void Start()
     {
         m_enemyState = EnemyState.Idle;
         m_anim = GetComponent<Animator>();
         m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
+        m_enemyMaxHp = m_hp;
     }
 
     virtual protected void Update()
@@ -151,6 +159,25 @@ public abstract class EnemyBase : MonoBehaviour
         m_meshRenderer.material.color = Color.white;
         m_enemyState = EnemyState.Idle;
         m_Invincible = false;
+    }
+
+    /// <summary>
+    /// EnemyのHPが減少した時にHPゲージを減少させる関数
+    /// </summary>
+    public void EnemyHPDecrease()
+    {
+        int currentHp = m_hp;
+        float hpRatio = (float)currentHp / (float)m_enemyMaxHp;
+
+        m_enemyHpGauge.fillAmount = hpRatio;
+        if (m_enemyHpGauge.fillAmount <= 0.5f)
+        {
+            m_enemyHpGauge.color = Color.yellow;
+        }
+        if (m_enemyHpGauge.fillAmount <= 0.15f)
+        {
+            m_enemyHpGauge.color = Color.red;
+        }
     }
 }
 

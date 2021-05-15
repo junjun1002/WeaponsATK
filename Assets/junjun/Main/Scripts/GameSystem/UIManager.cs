@@ -44,13 +44,6 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     /// <summary>Popする回数</summary>
     [SerializeField] int m_popNum = 1;
 
-    /// <summary>Enemy</summary>
-    [SerializeField] EnemyBase enemyBase;
-    /// <summary>EnemyのHPゲージImage</summary>
-    [SerializeField] Image m_enemyHpGauge;
-    /// <summary></summary>
-    [SerializeField] int m_enemyMaxHp; 
-
     protected override void Awake()
     {
         base.Awake();
@@ -61,15 +54,14 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         m_uIPointer.SetActive(false);
         m_maxSP = m_playerSPUI.TargetValue;
         m_currentSP = m_playerSPUI.TargetValue;
-        StartCoroutine("Logging");
-        m_enemyMaxHp = enemyBase.m_hp;
+        StartCoroutine("AutomaticRecovery");
     }
 
     /// <summary>
     /// SPの自然回復を非同期で行う
     /// </summary>
     /// <returns></returns>
-    IEnumerator Logging()
+    IEnumerator AutomaticRecovery()
     {
         while (true)
         {
@@ -89,7 +81,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     }
 
     /// <summary>
-    /// Enemyにダメージを与えたときの処理
+    /// SPを自動回復する関数
     /// </summary>
     public void NaturalRecoverySPUI()
     {
@@ -146,13 +138,5 @@ public class UIManager : SingletonMonoBehavior<UIManager>
             .SetEase(m_easeType)
             .SetRelative()
             .OnComplete(() => m_damageText.gameObject.SetActive(false));
-    }
-
-    /// <summary>
-    /// EnemyのHPが減少した時にHPゲージを減少させる関数
-    /// </summary>
-    public void EnemyHPDecrease()
-    {
-
     }
 }

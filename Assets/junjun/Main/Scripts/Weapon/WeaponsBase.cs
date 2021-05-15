@@ -35,6 +35,7 @@ public abstract class WeaponsBase : MonoBehaviour
             //左のコントローラーを0.5秒間振動させる
             StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
             enemyBase.m_hp -= m_power;
+            enemyBase.EnemyHPDecrease();
             enemyBase.KnockBack();
 
             isHit = Physics.Raycast(lastPos, transform.position - lastPos, out hit);
