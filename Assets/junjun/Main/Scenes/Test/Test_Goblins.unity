@@ -1036,6 +1036,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1439052722407022916, guid: 00b66c44150e8d145addf6a6a5b65b14,
+        type: 3}
+      propertyPath: Acceleration
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 1439052722413947016, guid: 00b66c44150e8d145addf6a6a5b65b14,
         type: 3}
       propertyPath: m_RootOrder
@@ -9501,7 +9506,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 440e99598766dbd40a4d8bc01445b5ca, type: 3}
     m_FontSize: 3
     m_FontStyle: 0
     m_BestFit: 1
