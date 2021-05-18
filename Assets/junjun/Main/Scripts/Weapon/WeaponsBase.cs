@@ -14,6 +14,16 @@ public abstract class WeaponsBase : MonoBehaviour
 
     public EnemyBase enemyBase;
 
+    Vector3 lastPos;
+    bool isHit;
+    RaycastHit hit;
+
+    private void Update()
+    {
+        Debug.DrawRay(lastPos, transform.position - lastPos, Color.red, 5);
+        
+        lastPos = this.transform.position;
+    }
     /// <summary>
     /// Enemyにダメージを与えたときの処理
     /// </summary>
@@ -25,7 +35,19 @@ public abstract class WeaponsBase : MonoBehaviour
             //左のコントローラーを0.5秒間振動させる
             StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
             enemyBase.m_hp -= m_power;
+            enemyBase.EnemyHPDecrease();
             enemyBase.KnockBack();
+
+            isHit = Physics.Raycast(lastPos, transform.position - lastPos, out hit);
+            if (isHit)
+            {
+                Debug.Log(hit.point);
+                Debug.Log("hit");
+                //Instantiate(gameObject, hit.point, Quaternion.identity);
+                UIManager.Instance.m_damageText.rectTransform.position = hit.point;
+                UIManager.Instance.m_damageText.text = m_power.ToString();
+                UIManager.Instance.PopUpText();
+            }
         }
     }
 

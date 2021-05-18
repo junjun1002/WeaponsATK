@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Goblins : EnemyBase
 {
-
     /// <summary>Ÿ‚ÌUŒ‚‚Ìí—Ş</summary>
     int m_nextAttack;
     protected override void Start()

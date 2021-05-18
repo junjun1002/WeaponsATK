@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 /// <summary>
 /// Scene上のUIを管理するクラス
@@ -20,6 +21,8 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     [SerializeField] GameObject m_menuWindow;
     /// <summary>SPが自然回復する間隔 </summary>
     public float m_span = 5f;
+    /// <summary>敵がダメージを受けた時に表示するテキスト</summary>
+    [SerializeField] public Text m_damageText;
 
     public VRPlayerController vRPlayerController;
 
@@ -29,6 +32,18 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     private float m_currentSP;
     /// <summary>UIがアクティブかどうかの判定</summary>
     private bool m_activeUI;
+
+    /// <summary>イージングタイプを指定</summary>
+    [SerializeField] Ease m_easeType;
+    /// <summary>アニメーションの時間</summary>
+    [SerializeField] float m_animTime;
+    /// <summary>アニメーションの終了地点</summary>
+    [SerializeField] Vector3 m_endPoint;
+    /// <summary>アニメーションがPopするときの力</summary>
+    [SerializeField] float m_popPower = 1f;
+    /// <summary>Popする回数</summary>
+    [SerializeField] int m_popNum = 1;
+
     protected override void Awake()
     {
         base.Awake();
@@ -39,14 +54,14 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         m_uIPointer.SetActive(false);
         m_maxSP = m_playerSPUI.TargetValue;
         m_currentSP = m_playerSPUI.TargetValue;
-        StartCoroutine("Logging");
+        StartCoroutine("AutomaticRecovery");
     }
 
     /// <summary>
     /// SPの自然回復を非同期で行う
     /// </summary>
     /// <returns></returns>
-    IEnumerator Logging()
+    IEnumerator AutomaticRecovery()
     {
         while (true)
         {
@@ -66,7 +81,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     }
 
     /// <summary>
-    /// Enemyにダメージを与えたときの処理
+    /// SPを自動回復する関数
     /// </summary>
     public void NaturalRecoverySPUI()
     {
@@ -111,5 +126,17 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         {
             m_activeUI = true;
         }
+    }
+
+    /// <summary>
+    /// Enemyがダメージを受けた時に出てくるダメージテキストのアニメーション
+    /// </summary>
+    public void PopUpText()
+    {
+        m_damageText.gameObject.SetActive(true);
+        m_damageText.transform.DOJump(m_endPoint, m_popPower, m_popNum, m_animTime)
+            .SetEase(m_easeType)
+            .SetRelative()
+            .OnComplete(() => m_damageText.gameObject.SetActive(false));
     }
 }
