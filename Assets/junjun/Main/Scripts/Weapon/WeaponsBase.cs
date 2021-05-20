@@ -9,13 +9,20 @@ public abstract class WeaponsBase : MonoBehaviour
 {
     /// <summary>武器の種類</summary>
     [SerializeField] public WeaponsType m_weaponsType;
+    /// <summary>武器の最低攻撃力</summary>
+    [SerializeField] int m_minPower;
+    /// <summary>武器の最高攻撃力</summary>
+    [SerializeField] int m_maxPower;
     /// <summary>武器の攻撃力</summary>
-    [SerializeField] public int m_power;
+    int m_power;
 
     public EnemyBase enemyBase;
 
+    /// <summary>1フレーム前の位置</summary>
     Vector3 lastPos;
+    /// <summary>Rayが当たったか</summary>
     bool isHit;
+
     RaycastHit hit;
 
     private void Update()
@@ -34,6 +41,8 @@ public abstract class WeaponsBase : MonoBehaviour
         {
             //左のコントローラーを0.5秒間振動させる
             StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
+
+            m_power = Random.Range(m_minPower, m_maxPower);
             enemyBase.m_hp -= m_power;
             enemyBase.EnemyHPDecrease();
             enemyBase.KnockBack();
