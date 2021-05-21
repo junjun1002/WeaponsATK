@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/junjun/Main/Scenes/Main/GameOver.unity
     guid: d5b5bd1dd3da76740a805290954b0bfe
+  - enabled: 1
+    path: Assets/junjun/Main/Scenes/Main/Goblins.unity
+    guid: cc6c06344bddb624c969828639a63340
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 6f22c85ba384200419b74e23702ec4c6,
       type: 2}

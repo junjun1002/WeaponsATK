@@ -685,7 +685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_title: Title
-  m_battle: Test_TigerBattle
+  m_battle: Goblins
   m_gameClear: GameClear
   m_gameOver: GameOver
   m_stopTimer: 0
