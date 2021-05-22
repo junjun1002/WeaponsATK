@@ -30,7 +30,7 @@ public class Tiger : EnemyBase
         base.Update();
         switch (m_enemyState)
         {
-            case EnemyState.None:
+            case EnemyStateType.None:
 
                 m_anim.SetBool("chase", false);
                 m_anim.SetBool("punch", false);
@@ -39,16 +39,16 @@ public class Tiger : EnemyBase
                     MoveStop();
                     m_nextAttack = Random.Range(0, 3);
                     Debug.Log("次の攻撃は" + m_nextAttack);
-                    m_enemyState = EnemyState.Attack;
+                    m_enemyState = EnemyStateType.Attack;
                 }
                 if (m_distance >= m_atkRange)
                 {
-                    m_enemyState = EnemyState.Idle;
+                    m_enemyState = EnemyStateType.Idle;
                     NextMove();
                 }
                 break;
 
-            case EnemyState.Idle:
+            case EnemyStateType.Idle:
 
                 if (m_anim)
                 {
@@ -60,17 +60,17 @@ public class Tiger : EnemyBase
                     {
                         if (m_nextMove == 0)
                         {
-                            m_enemyState = EnemyState.Chase;
+                            m_enemyState = EnemyStateType.Chase;
                         }
                         if (m_nextMove == 1)
                         {
-                            m_enemyState = EnemyState.RangedATK;
+                            m_enemyState = EnemyStateType.RangedATK;
                         }
                     }
                 }
                 break;
 
-            case EnemyState.Chase:
+            case EnemyStateType.Chase:
                 LookAtPlayer();
                 
                 m_anim.SetBool("chase", true);
@@ -78,33 +78,33 @@ public class Tiger : EnemyBase
                 if (m_distance <= m_atkRange)
                 {
                     Debug.Log("んあああ");
-                    m_enemyState = EnemyState.None;
+                    m_enemyState = EnemyStateType.None;
                     m_anim.SetBool("chase", false);
                 }
                 break;
 
-            case EnemyState.Attack:
+            case EnemyStateType.Attack:
                 LookAtPlayer();
                 
                 break;
 
-            case EnemyState.RangedATK:
+            case EnemyStateType.RangedATK:
                 LookAtPlayer();
                 TimelinePlayer.Instance.PlayTimeline(m_rangedATKDir);
                 break;
 
-            case EnemyState.CoolTime:
+            case EnemyStateType.CoolTime:
                 if (m_distance <= m_atkRange)
                 {
-                    m_enemyState = EnemyState.Idle;
+                    m_enemyState = EnemyStateType.Idle;
                 }
                 if (m_distance >= m_atkRange)
                 {
                     NextMove();
-                    m_enemyState = EnemyState.Idle;
+                    m_enemyState = EnemyStateType.Idle;
                 }
                 break;
-            case EnemyState.KnockBack:
+            case EnemyStateType.KnockBack:
                 break;
 
             default:
@@ -130,9 +130,9 @@ public class Tiger : EnemyBase
         {
             m_nextAttack = Random.Range(0, 3);
             Debug.Log("次の攻撃は" + m_nextAttack);
-            m_enemyState = EnemyState.Attack;
+            m_enemyState = EnemyStateType.Attack;
         }
-        if (m_enemyState == EnemyState.Attack)
+        if (m_enemyState == EnemyStateType.Attack)
         {
             if (m_nextAttack == 0)
             {

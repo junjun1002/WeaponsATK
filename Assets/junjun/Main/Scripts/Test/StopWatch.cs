@@ -10,8 +10,8 @@ public class StopWatch : MonoBehaviour
     [SerializeField] Text m_timerText;
 
     public bool m_timerStart;
-    private int m_minute;
-    private float m_seconds;
+    public int m_minute;
+    public float m_seconds;
     //　前のUpdateの時の秒数
     private float m_oldSeconds;
 

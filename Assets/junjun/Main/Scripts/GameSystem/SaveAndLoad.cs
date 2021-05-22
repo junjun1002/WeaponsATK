@@ -61,7 +61,7 @@ public class SaveAndLoad : SingletonMonoBehavior<SaveAndLoad>
     {
         string datastr = "";
         StreamReader reader;
-
+       
         reader = new StreamReader(Application.persistentDataPath + ".json");
         datastr = reader.ReadToEnd();
         reader.Close();

@@ -11848,12 +11848,12 @@ MonoBehaviour:
   m_enemyType: 3
   m_player: {fileID: 316325612}
   m_anim: {fileID: 4754822570092515181}
-  m_atkRange: 10
+  m_atkRange: 5
   m_enemyState: 1
   m_agent: {fileID: 3155058319457596690}
   m_vrPlayercontroller: {fileID: 316325613}
   m_meshRenderer: {fileID: 5935682357533154394}
-  m_knockBackPower: 5
+  m_knockBackPower: 6
   m_enemyHpGauge: {fileID: 29831635}
 --- !u!195 &3155058319457596690
 NavMeshAgent:

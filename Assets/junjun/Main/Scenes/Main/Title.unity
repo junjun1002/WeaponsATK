@@ -688,7 +688,7 @@ MonoBehaviour:
   m_battle: Goblins
   m_gameClear: GameClear
   m_gameOver: GameOver
-  m_stopTimer: 0
+  m_stopTimer: 10
   m_timerText: {fileID: 0}
   m_gameState: 0
 --- !u!4 &1346225975

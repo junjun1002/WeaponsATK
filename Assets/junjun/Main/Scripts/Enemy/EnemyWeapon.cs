@@ -28,10 +28,10 @@ public class EnemyWeapon : MonoBehaviour
     /// </summary>
     private void Parry()
     {
-        if (m_enemy.m_enemyState == EnemyState.Attack)
+        if (m_enemy.m_enemyState == EnemyStateType.Attack)
         {
             m_enemy.m_anim.SetBool("Hit", true);
-            m_enemy.m_enemyState = EnemyState.CoolTime;
+            m_enemy.m_enemyState = EnemyStateType.CoolTime;
         }
     }
 

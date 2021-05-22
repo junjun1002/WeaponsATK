@@ -26,7 +26,7 @@ public abstract class EnemyBase : MonoBehaviour
     ///<summary> 攻撃力</summary>
     float m_atkPoint;
     ///<summary> enemyの状態</summary>
-    public EnemyState m_enemyState;
+    public EnemyStateType m_enemyState;
     /// <summary> 無敵状態の判定</summary>
     private bool m_Invincible;
 
@@ -49,7 +49,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     virtual protected void Start()
     {
-        m_enemyState = EnemyState.Idle;
+        m_enemyState = EnemyStateType.Idle;
         m_anim = GetComponent<Animator>();
         m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
         m_enemyMaxHp = m_hp;
@@ -92,7 +92,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         Debug.Log("よっしゃ走るで");
         m_agent.SetDestination(m_player.transform.position);
-        if (m_enemyState == EnemyState.Chase)
+        if (m_enemyState == EnemyStateType.Chase)
         {
             m_agent.isStopped = false;
         }
@@ -113,7 +113,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected void EnemyStateIdle()
     {
         Debug.Log("idle");
-        m_enemyState = EnemyState.Idle;
+        m_enemyState = EnemyStateType.Idle;
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ public abstract class EnemyBase : MonoBehaviour
     /// </summary>
     protected void EnemyStateCoolTime()
     {     
-        m_enemyState = EnemyState.CoolTime;
+        m_enemyState = EnemyStateType.CoolTime;
         Debug.Log(m_enemyState);
     }
 
@@ -152,12 +152,12 @@ public abstract class EnemyBase : MonoBehaviour
         Debug.Log("ノックバック");
         m_knockBackVelocity = -transform.forward * m_knockBackPower;
         m_meshRenderer.material.color = Color.red;
-        m_enemyState = EnemyState.KnockBack;
+        m_enemyState = EnemyStateType.KnockBack;
         m_anim.SetBool("Hit", true);
         await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
         m_knockBackVelocity = Vector3.zero;
         m_meshRenderer.material.color = Color.white;
-        m_enemyState = EnemyState.Idle;
+        m_enemyState = EnemyStateType.Idle;
         m_Invincible = false;
     }
 
@@ -184,7 +184,7 @@ public abstract class EnemyBase : MonoBehaviour
 /// <summary>
 /// Enemyの状態を表すenum
 /// </summary>
-public enum EnemyState
+public enum EnemyStateType
 {
     None, Idle, Chase, Attack, RangedATK, CoolTime, KnockBack
 }

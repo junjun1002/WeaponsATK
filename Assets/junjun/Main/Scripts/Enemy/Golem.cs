@@ -15,17 +15,17 @@ public class Golem : EnemyBase
 
         switch (m_enemyState)
         {
-            case EnemyState.None:
+            case EnemyStateType.None:
                 break;
-            case EnemyState.Idle:
+            case EnemyStateType.Idle:
                 break;
-            case EnemyState.Chase:
+            case EnemyStateType.Chase:
                 break;
-            case EnemyState.Attack:
+            case EnemyStateType.Attack:
                 break;
-            case EnemyState.RangedATK:
+            case EnemyStateType.RangedATK:
                 break;
-            case EnemyState.CoolTime:
+            case EnemyStateType.CoolTime:
                 break;
             default:
                 break;

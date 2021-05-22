@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using Cysharp.Threading.Tasks;
 
 public class Goblins : EnemyBase
 {
@@ -14,13 +16,14 @@ public class Goblins : EnemyBase
 
     protected override void Update()
     {
+
         base.Update();
 
         switch (m_enemyState)
         {
-            case EnemyState.None:
+            case EnemyStateType.None:
                 break;
-            case EnemyState.Idle:
+            case EnemyStateType.Idle:
                 if (m_anim)
                 {
                     m_anim.SetBool("Chase", false);
@@ -29,33 +32,33 @@ public class Goblins : EnemyBase
                     m_anim.SetBool("Hit", false);
                     if (m_distance >= m_atkRange)
                     {
-                        m_enemyState = EnemyState.Chase;
+                        m_enemyState = EnemyStateType.Chase;
                     }
                     else
                     {
-                        m_enemyState = EnemyState.Attack;
+                        m_enemyState = EnemyStateType.Attack;
                     }
                 }
                 break;
-            case EnemyState.Chase:
+            case EnemyStateType.Chase:
                 LookAtPlayer();
                 m_anim.SetBool("Chase", true);
 
                 if (m_distance <= m_atkRange)
                 {
-                    m_enemyState = EnemyState.Idle;
+                    m_enemyState = EnemyStateType.Idle;
                 }
                 break;
-            case EnemyState.Attack:
+            case EnemyStateType.Attack:
 
                 LookAtPlayer();
                 break;
-            case EnemyState.RangedATK:
+            case EnemyStateType.RangedATK:
                 break;
-            case EnemyState.CoolTime:
-                m_enemyState = EnemyState.Idle;
+            case EnemyStateType.CoolTime:
+                m_enemyState = EnemyStateType.Idle;
                 break;
-            case EnemyState.KnockBack:
+            case EnemyStateType.KnockBack:
                 break;
             default:
                 break;
@@ -68,7 +71,7 @@ public class Goblins : EnemyBase
         {
             m_nextAttack = Random.Range(0, 2);
             Debug.Log(m_nextAttack);
-            m_enemyState = EnemyState.Attack;
+            m_enemyState = EnemyStateType.Attack;
             if (m_nextAttack == 0)
             {
                 m_anim.SetBool("Attack", true);
