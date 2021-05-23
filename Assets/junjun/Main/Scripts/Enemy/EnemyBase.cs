@@ -74,12 +74,13 @@ public abstract class EnemyBase : MonoBehaviour
     /// Plyerにダメージを与えるときの処理
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("くらえ");
             m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
+            Debug.Log(m_atkPoint);
             UIManager.Instance.DecreasesHPUI(m_atkPoint);
             m_vrPlayercontroller.m_playerHp -= m_atkPoint;
         }

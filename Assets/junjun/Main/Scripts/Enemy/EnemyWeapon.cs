@@ -8,19 +8,25 @@ public class EnemyWeapon : MonoBehaviour
     [SerializeField] EnemyBase m_enemy;
     /// <summary>盾と衝突した時に出るエフェクト</summary>
     [SerializeField] ParticleSystem m_hitEffect;
-   
+
+    BoxCollider col;
+
     /// <summary>
     /// 攻撃を盾で受けられたときに呼ばれる
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.gameObject.tag == "Shield")
         {
+            //this.GetComponent<BoxCollider>().enabled = false;
             m_hitEffect.gameObject.SetActive(false);
             Parry();
             m_hitEffect.gameObject.SetActive(true);
         }
+
+        m_enemy.OnTriggerEnter(other);
     }
 
     /// <summary>
