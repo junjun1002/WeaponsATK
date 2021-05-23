@@ -75,7 +75,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     /// </summary>
     public void ChangeTitleScene()
     {
-        SceneLoder.Instance.Load(m_title);
+        SceneLoader.Instance.Load(m_title);
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     /// </summary>
     public void ChangeGameScene()
     {
-        SceneLoder.Instance.Load(m_battle);
+        SceneLoader.Instance.Load(m_battle);
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     public void GameClear()
     {
         m_gameState = GameState.GameClear;
-        SceneLoder.Instance.Load(m_gameClear);
+        SceneLoader.Instance.Load(m_gameClear);
     }
 
     /// <summary>
@@ -101,7 +101,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     public void GameOver()
     {
         m_gameState = GameState.GameOver;
-        SceneLoder.Instance.Load(m_gameOver);
+        SceneLoader.Instance.Load(m_gameOver);
     }
 }
 

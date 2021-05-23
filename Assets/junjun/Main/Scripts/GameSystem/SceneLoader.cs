@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// シーンのフェードを行うクラス
 /// </summary>
-public class SceneLoder : SingletonMonoBehavior<SceneLoder>
+public class SceneLoader : SingletonMonoBehavior<SceneLoader>
 {
     protected override void Awake()
     {
