@@ -9,6 +9,7 @@ public class VRPlayerController : MonoBehaviour
 {
     ///<summary> SP</summary>
     [SerializeField] public int m_sp;
+    
    
     /// <summary>HP</summary>
     public float m_playerHp = 1f;

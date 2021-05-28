@@ -24,17 +24,19 @@ public abstract class EnemyBase : MonoBehaviour
     ///<summary> 敵が止まる距離</summary>
     [SerializeField] protected float m_atkRange = 20;
     ///<summary> 攻撃力</summary>
-    float m_atkPoint;
+    public float m_atkPoint;
     ///<summary> enemyの状態</summary>
     public EnemyStateType m_enemyState;
     /// <summary> 無敵状態の判定</summary>
-    private bool m_Invincible;
+    private bool m_isInvincible;
+
+    /// <summary>エネミーの武器</summary>
+    [SerializeField] EnemyWeapon enemyWeapon;
 
     /// <summary>PlayerとEnemyの距離 </summary>
     protected float m_distance;
     public NavMeshAgent m_agent;
 
-    public VRPlayerController m_vrPlayercontroller;
     public SkinnedMeshRenderer m_meshRenderer;
 
     /// <summary>ノックバックする力</summary>
@@ -70,21 +72,6 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Plyerにダメージを与えるときの処理
-    /// </summary>
-    /// <param name="other"></param>
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            Debug.Log("くらえ");
-            m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
-            Debug.Log(m_atkPoint);
-            UIManager.Instance.DecreasesHPUI(m_atkPoint);
-            m_vrPlayercontroller.m_playerHp -= m_atkPoint;
-        }
-    }
 
     /// <summary>
     /// playerを追いかける
@@ -111,8 +98,12 @@ public abstract class EnemyBase : MonoBehaviour
     /// <summary>
     /// 状態をidleにチェンジ
     /// </summary>
-    protected void EnemyStateIdle()
+    protected async void EnemyStateIdle()
     {
+        if (m_enemyState == EnemyStateType.CoolTime)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        }
         Debug.Log("idle");
         m_enemyState = EnemyStateType.Idle;
     }
@@ -145,11 +136,11 @@ public abstract class EnemyBase : MonoBehaviour
     public async void KnockBack()
     {
         /// 多段ヒットしないように攻撃を受けて少しの間は無敵化
-        if (m_Invincible)
+        if (m_isInvincible)
         {
             return;
         }
-        m_Invincible = true;
+        m_isInvincible = true;
         Debug.Log("ノックバック");
         m_knockBackVelocity = -transform.forward * m_knockBackPower;
         m_meshRenderer.material.color = Color.red;
@@ -159,7 +150,7 @@ public abstract class EnemyBase : MonoBehaviour
         m_knockBackVelocity = Vector3.zero;
         m_meshRenderer.material.color = Color.white;
         m_enemyState = EnemyStateType.Idle;
-        m_Invincible = false;
+        m_isInvincible = false;
     }
 
     /// <summary>
@@ -180,6 +171,7 @@ public abstract class EnemyBase : MonoBehaviour
             m_enemyHpGauge.color = Color.red;
         }
     }
+
 }
 
 /// <summary>

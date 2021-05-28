@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class EnemyState : StateBase
 {
-    public EnemyStateType m_enemyState;
+    [SerializeField] EnemyStateType stateType;
 
-    public override string GetStateName()
-    {
-        return m_enemyState.ToString();
-    }
+
 }

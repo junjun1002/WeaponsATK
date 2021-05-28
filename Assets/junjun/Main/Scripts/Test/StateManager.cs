@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class StateManager
 {
-    public void Execute(StateBase state)
-    {
-        state.Execute();
-    }
+    
 }

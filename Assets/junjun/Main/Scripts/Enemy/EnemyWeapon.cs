@@ -8,25 +8,31 @@ public class EnemyWeapon : MonoBehaviour
     [SerializeField] EnemyBase m_enemy;
     /// <summary>盾と衝突した時に出るエフェクト</summary>
     [SerializeField] ParticleSystem m_hitEffect;
-
-    BoxCollider col;
+    /// <summary>Playerのオブジェクト</summary>
+    [SerializeField] VRPlayerController m_player;
 
     /// <summary>
     /// 攻撃を盾で受けられたときに呼ばれる
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
-    {
-        
+    {      
         if (other.gameObject.tag == "Shield")
         {
-            //this.GetComponent<BoxCollider>().enabled = false;
+            GetComponent<BoxCollider>().enabled = false;
             m_hitEffect.gameObject.SetActive(false);
             Parry();
             m_hitEffect.gameObject.SetActive(true);
         }
 
-        m_enemy.OnTriggerEnter(other);
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("くらえ");
+            m_enemy.m_atkPoint = Random.Range(0.05f, 0.08f);
+            Debug.Log(m_enemy.m_atkPoint);
+            UIManager.Instance.DecreasesHPUI(m_enemy.m_atkPoint);
+            m_player.m_playerHp -= m_enemy.m_atkPoint;
+        }
     }
 
     /// <summary>

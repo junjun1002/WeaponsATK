@@ -7772,7 +7772,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 697338367}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 29831634}
@@ -9670,6 +9670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enemy: {fileID: 3155058319457596689}
   m_hitEffect: {fileID: 334318087}
+  m_player: {fileID: 0}
 --- !u!54 &1615979092
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10075,17 +10076,17 @@ PrefabInstance:
     - target: {fileID: 7969837043552043829, guid: c19acf4ab10efbe41a31a8fd176f78b2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.045000073
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: 7969837043552043829, guid: c19acf4ab10efbe41a31a8fd176f78b2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.49
       objectReference: {fileID: 0}
     - target: {fileID: 7969837043552043829, guid: c19acf4ab10efbe41a31a8fd176f78b2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.099999905
+      value: 2.92
       objectReference: {fileID: 0}
     - target: {fileID: 7969837043552043829, guid: c19acf4ab10efbe41a31a8fd176f78b2,
         type: 3}
@@ -11868,9 +11869,10 @@ MonoBehaviour:
   m_player: {fileID: 316325612}
   m_anim: {fileID: 4754822570092515181}
   m_atkRange: 6
+  m_atkPoint: 0
   m_enemyState: 1
+  enemyWeapon: {fileID: 0}
   m_agent: {fileID: 3155058319457596690}
-  m_vrPlayercontroller: {fileID: 316325613}
   m_meshRenderer: {fileID: 5935682357533154394}
   m_knockBackPower: 6
   m_enemyHpGauge: {fileID: 29831635}
