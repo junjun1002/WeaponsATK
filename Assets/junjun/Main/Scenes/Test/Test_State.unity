@@ -206,7 +206,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1486763642}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
         m_MethodName: Kill
         m_Mode: 1
@@ -451,7 +451,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1486763641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15d62d8fa4f9eeb48b6707eb18358e0d, type: 3}
+  m_Script: {fileID: 11500000, guid: ba6c418e33b9e1c4c9f233a81a2117e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &1486763643

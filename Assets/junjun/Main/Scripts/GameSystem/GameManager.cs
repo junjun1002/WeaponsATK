@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Junjun;
 
 /// <summary>
 /// ゲーム全体の管理をするマネージャークラス
@@ -31,14 +32,22 @@ public class GameManager : SingletonMonoBehavior<GameManager>
 
     /// <summary>ゲームの状態</summary>
     [SerializeField] GameState m_gameState;
+
+    StateMachine<GameManager> stateMachine;
+
+    public IState<GameManager> TitleState { get; set; } = new Title();
+
     protected override void Awake()
     {
         base.Awake();
         //DontDestroyOnLoad(this);
+        stateMachine = new StateMachine<GameManager>(this, TitleState);
     }
+
 
     private void Update()
     {
+        stateMachine.currentState.OnExcute();
         switch (m_gameState)
         {
             case GameState.Title:
@@ -104,6 +113,19 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         SceneLoader.Instance.Load(m_gameOver);
     }
 }
+
+public class Title : IState<GameManager>
+{
+    public void OnExcute()
+    {
+        
+    }
+
+    public void A() { }
+    public void B() { }
+
+}
+
 
 /// <summary>
 /// ゲームの状態を表すenum
