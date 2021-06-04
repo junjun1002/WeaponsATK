@@ -9000,6 +9000,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSystems
       objectReference: {fileID: 0}
+    - target: {fileID: 369588429258719188, guid: ba070549f7465904fbe484750d158bb7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 490449849731658368, guid: ba070549f7465904fbe484750d158bb7,
         type: 3}
       propertyPath: m_popNum
@@ -9650,6 +9655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enemy: {fileID: 3155058319457596689}
   m_hitEffect: {fileID: 334318087}
+  m_player: {fileID: 0}
 --- !u!54 &1615979092
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11819,6 +11825,9 @@ GameObject:
   - component: {fileID: 3155058319457596689}
   - component: {fileID: 3155058319457596690}
   - component: {fileID: 3155058319457596691}
+  - component: {fileID: 3155058319457596694}
+  - component: {fileID: 3155058319457596693}
+  - component: {fileID: 3155058319457596692}
   m_Layer: 0
   m_Name: GruntPBR
   m_TagString: Enemy
@@ -11840,16 +11849,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_lookSpeed: 0.1
   m_hp: 100
-  m_enemyType: 3
   m_player: {fileID: 316325612}
-  m_anim: {fileID: 4754822570092515181}
-  m_atkRange: 10
-  m_enemyState: 1
+  m_stopDistance: 20
+  m_atkPoint: 0
+  m_distance: 0
   m_agent: {fileID: 3155058319457596690}
-  m_vrPlayercontroller: {fileID: 316325613}
   m_meshRenderer: {fileID: 5935682357533154394}
   m_knockBackPower: 5
   m_enemyHpGauge: {fileID: 29831635}
+  m_anim: {fileID: 3155058319457596692}
 --- !u!195 &3155058319457596690
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11888,6 +11896,47 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 94
   m_CollisionDetection: 0
+--- !u!111 &3155058319457596692
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3155058319457596688}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &3155058319457596693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3155058319457596688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77ba22b38f77fed40a7fcaf38fb0430e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_chaseAnim: {fileID: 7400000, guid: d71581b97fb501e488eb778f198bb010, type: 2}
+--- !u!114 &3155058319457596694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3155058319457596688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4a2972609662448a1bcfa59e9cdf9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_idleAnim: {fileID: 7400000, guid: 8662c5c621c785c4b8030eac9758e764, type: 2}
 --- !u!1 &3312486802045161221
 GameObject:
   m_ObjectHideFlags: 0
@@ -12004,7 +12053,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3155058319457596688}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 406486edf02d8d74da3b2ca225e21254, type: 3}
   m_Controller: {fileID: 9100000, guid: e00bf533b15b7f5468d8c5248561a2e3, type: 2}
   m_CullingMode: 1

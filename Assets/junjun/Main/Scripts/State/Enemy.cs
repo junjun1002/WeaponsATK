@@ -9,9 +9,7 @@ namespace Junjun
 {
     public class Enemy : MonoBehaviour
     {
-        StateMachine<Enemy> stateMachine;
-
-        ReactiveProperty<Idle> idleReactiveProperty;
+       public  StateMachine<Enemy> stateMachine;
 
         public IState<Enemy> IdleState { get; set; } = new Idle();
 
@@ -20,33 +18,53 @@ namespace Junjun
         private async void Start()
         {
             stateMachine = new StateMachine<Enemy>(this, IdleState);
-            Debug.Log(stateMachine.currentState);
-            stateMachine.currentState.OnExcute();
-            await UniTask.Delay(500);
-            stateMachine.ChageMachine(AttackState);
-            Debug.Log(stateMachine.currentState);
-            stateMachine.currentState.OnExcute();
 
-            
+            Debug.Log(stateMachine.currentState);
+            //Debug.Log(stateMachine.currentState);
+            //stateMachine.currentState.OnExcute();
+
+            //stateMachine.ChageMachine(AttackState);
+            //Debug.Log(stateMachine.currentState);
+            //stateMachine.currentState.OnExcute();
+
+
+        }
+
+        private void Update()
+        {
+            stateMachine.currentState.OnExcute(this);
         }
     }
 
     public class Idle : IState<Enemy>
     {
-
-        public void OnExcute()
+        float timer = 0;
+        public void OnExcute(Enemy owner)
         {
-            Debug.Log("Idle");
-        }
+            timer += Time.deltaTime;
 
-      
+            if (timer > 5f)
+            {
+                owner.stateMachine.ChageMachine(owner.AttackState);
+                Debug.Log(owner.stateMachine.currentState);
+                timer = 0;
+            }
+        }
     }
 
     public class Attack : IState<Enemy>
     {
-        public void OnExcute()
+        float timer = 0;
+        public void OnExcute(Enemy owner)
         {
-            Debug.Log("Attack");
+            timer += Time.deltaTime;
+
+            if (timer > 5f)
+            {
+                owner.stateMachine.ChageMachine(owner.IdleState);
+                Debug.Log(owner.stateMachine.currentState);
+                timer = 0;
+            }
         }
     }
 }
