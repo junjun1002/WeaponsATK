@@ -2,18 +2,19 @@
 
 namespace Junjun
 {
-    public class GoblinChase : MonoBehaviour, IState<Goblins>
+    public class GoblinChase :IState<Goblins>
     {
-        /// <summary>Chaseの時のアニメーション</summary>
-        [SerializeField] AnimationClip m_chaseAnim;
 
         public void OnExcute(Goblins owner)
         {
             owner.LookAtPlayer();
-            
-
-            if (owner.m_distance <= owner.m_stopDistance)
+            owner.MoveToPlayer();
+           
+            if (owner.m_distance < owner.m_agent.stoppingDistance)
             {
+                owner.m_anim.SetBool("Idle", true);
+               // owner.MoveStop();
+                owner.m_anim.SetBool("Run", false);
                 owner.stateMachine.ChageMachine(owner.IdleState);
             }
         }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 namespace Junjun
 {
@@ -8,13 +10,19 @@ namespace Junjun
     {
         public StateMachine<Goblins> stateMachine;
 
-        public Animation m_anim;
+        /// <summary>
+        /// 
+        /// </summary>
+        public Animator m_anim;
+
 
         public IState<Goblins> IdleState { get; set; } = new GoblinIdle();
 
         public IState<Goblins> ChaseState { get; set; } = new GoblinChase();
 
         public IState<Goblins> AttackState { get; set; } = new GoblinAttack();
+
+        public IState<Goblins> DamageState { get; set; } = new GoblinDamage();
 
         protected override void Start()
         {
@@ -26,6 +34,43 @@ namespace Junjun
         {
             base.Update();
             stateMachine.currentState.OnExcute(this);
+        }
+
+
+        /// <summary>
+        /// playerを追いかける
+        /// </summary
+        public override void MoveToPlayer()
+        {
+            m_agent.SetDestination(m_player.transform.position);
+            if (stateMachine.currentState == ChaseState)
+            {
+                m_agent.isStopped = false;
+            }
+        }
+
+        /// <summary>
+        /// ダメージを受けた時にノックバックする
+        /// </summary>
+        public override async void KnockBack()
+        {
+            /// 多段ヒットしないように攻撃を受けて少しの間は無敵化
+            if (m_isInvincible)
+            {
+                return;
+            }
+            m_isInvincible = true;
+            Debug.Log("ノックバック");
+            m_knockBackVelocity = -transform.forward * m_knockBackPower;
+            m_meshRenderer.material.color = Color.red;
+            stateMachine.ChageMachine(DamageState);
+            m_anim.SetBool("Hit", true);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+            m_knockBackVelocity = Vector3.zero;
+            m_meshRenderer.material.color = Color.white;
+            stateMachine.ChageMachine(IdleState);
+            m_anim.SetBool("Hit", false);
+            m_isInvincible = false;
         }
 
         ///// <summary>次の攻撃の種類</summary>
@@ -111,13 +156,11 @@ namespace Junjun
         //}
     }
 
-    public class GoblinAttack : IState<Goblins>
-    {
-        /// <summary>Attackの時のアニメーション</summary>
-        [SerializeField] Animation m_attackAnim;
+    class GoblinDamage : MonoBehaviour,IState<Goblins>
+    { 
         public void OnExcute(Goblins owner)
         {
-            
-        }
+            owner.KnockBack();        
+        }      
     }
 }

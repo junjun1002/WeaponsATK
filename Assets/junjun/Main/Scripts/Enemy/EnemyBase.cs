@@ -23,20 +23,24 @@ namespace Junjun
         [SerializeField] public float m_stopDistance = 20;
         ///<summary> 攻撃力</summary>
         public float m_atkPoint;
-        /// <summary> 無敵状態の判定</summary>
-        private bool m_isInvincible;
+
 
         /// <summary>PlayerとEnemyの距離 </summary>
         public float m_distance;
 
         public NavMeshAgent m_agent;
 
-        public SkinnedMeshRenderer m_meshRenderer;
+
+        /// <summary> 無敵状態の判定</summary>
+        protected bool m_isInvincible;
 
         /// <summary>ノックバックする力</summary>
-        private Vector3 m_knockBackVelocity = Vector3.zero;
+        protected Vector3 m_knockBackVelocity = Vector3.zero;
         /// <summary>ノックバックする力</summary>
         [SerializeField] protected float m_knockBackPower;
+        public SkinnedMeshRenderer m_meshRenderer;
+
+
 
         /// <summary>EnemyのHPゲージImage</summary>
         [SerializeField] Image m_enemyHpGauge;
@@ -65,27 +69,15 @@ namespace Junjun
         }
 
 
-        ///// <summary>
-        ///// playerを追いかける
-        ///// </summary>
-        //protected void MoveToPlayer()
-        //{
-        //    Debug.Log("よっしゃ走るで");
-        //    m_agent.SetDestination(m_player.transform.position);
-        //    if (m_enemyState == EnemyStateType.Chase)
-        //    {
-        //        m_agent.isStopped = false;
-        //    }
-        //}
+        /// <summary>
+        /// playerを追いかける
+        /// </summary>
+        public abstract void MoveToPlayer();
 
-        ///// <summary>
-        ///// 自分の動きを止める
-        ///// </summary>
-        //protected void MoveStop()
-        //{
-        //    Debug.Log("止まるドン");
-        //    m_agent.isStopped = true;
-        //}
+        /// <summary>
+        /// ダメージを受けた時にノックバックする
+        /// </summary>
+        public abstract void KnockBack();
 
         ///// <summary>
         ///// 状態をidleにチェンジ
@@ -122,28 +114,7 @@ namespace Junjun
             transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, m_lookSpeed);
         }
 
-        ///// <summary>
-        ///// ダメージを受けた時にノックバックする
-        ///// </summary>
-        //public async void KnockBack()
-        //{
-        //    /// 多段ヒットしないように攻撃を受けて少しの間は無敵化
-        //    if (m_isInvincible)
-        //    {
-        //        return;
-        //    }
-        //    m_isInvincible = true;
-        //    Debug.Log("ノックバック");
-        //    m_knockBackVelocity = -transform.forward * m_knockBackPower;
-        //    m_meshRenderer.material.color = Color.red;
-        //    m_enemyState = EnemyStateType.KnockBack;
-        //    m_anim.SetBool("Hit", true);
-        //    await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
-        //    m_knockBackVelocity = Vector3.zero;
-        //    m_meshRenderer.material.color = Color.white;
-        //    m_enemyState = EnemyStateType.Idle;
-        //    m_isInvincible = false;
-        //}
+
 
         ///// <summary>
         ///// EnemyのHPが減少した時にHPゲージを減少させる関数
