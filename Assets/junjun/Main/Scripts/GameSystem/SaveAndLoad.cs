@@ -26,10 +26,10 @@ public class SaveAndLoad : SingletonMonoBehavior<SaveAndLoad>
 
     TimeData timeData = new TimeData();
 
-    private void Start()
-    {
-        LoadTimeData();
-    }
+    //private void Start()
+    //{
+    //    LoadTimeData();
+    //}
 
     /// <summary>
     /// ベストタイムが更新されたときにセーブする

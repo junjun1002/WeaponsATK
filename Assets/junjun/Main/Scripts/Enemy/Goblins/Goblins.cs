@@ -10,9 +10,7 @@ namespace Junjun
     {
         public StateMachine<Goblins> stateMachine;
 
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <summary>敵のアニメション</summary>
         public Animator m_anim;
 
 
@@ -32,10 +30,20 @@ namespace Junjun
 
         protected override void Update()
         {
-            base.Update();
-            stateMachine.currentState.OnExcute(this);
+            if (!(stateMachine.currentState == DamageState))
+            {
+                base.Update();
+                stateMachine.currentState.OnExcute(this);
+            }
         }
 
+        //private void OnTriggerEnter(Collider other)
+        //{
+        //    if (other.gameObject.tag == "Sword")
+        //    {
+        //        stateMachine.currentState.OnExcute(this);
+        //    }
+        //}
 
         /// <summary>
         /// playerを追いかける
@@ -60,16 +68,17 @@ namespace Junjun
                 return;
             }
             m_isInvincible = true;
+            stateMachine.ChageMachine(DamageState);
             Debug.Log("ノックバック");
             m_knockBackVelocity = -transform.forward * m_knockBackPower;
             m_meshRenderer.material.color = Color.red;
-            stateMachine.ChageMachine(DamageState);
             m_anim.SetBool("Hit", true);
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             m_knockBackVelocity = Vector3.zero;
             m_meshRenderer.material.color = Color.white;
             stateMachine.ChageMachine(IdleState);
             m_anim.SetBool("Hit", false);
+            m_anim.SetBool("Idle", true);
             m_isInvincible = false;
         }
 
@@ -156,11 +165,11 @@ namespace Junjun
         //}
     }
 
-    class GoblinDamage : MonoBehaviour,IState<Goblins>
-    { 
+    class GoblinDamage : IState<Goblins>
+    {
         public void OnExcute(Goblins owner)
         {
-            owner.KnockBack();        
-        }      
+            owner.KnockBack();
+        }
     }
 }
