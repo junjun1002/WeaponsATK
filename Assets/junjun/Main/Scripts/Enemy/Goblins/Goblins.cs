@@ -35,6 +35,14 @@ namespace Junjun
                 base.Update();
                 stateMachine.currentState.OnExcute(this);
             }
+            else if (stateMachine.currentState == DamageState)
+            {
+                // ノックバックする
+                if (m_knockBackVelocity != Vector3.zero)
+                {
+                    m_agent.Move(m_knockBackVelocity * Time.deltaTime);
+                }
+            }
         }
 
         //private void OnTriggerEnter(Collider other)

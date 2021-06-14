@@ -61,11 +61,7 @@ namespace Junjun
             {
                 GameManager.Instance.GameClear();
             }
-            // ノックバックする
-            if (m_knockBackVelocity != Vector3.zero)
-            {
-                m_agent.Move(m_knockBackVelocity * Time.deltaTime);
-            }
+           
         }
 
 
