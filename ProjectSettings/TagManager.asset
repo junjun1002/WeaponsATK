@@ -9,6 +9,7 @@ TagManager:
   - Tiger
   - Enemy
   - Shield
+  - Weapon
   layers:
   - Default
   - TransparentFX

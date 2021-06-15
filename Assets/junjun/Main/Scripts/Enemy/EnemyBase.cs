@@ -23,6 +23,8 @@ namespace Junjun
         [SerializeField] public float m_stopDistance = 20;
         ///<summary> 攻撃力</summary>
         public float m_atkPoint;
+        /// <summary>敵のアニメション</summary>
+        public Animator m_anim;
 
 
         /// <summary>PlayerとEnemyの距離 </summary>
@@ -34,8 +36,10 @@ namespace Junjun
         /// <summary> 無敵状態の判定</summary>
         protected bool m_isInvincible;
 
+        protected bool m_isOnDamage = false;
+
         /// <summary>ノックバックする力</summary>
-        protected Vector3 m_knockBackVelocity = Vector3.zero;
+        public Vector3 m_knockBackVelocity = Vector3.zero;
         /// <summary>ノックバックする力</summary>
         [SerializeField] protected float m_knockBackPower;
         public SkinnedMeshRenderer m_meshRenderer;
@@ -57,23 +61,24 @@ namespace Junjun
         {
             // playerと自分の距離を測る
             m_distance = Vector3.Distance(transform.position, m_player.transform.position);
+
+            // ノックバックする
+            if (m_knockBackVelocity != Vector3.zero)
+            {
+                m_agent.Move(m_knockBackVelocity * Time.deltaTime);
+            }
+
             if (m_hp <= 0)
             {
                 GameManager.Instance.GameClear();
             }
-           
-        }
 
+        }
 
         /// <summary>
         /// playerを追いかける
         /// </summary>
         public abstract void MoveToPlayer();
-
-        /// <summary>
-        /// ダメージを受けた時にノックバックする
-        /// </summary>
-        public abstract void KnockBack();
 
         ///// <summary>
         ///// 状態をidleにチェンジ
@@ -110,6 +115,33 @@ namespace Junjun
             transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, m_lookSpeed);
         }
 
+        /// <summary>
+        /// ダメージを受けた時にノックバックする
+        /// </summary>
+        public async void KnockBack()
+        {
+            /// 多段ヒットしないように攻撃を受けて少しの間は無敵化
+            if (!m_isInvincible)
+            {
+                m_isInvincible = true;
+                Debug.Log("ノックバック");
+                m_meshRenderer.material.color = Color.red;
+                m_anim.SetBool("Hit", true);
+                m_knockBackVelocity = -transform.forward * m_knockBackPower;
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+                m_knockBackVelocity = Vector3.zero;
+                m_meshRenderer.material.color = Color.white;
+                m_anim.SetBool("Hit", false);
+                m_anim.SetBool("Idle", true);
+                m_isInvincible = false;
+                m_isOnDamage = false;
+            }
+        }
+
+        public void MoveStop()
+        {
+            m_agent.isStopped = true;
+        }
 
 
         ///// <summary>

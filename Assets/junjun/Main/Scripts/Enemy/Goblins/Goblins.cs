@@ -8,10 +8,8 @@ namespace Junjun
 {
     public class Goblins : EnemyBase
     {
+        /// <summary>ゴブリンのステートマシン</summary>
         public StateMachine<Goblins> stateMachine;
-
-        /// <summary>敵のアニメション</summary>
-        public Animator m_anim;
 
 
         public IState<Goblins> IdleState { get; set; } = new GoblinIdle();
@@ -19,8 +17,6 @@ namespace Junjun
         public IState<Goblins> ChaseState { get; set; } = new GoblinChase();
 
         public IState<Goblins> AttackState { get; set; } = new GoblinAttack();
-
-        public IState<Goblins> DamageState { get; set; } = new GoblinDamage();
 
         protected override void Start()
         {
@@ -30,28 +26,12 @@ namespace Junjun
 
         protected override void Update()
         {
-            if (!(stateMachine.currentState == DamageState))
+            base.Update();
+            if (!m_isOnDamage)
             {
-                base.Update();
                 stateMachine.currentState.OnExcute(this);
             }
-            else if (stateMachine.currentState == DamageState)
-            {
-                // ノックバックする
-                if (m_knockBackVelocity != Vector3.zero)
-                {
-                    m_agent.Move(m_knockBackVelocity * Time.deltaTime);
-                }
-            }
         }
-
-        //private void OnTriggerEnter(Collider other)
-        //{
-        //    if (other.gameObject.tag == "Sword")
-        //    {
-        //        stateMachine.currentState.OnExcute(this);
-        //    }
-        //}
 
         /// <summary>
         /// playerを追いかける
@@ -59,36 +39,10 @@ namespace Junjun
         public override void MoveToPlayer()
         {
             m_agent.SetDestination(m_player.transform.position);
-            if (stateMachine.currentState == ChaseState)
-            {
-                m_agent.isStopped = false;
-            }
+            m_agent.isStopped = false;
         }
 
-        /// <summary>
-        /// ダメージを受けた時にノックバックする
-        /// </summary>
-        public override async void KnockBack()
-        {
-            /// 多段ヒットしないように攻撃を受けて少しの間は無敵化
-            if (m_isInvincible)
-            {
-                return;
-            }
-            m_isInvincible = true;
-            stateMachine.ChageMachine(DamageState);
-            Debug.Log("ノックバック");
-            m_knockBackVelocity = -transform.forward * m_knockBackPower;
-            m_meshRenderer.material.color = Color.red;
-            m_anim.SetBool("Hit", true);
-            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
-            m_knockBackVelocity = Vector3.zero;
-            m_meshRenderer.material.color = Color.white;
-            stateMachine.ChageMachine(IdleState);
-            m_anim.SetBool("Hit", false);
-            m_anim.SetBool("Idle", true);
-            m_isInvincible = false;
-        }
+
 
         ///// <summary>次の攻撃の種類</summary>
         //int m_nextAttack;
@@ -171,13 +125,5 @@ namespace Junjun
         //        }
         //    }
         //}
-    }
-
-    class GoblinDamage : IState<Goblins>
-    {
-        public void OnExcute(Goblins owner)
-        {
-            owner.KnockBack();
-        }
     }
 }

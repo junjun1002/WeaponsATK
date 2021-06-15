@@ -1561,6 +1561,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.36
       objectReference: {fileID: 0}
+    - target: {fileID: 7463805001690378717, guid: 00b66c44150e8d145addf6a6a5b65b14,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 7802136983651192002, guid: 00b66c44150e8d145addf6a6a5b65b14,
         type: 3}
       propertyPath: enemyBase
@@ -1575,6 +1580,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_minPower
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802136983651192003, guid: 00b66c44150e8d145addf6a6a5b65b14,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00b66c44150e8d145addf6a6a5b65b14, type: 3}
@@ -11854,12 +11864,13 @@ MonoBehaviour:
   m_player: {fileID: 316325612}
   m_stopDistance: 5
   m_atkPoint: 0
+  m_anim: {fileID: 4754822570092515181}
   m_distance: 0
   m_agent: {fileID: 3155058319457596690}
+  m_knockBackVelocity: {x: 0, y: 0, z: 0}
   m_knockBackPower: 5
   m_meshRenderer: {fileID: 5935682357533154394}
   m_enemyHpGauge: {fileID: 29831635}
-  m_anim: {fileID: 4754822570092515181}
 --- !u!195 &3155058319457596690
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11896,7 +11907,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &3312486802045161221
 GameObject:

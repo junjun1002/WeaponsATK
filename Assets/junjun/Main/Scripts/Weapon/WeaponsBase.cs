@@ -65,7 +65,7 @@ namespace Junjun
         /// <summary>
         /// Oculus Quest(やQuest2)のコントローラーを振動させる
         /// </summary>
-        public static IEnumerator Vibrate(float duration = 0.1f, float frequency = 2.0f, float amplitude = 2.0f, OVRInput.Controller controller = OVRInput.Controller.Active)
+        public IEnumerator Vibrate(float duration = 0.1f, float frequency = 2.0f, float amplitude = 2.0f, OVRInput.Controller controller = OVRInput.Controller.Active)
         {
             //コントローラーを振動させる
             OVRInput.SetControllerVibration(frequency, amplitude, controller);
