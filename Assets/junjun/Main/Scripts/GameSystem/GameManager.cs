@@ -47,7 +47,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
 
     private void Update()
     {
-        stateMachine.currentState.OnExcute(this);
+        stateMachine.currentState.OnExecute(this);
         switch (m_gameState)
         {
             case GameState.Title:
@@ -116,7 +116,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
 
 public class Title : IState<GameManager>
 {
-    public void OnExcute(GameManager owner)
+    public void OnExecute(GameManager owner)
     {
         
     }

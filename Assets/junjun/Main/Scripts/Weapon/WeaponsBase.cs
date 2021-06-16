@@ -47,6 +47,7 @@ namespace Junjun
                 m_power = Random.Range(m_minPower, m_maxPower);
                 enemyBase.m_hp -= m_power;
                 //enemyBase.EnemyHPDecrease();
+                Debug.Log($"{this.gameObject.name} が {other.gameObject.name} に接触した");
                 enemyBase.KnockBack();
 
                 isHit = Physics.Raycast(lastPos, transform.position - lastPos, out hit);
@@ -54,7 +55,7 @@ namespace Junjun
                 {
                     Debug.Log(hit.point);
                     Debug.Log("hit");
-                    Instantiate(gameObject, hit.point, Quaternion.identity);
+                   // Instantiate(gameObject, hit.point, Quaternion.identity);
                     UIManager.Instance.m_damageText.rectTransform.position = hit.point;
                     UIManager.Instance.m_damageText.text = m_power.ToString();
                     UIManager.Instance.PopUpText();

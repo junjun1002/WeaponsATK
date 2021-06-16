@@ -2,10 +2,12 @@
 
 namespace Junjun
 {
+    /// <summary>
+    /// ゴブリンのChase（Playerを追いかける）ステート
+    /// </summary>
     public class GoblinChase :IState<Goblins>
     {
-
-        public void OnExcute(Goblins owner)
+        public void OnExecute(Goblins owner)
         {
             owner.LookAtPlayer();
             owner.MoveToPlayer();

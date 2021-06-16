@@ -6,6 +6,9 @@ using Cysharp.Threading.Tasks;
 
 namespace Junjun
 {
+    /// <summary>
+    /// ゴブリンのステートのオーナー
+    /// </summary>
     public class Goblins : EnemyBase
     {
         /// <summary>ゴブリンのステートマシン</summary>
@@ -29,7 +32,7 @@ namespace Junjun
             base.Update();
             if (!m_isOnDamage)
             {
-                stateMachine.currentState.OnExcute(this);
+                stateMachine.currentState.OnExecute(this);
             }
         }
 

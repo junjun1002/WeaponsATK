@@ -2,9 +2,12 @@
 
 namespace Junjun
 {
+    /// <summary>
+    /// ゴブリンのAttackステート
+    /// </summary>
     public class GoblinAttack : IState<Goblins>
     {
-        public void OnExcute(Goblins owner)
+        public void OnExecute(Goblins owner)
         {
             
             if (owner.m_distance > owner.m_agent.stoppingDistance)

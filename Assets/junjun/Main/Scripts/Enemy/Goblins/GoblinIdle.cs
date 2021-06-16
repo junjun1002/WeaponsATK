@@ -4,9 +4,12 @@ using System;
 
 namespace Junjun
 {
+    /// <summary>
+    /// ゴブリンのIdleステート
+    /// </summary>
     public class GoblinIdle : IState<Goblins>
     {
-        public async void OnExcute(Goblins owner)
+        public async void OnExecute(Goblins owner)
         {
             if (owner.m_distance <= owner.m_agent.stoppingDistance)
             {
