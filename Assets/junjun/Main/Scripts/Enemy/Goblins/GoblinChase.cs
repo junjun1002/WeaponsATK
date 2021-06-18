@@ -10,7 +10,6 @@ namespace Junjun
         public void OnExecute(Goblins owner)
         {
             owner.LookAtPlayer();
-            owner.MoveToPlayer();
            
             if (owner.m_distance < owner.m_agent.stoppingDistance)
             {

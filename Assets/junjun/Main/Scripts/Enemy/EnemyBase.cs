@@ -25,6 +25,8 @@ namespace Junjun
         public float m_atkPoint;
         /// <summary>敵のアニメション</summary>
         public Animator m_anim;
+        /// <summary>敵の武器オブジェクト</summary>
+        [SerializeField] protected GameObject m_enemyWeapon;
 
 
         /// <summary>PlayerとEnemyの距離 </summary>
@@ -34,7 +36,7 @@ namespace Junjun
 
 
         /// <summary> 無敵状態の判定</summary>
-        protected bool m_isInvincible;
+        protected bool m_isInvincible = false;
 
         protected bool m_isOnDamage = false;
 
@@ -77,6 +79,8 @@ namespace Junjun
 
         /// <summary>
         /// playerを追いかける
+        /// アニメションがRunになった瞬間に呼ばれたいので
+        /// アニメションイベントで呼び出すようにする
         /// </summary>
         public abstract void MoveToPlayer();
 
@@ -121,50 +125,48 @@ namespace Junjun
         public async void KnockBack()
         {
             /// 多段ヒットしないように攻撃を受けて少しの間は無敵化
-            if (!m_isInvincible)
+            if (m_isInvincible)
             {
-                m_isInvincible = true;
-                Debug.Log("ノックバック");
-                m_meshRenderer.material.color = Color.red;
-                m_anim.SetBool("Hit", true);
-                m_knockBackVelocity = -transform.forward * m_knockBackPower;
-                await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
-                m_knockBackVelocity = Vector3.zero;
-                m_meshRenderer.material.color = Color.white;
-                m_anim.SetBool("Hit", false);
-                m_anim.SetBool("Idle", true);
-                m_isInvincible = false;
-                m_isOnDamage = false;
+                return;
+            }
+            m_agent.isStopped = true;
+            m_isInvincible = true;
+            Debug.Log("ノックバック");
+            m_meshRenderer.material.color = Color.red;
+            m_anim.SetTrigger("Hit");
+            m_knockBackVelocity = -transform.forward * m_knockBackPower;
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+            m_knockBackVelocity = Vector3.zero;
+            m_meshRenderer.material.color = Color.white;
+            m_anim.SetBool("Idle", true);
+            m_isInvincible = false;
+            m_isOnDamage = false;
+        }
+
+        /// <summary>
+        /// EnemyのHPが減少した時にHPゲージを減少させる関数
+        /// </summary>
+        public void EnemyHPDecrease()
+        {
+            int currentHp = m_hp;
+            float hpRatio = (float)currentHp / (float)m_enemyMaxHp;
+
+            m_enemyHpGauge.fillAmount = hpRatio;
+            if (m_enemyHpGauge.fillAmount <= 0.5f)
+            {
+                m_enemyHpGauge.color = Color.yellow;
+            }
+            if (m_enemyHpGauge.fillAmount <= 0.15f)
+            {
+                m_enemyHpGauge.color = Color.red;
             }
         }
 
-        public void MoveStop()
-        {
-            m_agent.isStopped = true;
-        }
-
-
-        ///// <summary>
-        ///// EnemyのHPが減少した時にHPゲージを減少させる関数
-        ///// </summary>
-        //public void EnemyHPDecrease()
-        //{
-        //    int currentHp = m_hp;
-        //    float hpRatio = (float)currentHp / (float)m_enemyMaxHp;
-
-        //    m_enemyHpGauge.fillAmount = hpRatio;
-        //    if (m_enemyHpGauge.fillAmount <= 0.5f)
-        //    {
-        //        m_enemyHpGauge.color = Color.yellow;
-        //    }
-        //    if (m_enemyHpGauge.fillAmount <= 0.15f)
-        //    {
-        //        m_enemyHpGauge.color = Color.red;
-        //    }
-        //}
-
+        /// <summary>
+        /// Playerに盾で弾かれたときに呼ばれる関数
+        /// </summary>
+        public abstract void Parry();
     }
-
 }
 
 ///// <summary>

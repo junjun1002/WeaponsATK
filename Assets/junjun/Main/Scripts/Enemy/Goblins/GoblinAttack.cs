@@ -9,7 +9,6 @@ namespace Junjun
     {
         public void OnExecute(Goblins owner)
         {
-            
             if (owner.m_distance > owner.m_agent.stoppingDistance)
             {
                 owner.m_anim.SetBool("Attack", false);

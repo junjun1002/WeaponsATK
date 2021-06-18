@@ -14,11 +14,8 @@ namespace Junjun
         /// <summary>ゴブリンのステートマシン</summary>
         public StateMachine<Goblins> stateMachine;
 
-
         public IState<Goblins> IdleState { get; set; } = new GoblinIdle();
-
         public IState<Goblins> ChaseState { get; set; } = new GoblinChase();
-
         public IState<Goblins> AttackState { get; set; } = new GoblinAttack();
 
         protected override void Start()
@@ -45,8 +42,13 @@ namespace Junjun
             m_agent.isStopped = false;
         }
 
-
-
+        public override void Parry()
+        {
+            if (stateMachine.currentState == AttackState)
+            {
+                m_anim.SetTrigger("Hit");
+            }
+        }
         ///// <summary>次の攻撃の種類</summary>
         //int m_nextAttack;
         //protected override void Start()

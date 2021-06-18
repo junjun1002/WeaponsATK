@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 namespace Junjun
 {
@@ -13,43 +15,44 @@ namespace Junjun
         /// <summary>Playerのオブジェクト</summary>
         [SerializeField] VRPlayerController m_player;
 
+        /// <summary>パリィが成功したかどうか</summary>
+        bool isParrySuccess = false;
+
         /// <summary>
         /// 攻撃を盾で受けられたときに呼ばれる
         /// </summary>
         /// <param name="other"></param>
-        private void OnTriggerEnter(Collider other)
+        private async void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == "Shield")
             {
-                GetComponent<BoxCollider>().enabled = false;
+                isParrySuccess = true;
                 m_hitEffect.gameObject.SetActive(false);
-                Parry();
+                m_enemy.Parry();
                 m_hitEffect.gameObject.SetActive(true);
             }
 
             if (other.gameObject.tag == "Player")
             {
+                /*
+                 * パリィが成功しているのに武器の先っちょがあたりダメージが発生してしまう事象が発生していたので
+                 * ダメージ処理を遅延実行させることでそれを解消
+                 */
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+                if (isParrySuccess)
+                {
+                    isParrySuccess = false;
+                    return;
+                }
                 Debug.Log("くらえ");
-                m_enemy.m_atkPoint = Random.Range(0.05f, 0.08f);
+                m_enemy.m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
                 Debug.Log(m_enemy.m_atkPoint);
                 UIManager.Instance.DecreasesHPUI(m_enemy.m_atkPoint);
                 m_player.m_playerHp -= m_enemy.m_atkPoint;
             }
         }
 
-        /// <summary>
-        /// Playerに盾で弾かれたときに呼ばれる関数
-        /// </summary>
-        private void Parry()
-        {
-            //if (m_enemy.m_enemyState == EnemyStateType.Attack)
-            //{
-            //    m_enemy.m_anim.SetBool("Hit", true);
-            //    m_enemy.m_enemyState = EnemyStateType.CoolTime;
-            //}
-        }
-
-
+        
     }
 
 }

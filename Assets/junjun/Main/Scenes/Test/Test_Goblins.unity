@@ -11865,6 +11865,7 @@ MonoBehaviour:
   m_stopDistance: 5
   m_atkPoint: 0
   m_anim: {fileID: 4754822570092515181}
+  m_enemyWeapon: {fileID: 1615979086}
   m_distance: 0
   m_agent: {fileID: 3155058319457596690}
   m_knockBackVelocity: {x: 0, y: 0, z: 0}
@@ -11907,7 +11908,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &3312486802045161221
 GameObject:
