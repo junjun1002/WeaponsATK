@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 namespace Junjun
 {
@@ -27,6 +28,9 @@ namespace Junjun
         public Animator m_anim;
         /// <summary>敵の武器オブジェクト</summary>
         [SerializeField] protected GameObject m_enemyWeapon;
+
+        /// <summary>敵が死ぬときの演出</summary>
+        [SerializeField] PlayableDirector m_enemyDie;
 
 
         /// <summary>PlayerとEnemyの距離 </summary>
@@ -72,7 +76,7 @@ namespace Junjun
 
             if (m_hp <= 0)
             {
-                GameManager.Instance.GameClear();
+                TimeLinePlayer.PlayTimeline(m_enemyDie);
             }
 
         }

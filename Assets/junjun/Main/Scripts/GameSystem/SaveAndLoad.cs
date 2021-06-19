@@ -10,9 +10,6 @@ using System.IO;
 /// </summary>
 public class SaveAndLoad : SingletonMonoBehavior<SaveAndLoad>
 {
-    /// <summary>最速タイムを表示するテキスト</summary>
-    [SerializeField] Text m_bestTime;
-
     /// <summary>
     /// ベストタイムを記録しているデータ
     /// </summary>
@@ -57,7 +54,7 @@ public class SaveAndLoad : SingletonMonoBehavior<SaveAndLoad>
     /// <summary>
     /// ベストタイムをロード
     /// </summary>
-    public void LoadTimeData()
+    public void LoadTimeData(Text bestTimeText)
     {
         string datastr = "";
         StreamReader reader;
@@ -67,6 +64,6 @@ public class SaveAndLoad : SingletonMonoBehavior<SaveAndLoad>
         reader.Close();
 
         timeData = JsonUtility.FromJson<TimeData>(datastr); // ロードしたデータで上書き    
-        m_bestTime.text = timeData.bestTime;
+        bestTimeText.text = timeData.bestTime;
     }
 }
