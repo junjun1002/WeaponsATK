@@ -44,7 +44,6 @@ namespace Junjun
                     isParrySuccess = false;
                     return;
                 }
-                Debug.Log("‚­‚ç‚¦");
                 m_enemy.m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
                 Debug.Log(m_enemy.m_atkPoint);
                 UIManager.Instance.DecreasesHPUI(m_enemy.m_atkPoint);
