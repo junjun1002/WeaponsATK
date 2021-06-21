@@ -131,7 +131,7 @@ namespace Junjun
         /// <summary>
         /// ƒQ[ƒ€ƒNƒŠƒA
         /// </summary>
-        public async void GameClear()
+        public void GameClear()
         {
             SaveAndLoad.Instance.SaveTimeData(m_minute, m_seconds);
             SceneLoader.Instance.Load(m_gameClear);

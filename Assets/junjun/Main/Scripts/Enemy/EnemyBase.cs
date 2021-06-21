@@ -31,7 +31,8 @@ namespace Junjun
 
         /// <summary>敵が死ぬときの演出</summary>
         [SerializeField] PlayableDirector m_enemyDie;
-
+        /// <summary>敵が死ぬ時の演出エフェクト</summary>
+        [SerializeField] GameObject m_dieEffect;
 
         /// <summary>PlayerとEnemyの距離 </summary>
         public float m_distance;
@@ -76,7 +77,13 @@ namespace Junjun
 
             if (m_hp <= 0)
             {
+                m_dieEffect.transform.position = this.transform.position;
                 TimeLinePlayer.PlayTimeline(m_enemyDie);
+                /*
+                 * 死ぬ演出をさせる時にスクリプト的には非アクティブ状態にいないと動き出すため
+                 * 無理やり実装
+                 */
+                this.gameObject.SetActive(false);
             }
 
         }
