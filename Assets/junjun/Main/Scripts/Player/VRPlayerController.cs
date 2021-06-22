@@ -53,5 +53,4 @@ namespace Junjun
             TimeState.Instance.RestoredTime();
         }
     }
-
 }
