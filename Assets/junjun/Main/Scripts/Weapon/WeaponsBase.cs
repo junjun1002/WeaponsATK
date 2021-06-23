@@ -9,6 +9,10 @@ namespace Junjun
     /// </summary>
     public abstract class WeaponsBase : MonoBehaviour
     {
+        [SerializeField] WeaponID weaponID;
+
+        protected string m_weaponName;
+
         /// <summary>武器の最低攻撃力</summary>
         [SerializeField] int m_minPower;
         /// <summary>武器の最高攻撃力</summary>

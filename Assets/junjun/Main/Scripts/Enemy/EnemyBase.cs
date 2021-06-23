@@ -14,6 +14,8 @@ namespace Junjun
     /// </summary>
     public abstract class EnemyBase : MonoBehaviour
     {
+        //[SerializeField] EnemyData enemyData;
+
         ///<summary>補完スピードを決める</summary> 
         [SerializeField] public float m_lookSpeed = 0.1f;
         ///<summar>HP</summar> 
