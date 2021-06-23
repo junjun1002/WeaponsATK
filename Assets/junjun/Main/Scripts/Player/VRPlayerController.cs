@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Junjun
 {
@@ -14,18 +15,32 @@ namespace Junjun
 
 
         /// <summary>HP</summary>
-        public float m_playerHp = 1f;
+        [SerializeField] public float m_playerHp = 1f;
+        /// <summary>PlayerのマックスHP</summary>
+        float m_maxHp;
+
         /// <summary>スローモーションの効果時間</summary>
         [SerializeField] float m_zoneTime;
 
+        /// <summary>Playerがダメージを受けた際に視界を狭めていくのに使用</summary>
+        [SerializeField] Volume volume;
+
+        private void Start()
+        {
+            m_maxHp = m_playerHp;
+            volume.weight = 0f;
+        }
 
         private void Update()
         {
             if (m_playerHp <= 0)
             {
+                // volume.weight = 0.8f;
                 GameManager.Instance.GameOver();
                 Debug.Log("GameOver");
             }
+
+            volume.weight = 1f - (m_playerHp / m_maxHp);
 
             if (OVRInput.Get(OVRInput.Button.Start))
             {
@@ -38,7 +53,6 @@ namespace Junjun
                 {
                     UIManager.Instance.UseSPUI(0.3f);
                     m_sp -= 30;
-                    Debug.Log("Zoneだどん");
                     TimeState.Instance.SlowTime();
                     Invoke("StopZone", m_zoneTime);
                 }

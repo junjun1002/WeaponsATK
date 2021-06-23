@@ -1102,10 +1102,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1439052722414113957, guid: 00b66c44150e8d145addf6a6a5b65b14,
+        type: 3}
+      propertyPath: m_RenderShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1439052722414113957, guid: 00b66c44150e8d145addf6a6a5b65b14,
+        type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1439052722414113958, guid: 00b66c44150e8d145addf6a6a5b65b14,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1439052722414424606, guid: 00b66c44150e8d145addf6a6a5b65b14,
+        type: 3}
+      propertyPath: field of view
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3975035447802569988, guid: 00b66c44150e8d145addf6a6a5b65b14,
         type: 3}
@@ -1322,6 +1337,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.018991696
       objectReference: {fileID: 0}
+    - target: {fileID: 4854094091355881974, guid: 00b66c44150e8d145addf6a6a5b65b14,
+        type: 3}
+      propertyPath: volume
+      value: 
+      objectReference: {fileID: 1385718256}
     - target: {fileID: 6488652319613458740, guid: 00b66c44150e8d145addf6a6a5b65b14,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -9065,6 +9085,29 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2442643231031707110}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1385718253 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1439052722414113954, guid: 00b66c44150e8d145addf6a6a5b65b14,
+    type: 3}
+  m_PrefabInstance: {fileID: 316325611}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1385718256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385718253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 0
+  sharedProfile: {fileID: 11400000, guid: 6f97dc345c32b3b4f9e8cc8b54632fe0, type: 2}
 --- !u!1001 &1429080934
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11356,12 +11399,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'Lower_Arm_L'\n\tTransform 'Upper_Arm_R'\n\tTransform
-    'Lower_Reg_R'\n\tTransform 'Toes_L'\n\tTransform 'Toes_R'\n\tTransform 'Lower_Leg_L'\n\tTransform
-    'Foot_R'\n\tTransform 'Head'\n\tTransform 'Spine'\n\tTransform 'Upper_Leg_L'\n\tand
-    more ..."
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
