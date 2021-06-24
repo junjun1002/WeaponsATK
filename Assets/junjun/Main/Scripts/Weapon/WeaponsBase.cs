@@ -47,7 +47,7 @@ namespace Junjun
                 StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
 
                 m_power = Random.Range(m_minPower, m_maxPower);
-                enemyBase.m_hp -= m_power;
+                enemyBase.m_currentHp -= m_power;
                 enemyBase.EnemyHPDecrease();
                 Debug.Log($"{this.gameObject.name} が {other.gameObject.name} に接触した");
                 enemyBase.KnockBack();

@@ -14,56 +14,49 @@ namespace Junjun
     /// </summary>
     public abstract class EnemyBase : MonoBehaviour
     {
-        //[SerializeField] EnemyData enemyData;
+        [SerializeField] EnemyStatusData enemyStatusData;
 
-        ///<summary>補完スピードを決める</summary> 
-        [SerializeField] public float m_lookSpeed = 0.1f;
+        /// <summary>EnemyのHPゲージImage</summary>
+        [SerializeField] Image m_enemyHpGauge;
+        /// <summary>EnemyのMaxHP</summary>
+        int m_enemyMaxHp;
         ///<summar>HP</summar> 
-        [SerializeField] public int m_hp;
+        public int m_currentHp;
+        ///<summary> 攻撃力</summary>
+        public float m_power;
+
+        ///<summary>ターゲットを見る補完スピードを決める</summary> 
+        const float m_lookSpeed = 0.1f;
+
+        /// <summary>PlayerとEnemyの距離 </summary>
+        public float m_distance;
+
         ///<summary> Player(ターゲット)</summary>
         [SerializeField] protected GameObject m_player;
-        ///<summary> 敵が止まる距離</summary>
-        [SerializeField] public float m_stopDistance = 20;
-        ///<summary> 攻撃力</summary>
-        public float m_atkPoint;
+
         /// <summary>敵のアニメション</summary>
         public Animator m_anim;
-        /// <summary>敵の武器オブジェクト</summary>
-        [SerializeField] protected GameObject m_enemyWeapon;
+
+        [SerializeField] public NavMeshAgent m_agent;
+
+        /// <summary> 無敵状態の判定</summary>
+        protected bool m_isInvincible = false;
 
         /// <summary>敵が死ぬときの演出</summary>
         [SerializeField] PlayableDirector m_enemyDie;
         /// <summary>敵が死ぬ時の演出エフェクト</summary>
         [SerializeField] GameObject m_dieEffect;
 
-        /// <summary>PlayerとEnemyの距離 </summary>
-        public float m_distance;
-
-        public NavMeshAgent m_agent;
-
-
-        /// <summary> 無敵状態の判定</summary>
-        protected bool m_isInvincible = false;
-
-        protected bool m_isOnDamage = false;
-
+        /// <summary>ノックバックする速度</summary>
+        Vector3 m_knockBackVelocity = Vector3.zero;
         /// <summary>ノックバックする力</summary>
-        public Vector3 m_knockBackVelocity = Vector3.zero;
-        /// <summary>ノックバックする力</summary>
-        [SerializeField] protected float m_knockBackPower;
-        public SkinnedMeshRenderer m_meshRenderer;
-
-
-
-        /// <summary>EnemyのHPゲージImage</summary>
-        [SerializeField] Image m_enemyHpGauge;
-        /// <summary>EnemyのMaxHP</summary>
-        int m_enemyMaxHp;
+        [SerializeField] float m_knockBackPower;
+        [SerializeField] SkinnedMeshRenderer m_meshRenderer;
 
         virtual protected void Start()
         {
-            m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
-            m_enemyMaxHp = m_hp;
+            m_power = UnityEngine.Random.Range(0.05f, 0.08f);
+            Init();
         }
 
         virtual protected void Update()
@@ -77,7 +70,7 @@ namespace Junjun
                 m_agent.Move(m_knockBackVelocity * Time.deltaTime);
             }
 
-            if (m_hp <= 0)
+            if (m_currentHp <= 0)
             {
                 m_dieEffect.transform.position = this.transform.position;
                 TimeLinePlayer.PlayTimeline(m_enemyDie);
@@ -90,34 +83,19 @@ namespace Junjun
 
         }
 
+        void Init()
+        {
+            m_enemyMaxHp = enemyStatusData.EnemyHP;
+            m_currentHp = m_enemyMaxHp;
+            m_power = enemyStatusData.EnemyPower;
+        }
+
         /// <summary>
         /// playerを追いかける
         /// アニメションがRunになった瞬間に呼ばれたいので
         /// アニメションイベントで呼び出すようにする
         /// </summary>
         public abstract void MoveToPlayer();
-
-        ///// <summary>
-        ///// 状態をidleにチェンジ
-        ///// </summary>
-        //protected async void EnemyStateIdle()
-        //{
-        //    if (m_enemyState == EnemyStateType.CoolTime)
-        //    {
-        //        await UniTask.Delay(TimeSpan.FromSeconds(1f));
-        //    }
-        //    Debug.Log("idle");
-        //    m_enemyState = EnemyStateType.Idle;
-        //}
-
-        ///// <summary>
-        ///// 状態をCoolTimeにする
-        ///// </summary>
-        //protected void EnemyStateCoolTime()
-        //{     
-        //    m_enemyState = EnemyStateType.CoolTime;
-        //    Debug.Log(m_enemyState);
-        //}
 
         /// <summary>
         /// 滑らかにPlayerの方向を向くように
@@ -153,7 +131,6 @@ namespace Junjun
             m_meshRenderer.material.color = Color.white;
             m_anim.SetBool("Idle", true);
             m_isInvincible = false;
-            m_isOnDamage = false;
         }
 
         /// <summary>
@@ -161,7 +138,7 @@ namespace Junjun
         /// </summary>
         public void EnemyHPDecrease()
         {
-            int currentHp = m_hp;
+            int currentHp = m_currentHp;
             float hpRatio = (float)currentHp / (float)m_enemyMaxHp;
 
             m_enemyHpGauge.fillAmount = hpRatio;
@@ -181,19 +158,3 @@ namespace Junjun
         public abstract void Parry();
     }
 }
-
-///// <summary>
-///// Enemyの状態を表すenum
-///// </summary>
-//public enum EnemyStateType
-//{
-//    None, Idle, Chase, Attack, RangedATK, CoolTime, KnockBack
-//}
-
-///// <summary>
-///// Enemyの種類を表すEnum
-///// </summary>
-//public enum EnemyType
-//{
-//    PunchingBag, Spider, Golem, Goblins, Tiger
-//}

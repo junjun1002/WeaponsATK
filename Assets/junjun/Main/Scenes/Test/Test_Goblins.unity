@@ -11223,21 +11223,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 296928ed31a607a45916eba089d8cb2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_lookSpeed: 0.1
-  m_hp: 100
+  enemyStatusData: {fileID: 11400000, guid: bf23cd00bfb680c4d87c1f0c02ac9ad3, type: 2}
+  m_enemyHpGauge: {fileID: 29831635}
+  m_currentHp: 0
+  m_power: 0
+  m_distance: 0
   m_player: {fileID: 316325612}
-  m_stopDistance: 5
-  m_atkPoint: 0
   m_anim: {fileID: 4754822570092515181}
-  m_enemyWeapon: {fileID: 1615979086}
+  m_agent: {fileID: 3155058319457596690}
   m_enemyDie: {fileID: 4946995425899104133}
   m_dieEffect: {fileID: 4834749679376302262}
-  m_distance: 0
-  m_agent: {fileID: 3155058319457596690}
-  m_knockBackVelocity: {x: 0, y: 0, z: 0}
-  m_knockBackPower: 5
+  m_knockBackPower: 10
   m_meshRenderer: {fileID: 5935682357533154394}
-  m_enemyHpGauge: {fileID: 29831635}
 --- !u!195 &3155058319457596690
 NavMeshAgent:
   m_ObjectHideFlags: 0

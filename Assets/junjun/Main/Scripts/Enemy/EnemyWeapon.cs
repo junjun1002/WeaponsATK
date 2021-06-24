@@ -44,10 +44,10 @@ namespace Junjun
                     isParrySuccess = false;
                     return;
                 }
-                m_enemy.m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
-                Debug.Log(m_enemy.m_atkPoint);
-                UIManager.Instance.DecreasesHPUI(m_enemy.m_atkPoint);
-                m_player.m_playerHp -= m_enemy.m_atkPoint;
+                m_enemy.m_power = UnityEngine.Random.Range(0.05f, 0.08f);
+                Debug.Log(m_enemy.m_power);
+                UIManager.Instance.DecreasesHPUI(m_enemy.m_power);
+                m_player.m_playerHp -= m_enemy.m_power;
             }
         }
 

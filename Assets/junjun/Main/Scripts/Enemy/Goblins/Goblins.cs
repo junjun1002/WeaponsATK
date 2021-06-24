@@ -27,7 +27,7 @@ namespace Junjun
         protected override void Update()
         {
             base.Update();
-            if (!m_isOnDamage)
+            if (!m_isInvincible)
             {
                 stateMachine.currentState.OnExecute(this);
             }
