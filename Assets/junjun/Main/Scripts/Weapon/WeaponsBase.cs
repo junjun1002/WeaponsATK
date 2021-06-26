@@ -9,14 +9,13 @@ namespace Junjun
     /// </summary>
     public abstract class WeaponsBase : MonoBehaviour
     {
-        [SerializeField] WeaponID weaponID;
-
-        protected string m_weaponName;
+        /// <summary>WeaponのScriptableObject</summary>
+        [SerializeField] WeaponData weaponData;
 
         /// <summary>武器の最低攻撃力</summary>
-        [SerializeField] int m_minPower;
+        int m_minAtk;
         /// <summary>武器の最高攻撃力</summary>
-        [SerializeField] int m_maxPower;
+        int m_maxAtk;
         /// <summary>武器の攻撃力</summary>
         int m_power;
 
@@ -28,6 +27,11 @@ namespace Junjun
         bool isHit;
 
         RaycastHit hit;
+
+        void Start()
+        {
+            Init();
+        }
 
         private void Update()
         {
@@ -46,7 +50,7 @@ namespace Junjun
                 //左のコントローラーを0.5秒間振動させる
                 StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
 
-                m_power = Random.Range(m_minPower, m_maxPower);
+                m_power = Random.Range(m_minAtk, m_maxAtk);
                 enemyBase.m_currentHp -= m_power;
                 enemyBase.EnemyHPDecrease();
                 Debug.Log($"{this.gameObject.name} が {other.gameObject.name} に接触した");
@@ -82,6 +86,12 @@ namespace Junjun
 
             //コントローラーの振動を止める
             OVRInput.SetControllerVibration(0, 0, controller);
+        }
+
+        void Init()
+        {
+            m_maxAtk = weaponData.maxAtk;
+            m_minAtk = weaponData.minAtk;
         }
     }
 }

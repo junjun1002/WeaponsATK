@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Junjun;
 
 namespace Junjun
 {
-    [CustomEditor(typeof(CSVLoader))]
-    public class CustomInspecter : Editor
+    /// <summary>
+    /// ボタン一つでCSVからWeaponDataのScriptableObjectを生成させる
+    /// Editor拡張
+    /// </summary>
+    [CustomEditor(typeof(WeaponCSVImporter))]
+    public class WeaponCSVImportEditor : Editor, ICSVImport<WeaponCSVImporter>
     {
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
-            var t = target as CSVLoader;
+            var t = target as WeaponCSVImporter;
             if (GUILayout.Button("Apply"))
             {
                 // CSVファイルがアタッチされていないならResourcesファイルからセットする
@@ -24,7 +29,7 @@ namespace Junjun
             }
         }
 
-        void CSVLoad(CSVLoader cSVLoader)
+        public void CSVLoad(WeaponCSVImporter cSVLoader)
         {
             Debug.Log("CSVファイルをセットします。");
 
@@ -32,12 +37,12 @@ namespace Junjun
             TextAsset textasset = new TextAsset();
             //　先ほど用意したcsvファイルを読み込ませる。
             //　ファイルは「Resources」フォルダを作り、そこに入れておくこと。また"CSVTestData"の部分はファイル名に合わせて変更する。
-            textasset = Resources.Load("CSVEnemy", typeof(TextAsset)) as TextAsset;
+            textasset = Resources.Load("CSVWeapon", typeof(TextAsset)) as TextAsset;
 
             cSVLoader.cSV = textasset;
         }
 
-        void SetCsvDataToScriptableObject(CSVLoader csvLoader)
+        public void SetCsvDataToScriptableObject(WeaponCSVImporter csvLoader)
         {
             // ボタンを押されたらパース実行
             if (csvLoader.cSV == null)
@@ -66,41 +71,40 @@ namespace Junjun
                 }
 
                 // EnemyDataのインスタンスをメモリ上に作成
-                var enemyData = CreateInstance<EnemyData>();
+                var weaponData = CreateInstance<WeaponData>();
 
                 // 行数をIDとしてファイルを作成
-                string fileName = enemyData.name = parseByComma[column] + "EnemyData" + ".asset";
-                string path = "Assets/junjun/Main/ScriptableObject/Enemy/" + fileName;
+                string fileName = weaponData.name = parseByComma[column] + "WeaponData" + ".asset";
+                string path = "Assets/junjun/Main/ScriptableObject/Weapon/" + fileName;
 
 
                 // 名前
-                enemyData.name = parseByComma[column];
+                weaponData.name = parseByComma[column];
 
-                // 最大HP
+                // 最低攻撃力
                 column += 1;
-                enemyData.hp = int.Parse(parseByComma[column]);
+                weaponData.minAtk = int.Parse(parseByComma[column]);
 
-                // 攻撃力
+                // 最高攻撃力
                 column += 1;
-                enemyData.power = int.Parse(parseByComma[column]);
+                weaponData.maxAtk = int.Parse(parseByComma[column]);
 
                 // インスタンス化したものをアセットとして保存
                 var asset = (EnemyData)AssetDatabase.LoadAssetAtPath(path, typeof(EnemyData));
                 if (asset == null)
                 {
                     // 指定のパスにファイルが存在しない場合は新規作成
-                    AssetDatabase.CreateAsset(enemyData, path);
+                    AssetDatabase.CreateAsset(weaponData, path);
                 }
                 else
                 {
                     // 指定のパスに既に同名のファイルが存在する場合は更新
-                    EditorUtility.CopySerialized(enemyData, asset);
+                    EditorUtility.CopySerialized(weaponData, asset);
                     AssetDatabase.SaveAssets();
                 }
                 AssetDatabase.Refresh();
             }
-            Debug.Log(csvLoader.name + " : 敵データの作成が完了しました。");
+            Debug.Log(" 武器データの作成が完了しました。");
         }
     }
-
 }

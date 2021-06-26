@@ -8,11 +8,9 @@ namespace Junjun
     [Serializable, CreateAssetMenu(fileName = "EnemyData", menuName = "Data/EnemyData")]
     public class EnemyData : ScriptableObject
     {
-        public string name;
-
-        public int hp;
-
-        public int power;
+        [SerializeField, Header("“G‚Ì–¼‘O")] public string name;
+        [SerializeField, Header("“G‚ÌHP")] public int hp;
+        [SerializeField, Header("“G‚ÌUŒ‚—Í")] public int power;
     }
 }
 

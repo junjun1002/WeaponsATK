@@ -18,6 +18,8 @@ namespace Junjun
         public IState<Goblins> ChaseState { get; set; } = new GoblinChase();
         public IState<Goblins> AttackState { get; set; } = new GoblinAttack();
 
+        public IState<Goblins> DieState = new GoblinDie();
+
         protected override void Start()
         {
             base.Start();
@@ -30,6 +32,10 @@ namespace Junjun
             if (!m_isInvincible)
             {
                 stateMachine.currentState.OnExecute(this);
+            }
+            if (m_currentHp <= 0)
+            {
+                stateMachine.ChageMachine(DieState);
             }
         }
 
@@ -130,5 +136,13 @@ namespace Junjun
         //        }
         //    }
         //}
+    }
+
+    class GoblinDie : IState<Goblins>
+    {
+        public void OnExecute(Goblins owner)
+        {
+            Debug.Log("ñlÇÕéÄÇ…Ç‹ÇµÇΩÅB");
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace Junjun
     /// </summary>
     public abstract class EnemyBase : MonoBehaviour
     {
-        [SerializeField] EnemyStatusData enemyStatusData;
+        [SerializeField] EnemyData enemyData;
 
         /// <summary>EnemyのHPゲージImage</summary>
         [SerializeField] Image m_enemyHpGauge;
@@ -85,9 +85,9 @@ namespace Junjun
 
         void Init()
         {
-            m_enemyMaxHp = enemyStatusData.EnemyHP;
+            m_enemyMaxHp = enemyData.hp;
             m_currentHp = m_enemyMaxHp;
-            m_power = enemyStatusData.EnemyPower;
+            m_power = enemyData.power;
         }
 
         /// <summary>

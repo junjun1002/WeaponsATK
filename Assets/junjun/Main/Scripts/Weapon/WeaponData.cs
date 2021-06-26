@@ -11,24 +11,9 @@ namespace Junjun
     [Serializable, CreateAssetMenu(fileName = "WeaponData", menuName = "Data/WeaponData")]
     public class WeaponData : ScriptableObject
     {
-        [SerializeField, Header("•Ší‚Ì¯•ÊID")] WeaponID weaponID;
-        [SerializeField, Header("•Ší‚Ì–¼‘O")] string weaponName;
-        [SerializeField, Header("•Ší‚ÌUŒ‚—Í")] int weaponPower;
+        [SerializeField, Header("•Ší‚Ì–¼‘O")] public string name;
+        [SerializeField, Header("•Ší‚ÌÅ¬UŒ‚—Í")]public int minAtk;
+        [SerializeField, Header("•Ší‚ÌÅ‚UŒ‚—Í")] public int maxAtk;
 
-        /// <summary>•Ší‚Ì¯•ÊID</summary>
-        public WeaponID WeaponID { get => weaponID; }
-        /// <summary>•Ší‚Ì–¼‘O</summary>
-        public string WeaponName { get => weaponName; }
-        /// <summary>•Ší‚ÌUŒ‚—Í</summary>
-        public int WeaponPower { get => weaponPower; }
-
-    }
-
-    /// <summary>
-    /// •Ší‚Ì¯•ÊID
-    /// </summary>
-    public enum WeaponID
-    {
-        LongSword, ShortSword
     }
 }
