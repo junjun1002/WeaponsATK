@@ -95,7 +95,7 @@ namespace Junjun
             {
                 stateMachine.currentState.OnExecute(this);
             }
-            if (stateMachine.currentState == InGameState)
+            if (stateMachine.currentState == TitleState)
             {
                 StartCoroutine("StopWatch");
             }
