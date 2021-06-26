@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab650ebc7caef0b409f21b8abe3b360f, type: 3}
-  m_Name: GoblinStatus
+  m_Script: {fileID: 11500000, guid: d4e9e3f690bf32a4bb464cf8769be4dd, type: 3}
+  m_Name: CSVImporter
   m_EditorClassIdentifier: 
-  enemyDatas:
-  - {fileID: 0}
-  enemyName: 
-  enemyMaxHP: 1
-  enemyPower: 1
+  cSV: {fileID: 4900000, guid: b2674632e35675e4db7d2986b84ace5e, type: 3}

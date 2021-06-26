@@ -11,8 +11,7 @@ namespace Junjun
     [Serializable, CreateAssetMenu(fileName = "EnemyList", menuName = "List/EnemyList")]
     public class EnemyList : ScriptableObject
     {
-        [SerializeField] List<EnemyStatusData> enemyDatas;
-
-        public List<EnemyStatusData> EnemyDatas { get => enemyDatas; }
+        EnemyStatusData[] enemyDatas;
+        public EnemyStatusData[] EnemyDatas { get => enemyDatas; }
     }
 }
