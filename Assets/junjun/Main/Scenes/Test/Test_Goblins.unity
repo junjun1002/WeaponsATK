@@ -1045,7 +1045,7 @@ PrefabInstance:
     - target: {fileID: 1439052722407022916, guid: 00b66c44150e8d145addf6a6a5b65b14,
         type: 3}
       propertyPath: Acceleration
-      value: 0.01
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1439052722407093510, guid: 00b66c44150e8d145addf6a6a5b65b14,
         type: 3}
@@ -1126,6 +1126,11 @@ PrefabInstance:
         type: 3}
       propertyPath: field of view
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640615933822047853, guid: 00b66c44150e8d145addf6a6a5b65b14,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3975035447802569988, guid: 00b66c44150e8d145addf6a6a5b65b14,
         type: 3}
@@ -1341,6 +1346,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.018991696
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276300988225296109, guid: 00b66c44150e8d145addf6a6a5b65b14,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4854094091355881974, guid: 00b66c44150e8d145addf6a6a5b65b14,
         type: 3}
@@ -10889,6 +10899,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567265351555894439, guid: 06ae3e2a617480d42bea57e18870037a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8567265351555894440, guid: 06ae3e2a617480d42bea57e18870037a,
         type: 3}

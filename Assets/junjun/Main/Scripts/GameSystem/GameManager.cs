@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 namespace Junjun
 {
@@ -56,7 +55,7 @@ namespace Junjun
         /// <summary>タイトルシーンの名前</summary>
         [SerializeField] public string m_title = "Title";
         /// <summary>バトルシーン名前</summary>
-        [SerializeField] public string m_battle = "TigerBattle";
+        [SerializeField] public string m_battle = "Test_Goblins";
         /// <summary>ゲームクリアシーンの名前</summary>
         [SerializeField] public string m_gameClear = "GameClear";
         /// <summary>ゲームオーバーシーンの名前</summary>
@@ -65,7 +64,7 @@ namespace Junjun
         /// <summary>タイマーが止まる時間</summary>
         [SerializeField] public float m_stopTimer;
         /// <summary>タイマー表示用テキスト</summary>
-        [SerializeField] public Text m_timerText;
+        [SerializeField] public GameObject m_timerText;
         /// <summary>最速タイムを表示するテキスト</summary>
         [SerializeField] public Text m_bestTimeText;
 
@@ -82,11 +81,13 @@ namespace Junjun
 
         public IState<GameManager> InGameState { get; set; } = new InGame();
 
+       
+
         protected override void Awake()
         {
             base.Awake();
-            //DontDestroyOnLoad(this);
-            stateMachine = new StateMachine<GameManager>(this, InGameState);
+            DontDestroyOnLoad(this);
+            stateMachine = new StateMachine<GameManager>(this, TitleState);
         }
 
         private void Start()
@@ -95,8 +96,10 @@ namespace Junjun
             {
                 stateMachine.currentState.OnExecute(this);
             }
-            if (stateMachine.currentState == TitleState)
+            if (stateMachine.currentState == InGameState)
             {
+                Debug.Log("aaaaa");
+                m_timerText = GameObject.Find("TimeText");
                 StartCoroutine("StopWatch");
             }
         }
@@ -124,7 +127,8 @@ namespace Junjun
         /// </summary>
         public void ChangeGameScene()
         {
-            stateMachine.currentState = TitleState;
+            stateMachine.currentState = InGameState;
+            Debug.Log(stateMachine.currentState);
             SceneLoader.Instance.Load(m_battle);
         }
 
@@ -166,7 +170,7 @@ namespace Junjun
                 //　値が変わった時だけテキストUIを更新
                 if (owner.m_seconds != owner.m_oldSeconds)
                 {
-                    owner.m_timerText.text = owner.m_minute.ToString() + ":" + owner.m_seconds.ToString("f1");
+                    owner.m_timerText.GetComponent<Text>() .text = owner.m_minute.ToString() + ":" + owner.m_seconds.ToString("f1");
                 }
                 owner.m_oldSeconds = owner.m_seconds;
             }
