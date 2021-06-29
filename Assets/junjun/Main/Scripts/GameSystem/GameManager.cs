@@ -81,13 +81,16 @@ namespace Junjun
 
         public IState<GameManager> InGameState { get; set; } = new InGame();
 
-       
+
 
         protected override void Awake()
         {
             base.Awake();
             DontDestroyOnLoad(this);
-            stateMachine = new StateMachine<GameManager>(this, TitleState);
+            if (stateMachine == null)
+            {
+                stateMachine = new StateMachine<GameManager>(this, InGameState);
+            }
         }
 
         private void Start()
@@ -170,7 +173,7 @@ namespace Junjun
                 //　値が変わった時だけテキストUIを更新
                 if (owner.m_seconds != owner.m_oldSeconds)
                 {
-                    owner.m_timerText.GetComponent<Text>() .text = owner.m_minute.ToString() + ":" + owner.m_seconds.ToString("f1");
+                    owner.m_timerText.GetComponent<Text>().text = owner.m_minute.ToString() + ":" + owner.m_seconds.ToString("f1");
                 }
                 owner.m_oldSeconds = owner.m_seconds;
             }
