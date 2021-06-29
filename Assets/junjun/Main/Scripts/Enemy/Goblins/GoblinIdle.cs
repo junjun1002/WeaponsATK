@@ -13,7 +13,7 @@ namespace Junjun
         {
             if (owner.m_distance <= owner.m_agent.stoppingDistance)
             {
-                owner.m_anim.SetBool("Attack", true);
+                owner.m_nextAtk = UnityEngine.Random.Range(0, 2);
                 owner.stateMachine.ChageMachine(owner.AttackState);
             }
             owner.m_anim.SetBool("Idle", false);

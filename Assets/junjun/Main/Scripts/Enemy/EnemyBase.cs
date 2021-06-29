@@ -14,6 +14,7 @@ namespace Junjun
     /// </summary>
     public abstract class EnemyBase : MonoBehaviour
     {
+        /// <summary>EnemyのDataを保持したScriptableObject</summary>
         [SerializeField] EnemyData enemyData;
 
         /// <summary>EnemyのHPゲージImage</summary>
@@ -24,6 +25,9 @@ namespace Junjun
         public int m_currentHp;
         ///<summary> 攻撃力</summary>
         public float m_power;
+
+        /// <summary>次の攻撃の種別判定</summary>
+        public int m_nextAtk;
 
         ///<summary>ターゲットを見る補完スピードを決める</summary> 
         const float m_lookSpeed = 0.1f;

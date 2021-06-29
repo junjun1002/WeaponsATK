@@ -11270,12 +11270,12 @@ GameObject:
   - component: {fileID: 1640615933591791748}
   - component: {fileID: 1640615933591791751}
   m_Layer: 5
-  m_Name: MenuCanvas
+  m_Name: MenuWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1640615933591791751
 MonoBehaviour:
   m_ObjectHideFlags: 0

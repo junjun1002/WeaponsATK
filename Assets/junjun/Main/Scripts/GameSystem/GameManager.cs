@@ -64,9 +64,11 @@ namespace Junjun
         /// <summary>タイマーが止まる時間</summary>
         [SerializeField] public float m_stopTimer;
         /// <summary>タイマー表示用テキスト</summary>
-        [SerializeField] public GameObject m_timerText;
+        public GameObject m_timerText;
         /// <summary>最速タイムを表示するテキスト</summary>
         [SerializeField] public Text m_bestTimeText;
+        /// <summary>Playerのメニューウィンドウ</summary>
+        GameObject m_menuWindow;
 
         /// <summary>経過時間（分）</summary>
         public int m_minute;
@@ -103,6 +105,8 @@ namespace Junjun
             {
                 Debug.Log("aaaaa");
                 m_timerText = GameObject.Find("TimeText");
+                m_menuWindow = GameObject.Find("MenuWindow");
+                m_menuWindow.gameObject.SetActive(false);
                 StartCoroutine("StopWatch");
             }
         }
