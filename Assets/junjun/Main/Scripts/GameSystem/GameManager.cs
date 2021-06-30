@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+using UniRx;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Junjun
 {
@@ -67,9 +70,13 @@ namespace Junjun
         /// <summary>タイマー表示用テキスト</summary>
         public GameObject m_timerText;
         /// <summary>最速タイムを表示するテキスト</summary>
-        [SerializeField] public Text m_bestTimeText;
+        [SerializeField] public GameObject m_bestTimeText;
         /// <summary>Playerのメニューウィンドウ</summary>
         GameObject m_menuWindow;
+        /// <summary>タイトルに戻るボタン/summary>
+        GameObject m_returnTitleButton;
+        /// <summary>Gameを始めるボタン</summary>
+        GameObject m_gameStartButton;
         #endregion
 
         #region In Game Time
@@ -125,9 +132,6 @@ namespace Junjun
         {
             if (m_isInGame)
             {
-                m_timerText = GameObject.Find("TimeText");
-                m_menuWindow = GameObject.Find("MenuWindow");
-                m_menuWindow.gameObject.SetActive(false);
                 if (stateMachine.currentState == InGameState)
                 {
                     Debug.Log(stateMachine.currentState);
@@ -151,40 +155,68 @@ namespace Junjun
         /// <summary>
         /// タイトルシーンに遷移
         /// </summary>
-        public void ChangeTitleScene()
+        public async void ChangeTitleScene()
         {
             Debug.Log(stateMachine);
             m_isInGame = false;
             stateMachine.currentState = TitleState;
             SceneLoader.Instance.Load(m_title);
+            await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
+            m_bestTimeText = GameObject.Find("BestTime");
+            stateMachine.currentState.OnExecute(this);
+            m_gameStartButton = GameObject.Find("GameStart");
+            m_gameStartButton.GetComponent<Button>().onClick.AddListener(() => ChangeGameScene());
         }
 
         /// <summary>
         /// ゲームシーンに遷移
         /// </summary>
-        public void ChangeGameScene()
+        public async void ChangeGameScene()
         {
             stateMachine.ChageMachine(InGameState);
+            TimeInit();
             SceneLoader.Instance.Load(m_battle);
+            await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
+            m_timerText = GameObject.Find("TimeText");
+            m_returnTitleButton = GameObject.Find("ReturnTitle");
+            m_returnTitleButton.GetComponent<Button>().onClick.AddListener(() => ChangeTitleScene());
+            m_menuWindow = GameObject.Find("MenuWindow");
+            m_menuWindow.gameObject.SetActive(false);
             m_isInGame = true;
         }
 
         /// <summary>
         /// ゲームクリア
         /// </summary>
-        public void GameClear()
+        public async void GameClear()
         {
             m_isInGame = false;
             stateMachine.ChageMachine(GameClearState);
             SaveAndLoad.Instance.SaveTimeData(m_minute, m_seconds);
             SceneLoader.Instance.Load(m_gameClear);
+            await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
+            m_returnTitleButton = GameObject.Find("ReturnTitle");
+            m_returnTitleButton.GetComponent<Button>().onClick.AddListener(() => ChangeTitleScene());
         }
 
-        public void GameOver()
+        public async void GameOver()
         {
             m_isInGame = false;
             stateMachine.ChageMachine(GameOverState);
             SceneLoader.Instance.Load(m_gameOver);
+            await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
+            m_returnTitleButton = GameObject.Find("ReturnTitle");
+            m_returnTitleButton.GetComponent<Button>().onClick.AddListener(() => ChangeTitleScene());
+        }
+
+        /// <summary>
+        /// Timeを初期化する関数
+        /// </summary>
+        void TimeInit()
+        {
+            m_minute = 0;
+            m_seconds = 0;
+            m_oldSeconds = 0;
         }
     }
 
@@ -192,7 +224,7 @@ namespace Junjun
     {
         public void OnExecute(GameManager owner)
         {
-            SaveAndLoad.Instance.LoadTimeData(owner.m_bestTimeText);
+            SaveAndLoad.Instance.LoadTimeData(owner.m_bestTimeText.GetComponent<Text>());
         }
     }
 

@@ -687,9 +687,9 @@ MonoBehaviour:
   m_battle: Test_Goblins
   m_gameClear: GameClear
   m_gameOver: GameOver
-  m_stopTimer: 10
   m_timerText: {fileID: 0}
-  m_bestTimeText: {fileID: 2072243494}
+  m_bestTimeText: {fileID: 2072243493}
+  m_stopTimer: 10
   m_minute: 0
   m_seconds: 0
   m_oldSeconds: 0
