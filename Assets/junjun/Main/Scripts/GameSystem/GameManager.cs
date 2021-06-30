@@ -52,6 +52,7 @@ namespace Junjun
     /// </summary>
     public class GameManager : SingletonMonoBehavior<GameManager>
     {
+        #region Scene Name
         /// <summary>タイトルシーンの名前</summary>
         [SerializeField] public string m_title = "Title";
         /// <summary>バトルシーン名前</summary>
@@ -60,29 +61,35 @@ namespace Junjun
         [SerializeField] public string m_gameClear = "GameClear";
         /// <summary>ゲームオーバーシーンの名前</summary>
         [SerializeField] public string m_gameOver = "GameOver";
+        #endregion
 
-        /// <summary>タイマーが止まる時間</summary>
-        [SerializeField] public float m_stopTimer;
+        #region Game UI
         /// <summary>タイマー表示用テキスト</summary>
         public GameObject m_timerText;
         /// <summary>最速タイムを表示するテキスト</summary>
         [SerializeField] public Text m_bestTimeText;
         /// <summary>Playerのメニューウィンドウ</summary>
         GameObject m_menuWindow;
+        #endregion
 
+        #region In Game Time
+        /// <summary>タイマーが止まる時間</summary>
+        [SerializeField] public float m_stopTimer;
         /// <summary>経過時間（分）</summary>
-        public int m_minute;
+        [SerializeField, HideInInspector] public int m_minute;
         /// <summary>経過時間（秒）</summary>
-        public float m_seconds;
+        [SerializeField, HideInInspector] public float m_seconds;
         /// <summary>前のUpdateの時の秒数</summary>
-        public float m_oldSeconds;
+        [SerializeField, HideInInspector] public float m_oldSeconds;
+        #endregion
 
+        #region GameState
         StateMachine<GameManager> stateMachine;
 
         private IState<GameManager> titleState = new Title();
         public IState<GameManager> TitleState { get => titleState; }
 
-        private IState<GameManager> inGameState = new InGame(); 
+        private IState<GameManager> inGameState = new InGame();
         public IState<GameManager> InGameState { get => inGameState; }
 
         private IState<GameManager> gameClearState = new GameClear();
@@ -90,6 +97,9 @@ namespace Junjun
 
         private IState<GameManager> gameOverState = new GameOver();
         public IState<GameManager> GameOverState { get => gameOverState; }
+
+        bool m_isInGame = false;
+        #endregion
 
 
 
@@ -99,7 +109,7 @@ namespace Junjun
             DontDestroyOnLoad(this);
             if (stateMachine == null)
             {
-                stateMachine = new StateMachine<GameManager>(this, InGameState);
+                stateMachine = new StateMachine<GameManager>(this, TitleState);
             }
         }
 
@@ -109,12 +119,23 @@ namespace Junjun
             {
                 stateMachine.currentState.OnExecute(this);
             }
-            if (stateMachine.currentState == InGameState)
+        }
+
+        private void Update()
+        {
+            if (m_isInGame)
             {
                 m_timerText = GameObject.Find("TimeText");
                 m_menuWindow = GameObject.Find("MenuWindow");
                 m_menuWindow.gameObject.SetActive(false);
-                StartCoroutine("StopWatch");
+                if (stateMachine.currentState == InGameState)
+                {
+                    Debug.Log(stateMachine.currentState);
+                   
+                    StartCoroutine("StopWatch");
+                    m_isInGame = false;
+                    
+                }
             }
         }
 
@@ -132,7 +153,9 @@ namespace Junjun
         /// </summary>
         public void ChangeTitleScene()
         {
-            stateMachine.ChageMachine(TitleState);
+            Debug.Log(stateMachine);
+            m_isInGame = false;
+            stateMachine.currentState = TitleState;
             SceneLoader.Instance.Load(m_title);
         }
 
@@ -141,9 +164,9 @@ namespace Junjun
         /// </summary>
         public void ChangeGameScene()
         {
-            stateMachine.ChageMachine(GameClearState);
-           
+            stateMachine.ChageMachine(InGameState);
             SceneLoader.Instance.Load(m_battle);
+            m_isInGame = true;
         }
 
         /// <summary>
@@ -151,6 +174,7 @@ namespace Junjun
         /// </summary>
         public void GameClear()
         {
+            m_isInGame = false;
             stateMachine.ChageMachine(GameClearState);
             SaveAndLoad.Instance.SaveTimeData(m_minute, m_seconds);
             SceneLoader.Instance.Load(m_gameClear);
@@ -158,6 +182,7 @@ namespace Junjun
 
         public void GameOver()
         {
+            m_isInGame = false;
             stateMachine.ChageMachine(GameOverState);
             SceneLoader.Instance.Load(m_gameOver);
         }
@@ -205,7 +230,7 @@ namespace Junjun
     {
         public void OnExecute(GameManager owner)
         {
-            
+
         }
     }
 }
