@@ -11,7 +11,7 @@ namespace Junjun
     [Serializable, CreateAssetMenu(fileName = "WeaponData", menuName = "Data/WeaponData")]
     public class WeaponData : ScriptableObject
     {
-        [SerializeField, Header("•Ší‚Ì–¼‘O")] public string name;
+        [SerializeField, Header("•Ší‚Ì–¼‘O")] public string weaponName;
         [SerializeField, Header("•Ší‚ÌÅ¬UŒ‚—Í")]public int minAtk;
         [SerializeField, Header("•Ší‚ÌÅ‚UŒ‚—Í")] public int maxAtk;
 

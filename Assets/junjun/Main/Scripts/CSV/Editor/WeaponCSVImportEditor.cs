@@ -73,12 +73,12 @@ namespace Junjun
                 var weaponData = CreateInstance<WeaponData>();
 
                 // 行数をIDとしてファイルを作成
-                string fileName = weaponData.name = parseByComma[column] + "WeaponData" + ".asset";
+                string fileName = weaponData.weaponName = parseByComma[column] + "WeaponData" + ".asset";
                 string path = "Assets/junjun/Main/ScriptableObject/Weapon/" + fileName;
 
 
                 // 名前
-                weaponData.name = parseByComma[column];
+                weaponData.weaponName = parseByComma[column];
 
                 // 最低攻撃力
                 column += 1;

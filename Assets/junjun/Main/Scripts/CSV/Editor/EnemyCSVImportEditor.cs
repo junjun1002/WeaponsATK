@@ -73,12 +73,12 @@ namespace Junjun
                 var enemyData = CreateInstance<EnemyData>();
 
                 // 行数をIDとしてファイルを作成
-                string fileName = enemyData.name = parseByComma[column] + "EnemyData" + ".asset";
+                string fileName = enemyData.enemyName = parseByComma[column] + "EnemyData" + ".asset";
                 string path = "Assets/junjun/Main/ScriptableObject/Enemy/" + fileName;
 
 
                 // 名前
-                enemyData.name = parseByComma[column];
+                enemyData.enemyName = parseByComma[column];
 
                 // 最大HP
                 column += 1;

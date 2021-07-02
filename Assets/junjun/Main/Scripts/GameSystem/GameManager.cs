@@ -183,6 +183,8 @@ namespace Junjun
             m_menuWindow = GameObject.Find("MenuWindow");
             m_menuWindow.gameObject.SetActive(false);
             m_isInGame = true;
+
+            
         }
 
         /// <summary>
@@ -217,52 +219,6 @@ namespace Junjun
             m_minute = 0;
             m_seconds = 0;
             m_oldSeconds = 0;
-        }
-    }
-
-    public class Title : IState<GameManager>
-    {
-        public void OnExecute(GameManager owner)
-        {
-            SaveAndLoad.Instance.LoadTimeData(owner.m_bestTimeText.GetComponent<Text>());
-        }
-    }
-
-    public class InGame : IState<GameManager>
-    {
-        public void OnExecute(GameManager owner)
-        {
-            if (owner.m_minute < owner.m_stopTimer)
-            {
-                owner.m_seconds += Time.unscaledDeltaTime;
-                if (owner.m_seconds >= 60f)
-                {
-                    owner.m_minute++;
-                    owner.m_seconds = owner.m_seconds - 60;
-                }
-                //　値が変わった時だけテキストUIを更新
-                if (owner.m_seconds != owner.m_oldSeconds)
-                {
-                    owner.m_timerText.GetComponent<Text>().text = owner.m_minute.ToString() + ":" + owner.m_seconds.ToString("f1");
-                }
-                owner.m_oldSeconds = owner.m_seconds;
-            }
-        }
-    }
-
-    public class GameClear : IState<GameManager>
-    {
-        public void OnExecute(GameManager owner)
-        {
-
-        }
-    }
-
-    public class GameOver : IState<GameManager>
-    {
-        public void OnExecute(GameManager owner)
-        {
-
         }
     }
 }
