@@ -68,15 +68,15 @@ namespace Junjun
 
         #region Game UI
         /// <summary>タイマー表示用テキスト</summary>
-        public GameObject m_timerText;
+        public Text m_timerText;
         /// <summary>最速タイムを表示するテキスト</summary>
-        [SerializeField] public GameObject m_bestTimeText;
+        [SerializeField] public Text m_bestTimeText;
         /// <summary>Playerのメニューウィンドウ</summary>
-        GameObject m_menuWindow;
+        [SerializeField] GameObject m_menuWindow;
         /// <summary>タイトルに戻るボタン/summary>
-        GameObject m_returnTitleButton;
+        [SerializeField] GameObject m_returnTitleButton;
         /// <summary>Gameを始めるボタン</summary>
-        GameObject m_gameStartButton;
+        [SerializeField] GameObject m_gameStartButton;
         #endregion
 
         #region In Game Time
@@ -90,63 +90,62 @@ namespace Junjun
         [SerializeField, HideInInspector] public float m_oldSeconds;
         #endregion
 
-        #region GameState
+        /// <summary>FindをさせないためにSerializeしとく</summary>
+        [SerializeField] public GameManager gameManager;
+
+        GameState gameState;
         StateMachine<GameManager> stateMachine;
 
-        private IState<GameManager> titleState = new Title();
-        public IState<GameManager> TitleState { get => titleState; }
+        private bool m_isTimeLoad = true;
 
-        private IState<GameManager> inGameState = new InGame();
-        public IState<GameManager> InGameState { get => inGameState; }
-
-        private IState<GameManager> gameClearState = new GameClear();
-        public IState<GameManager> GameClearState { get => gameClearState; }
-
-        private IState<GameManager> gameOverState = new GameOver();
-        public IState<GameManager> GameOverState { get => gameOverState; }
-
-        bool m_isInGame = false;
-        #endregion
-
-
+        [SerializeField] GameObject m_enemy;
 
         protected override void Awake()
         {
             base.Awake();
-            DontDestroyOnLoad(this);
-            if (stateMachine == null)
-            {
-                stateMachine = new StateMachine<GameManager>(this, TitleState);
-            }
+            gameState = GameState.Instance;
         }
 
         private void Start()
         {
-            if (stateMachine.currentState == TitleState)
+            stateMachine = gameState.stateMachine;
+
+            if (stateMachine.currentState == gameState.InGameState)
             {
-                stateMachine.currentState.OnExecute(this);
+                StartCoroutine("StopWatch");
             }
+
         }
 
         private void Update()
         {
-            if (m_isInGame)
+
+            if (m_isTimeLoad)
             {
-                if (stateMachine.currentState == InGameState)
+                if (m_bestTimeText)
                 {
-                    Debug.Log(stateMachine.currentState);
-                   
-                    StartCoroutine("StopWatch");
-                    m_isInGame = false;
-                    
+                    if (stateMachine.currentState == gameState.TitleState)
+                    {
+                        stateMachine.currentState.OnExecute(this);
+                        m_isTimeLoad = false;
+                    }
                 }
             }
         }
 
+        /// <summary>
+        /// 戦闘時間を計る非同期処理
+        /// </summary>
+        /// <returns></returns>
         IEnumerator StopWatch()
         {
             while (true)
             {
+                if (stateMachine.currentState == gameState.TitleState)
+                {
+                    StopCoroutine("StopWatch");
+                    yield return null;
+                }
                 stateMachine.currentState.OnExecute(this);
                 yield return null;
             }
@@ -155,70 +154,43 @@ namespace Junjun
         /// <summary>
         /// タイトルシーンに遷移
         /// </summary>
-        public async void ChangeTitleScene()
+        public void ChangeTitleScene()
         {
-            Debug.Log(stateMachine);
-            m_isInGame = false;
-            stateMachine.currentState = TitleState;
+            if (stateMachine.currentState == gameState.InGameState)
+            {
+                m_enemy.SetActive(false);
+            }
+            gameState.m_isInGame = false;
+            stateMachine.ChageMachine(gameState.TitleState);
             SceneLoader.Instance.Load(m_title);
-            await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
-            m_bestTimeText = GameObject.Find("BestTime");
-            stateMachine.currentState.OnExecute(this);
-            m_gameStartButton = GameObject.Find("GameStart");
-            m_gameStartButton.GetComponent<Button>().onClick.AddListener(() => ChangeGameScene());
         }
 
         /// <summary>
         /// ゲームシーンに遷移
         /// </summary>
-        public async void ChangeGameScene()
+        public void ChangeGameScene()
         {
-            stateMachine.ChageMachine(InGameState);
-            TimeInit();
+            stateMachine.ChageMachine(gameState.InGameState);
             SceneLoader.Instance.Load(m_battle);
-            await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
-            m_timerText = GameObject.Find("TimeText");
-            m_returnTitleButton = GameObject.Find("ReturnTitle");
-            m_returnTitleButton.GetComponent<Button>().onClick.AddListener(() => ChangeTitleScene());
-            m_menuWindow = GameObject.Find("MenuWindow");
-            m_menuWindow.gameObject.SetActive(false);
-            m_isInGame = true;
-
-            
+            gameState.m_isInGame = true;
         }
 
         /// <summary>
         /// ゲームクリア
         /// </summary>
-        public async void GameClear()
+        public void GameClear()
         {
-            m_isInGame = false;
-            stateMachine.ChageMachine(GameClearState);
+            gameState.m_isInGame = false;
+            stateMachine.ChageMachine(gameState.GameClearState);
             SaveAndLoad.Instance.SaveTimeData(m_minute, m_seconds);
             SceneLoader.Instance.Load(m_gameClear);
-            await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
-            m_returnTitleButton = GameObject.Find("ReturnTitle");
-            m_returnTitleButton.GetComponent<Button>().onClick.AddListener(() => ChangeTitleScene());
         }
 
-        public async void GameOver()
+        public void GameOver()
         {
-            m_isInGame = false;
-            stateMachine.ChageMachine(GameOverState);
+            gameState.m_isInGame = false;
+            stateMachine.ChageMachine(gameState.GameOverState);
             SceneLoader.Instance.Load(m_gameOver);
-            await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
-            m_returnTitleButton = GameObject.Find("ReturnTitle");
-            m_returnTitleButton.GetComponent<Button>().onClick.AddListener(() => ChangeTitleScene());
-        }
-
-        /// <summary>
-        /// Timeを初期化する関数
-        /// </summary>
-        void TimeInit()
-        {
-            m_minute = 0;
-            m_seconds = 0;
-            m_oldSeconds = 0;
         }
     }
 }
