@@ -24,7 +24,6 @@ namespace Junjun
         private IState<GameManager> gameOverState = new GameOver();
         public IState<GameManager> GameOverState { get => gameOverState; }
 
-        public bool m_isInGame;
         #endregion
 
         protected override void Awake()

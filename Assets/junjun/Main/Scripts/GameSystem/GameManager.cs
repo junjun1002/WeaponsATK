@@ -160,7 +160,6 @@ namespace Junjun
             {
                 m_enemy.SetActive(false);
             }
-            gameState.m_isInGame = false;
             stateMachine.ChageMachine(gameState.TitleState);
             SceneLoader.Instance.Load(m_title);
         }
@@ -172,7 +171,6 @@ namespace Junjun
         {
             stateMachine.ChageMachine(gameState.InGameState);
             SceneLoader.Instance.Load(m_battle);
-            gameState.m_isInGame = true;
         }
 
         /// <summary>
@@ -180,7 +178,6 @@ namespace Junjun
         /// </summary>
         public void GameClear()
         {
-            gameState.m_isInGame = false;
             stateMachine.ChageMachine(gameState.GameClearState);
             SaveAndLoad.Instance.SaveTimeData(m_minute, m_seconds);
             SceneLoader.Instance.Load(m_gameClear);
@@ -188,7 +185,6 @@ namespace Junjun
 
         public void GameOver()
         {
-            gameState.m_isInGame = false;
             stateMachine.ChageMachine(gameState.GameOverState);
             SceneLoader.Instance.Load(m_gameOver);
         }
