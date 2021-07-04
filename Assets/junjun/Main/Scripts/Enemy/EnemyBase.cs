@@ -5,187 +5,193 @@ using UnityEngine;
 using UnityEngine.AI;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
-/// <summary>
-/// Enemyの基底クラス
-/// </summary>
-public abstract class EnemyBase : MonoBehaviour
+namespace Junjun
 {
-    ///<summary>補完スピードを決める</summary> 
-    [SerializeField] public float m_lookSpeed = 0.1f;
-    ///<summar>HP</summar> 
-    [SerializeField] public int m_hp;
-    ///<summary>enemyの種類</summary> 
-    [SerializeField] protected EnemyType m_enemyType;
-    ///<summary> Player(ターゲット)</summary>
-    [SerializeField] protected GameObject m_player;
-    ///<summary> 敵のアニメーション</summary>
-    [SerializeField] public Animator m_anim;
-    ///<summary> 敵が止まる距離</summary>
-    [SerializeField] protected float m_atkRange = 20;
-    ///<summary> 攻撃力</summary>
-    public float m_atkPoint;
-    ///<summary> enemyの状態</summary>
-    public EnemyStateType m_enemyState;
-    /// <summary> 無敵状態の判定</summary>
-    private bool m_isInvincible;
-
-    /// <summary>エネミーの武器</summary>
-    [SerializeField] EnemyWeapon enemyWeapon;
-
-    /// <summary>PlayerとEnemyの距離 </summary>
-    protected float m_distance;
-    public NavMeshAgent m_agent;
-
-    public SkinnedMeshRenderer m_meshRenderer;
-
-    /// <summary>ノックバックする力</summary>
-    private Vector3 m_knockBackVelocity = Vector3.zero;
-    /// <summary>ノックバックする力</summary>
-    [SerializeField] protected float m_knockBackPower;
-
-    /// <summary>EnemyのHPゲージImage</summary>
-    [SerializeField] Image m_enemyHpGauge;
-    /// <summary>EnemyのMaxHP</summary>
-    int m_enemyMaxHp;
-
-    virtual protected void Start()
-    {
-        m_enemyState = EnemyStateType.Idle;
-        m_anim = GetComponent<Animator>();
-        m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
-        m_enemyMaxHp = m_hp;
-    }
-
-    virtual protected void Update()
-    {
-        // playerと自分の距離を測る
-        m_distance = Vector3.Distance(transform.position, m_player.transform.position);
-        if (m_hp <= 0)
-        {
-            GameManager.Instance.GameClear();
-        }
-        // ノックバックする
-        if (m_knockBackVelocity != Vector3.zero)
-        {
-            m_agent.Move(m_knockBackVelocity * Time.deltaTime);
-        }
-    }
-
-
     /// <summary>
-    /// playerを追いかける
+    /// Enemyの基底クラス
     /// </summary>
-    protected void MoveToPlayer()
+    public abstract class EnemyBase : MonoBehaviour
     {
-        Debug.Log("よっしゃ走るで");
-        m_agent.SetDestination(m_player.transform.position);
-        if (m_enemyState == EnemyStateType.Chase)
+        ///<summary>補完スピードを決める</summary> 
+        [SerializeField] public float m_lookSpeed = 0.1f;
+        ///<summar>HP</summar> 
+        [SerializeField] public int m_hp;
+        ///<summary> Player(ターゲット)</summary>
+        [SerializeField] protected GameObject m_player;
+        ///<summary> 敵が止まる距離</summary>
+        [SerializeField] public float m_stopDistance = 20;
+        ///<summary> 攻撃力</summary>
+        public float m_atkPoint;
+        /// <summary>敵のアニメション</summary>
+        public Animator m_anim;
+        /// <summary>敵の武器オブジェクト</summary>
+        [SerializeField] protected GameObject m_enemyWeapon;
+
+        /// <summary>敵が死ぬときの演出</summary>
+        [SerializeField] PlayableDirector m_enemyDie;
+        /// <summary>敵が死ぬ時の演出エフェクト</summary>
+        [SerializeField] GameObject m_dieEffect;
+
+        /// <summary>PlayerとEnemyの距離 </summary>
+        public float m_distance;
+
+        public NavMeshAgent m_agent;
+
+
+        /// <summary> 無敵状態の判定</summary>
+        protected bool m_isInvincible = false;
+
+        protected bool m_isOnDamage = false;
+
+        /// <summary>ノックバックする力</summary>
+        public Vector3 m_knockBackVelocity = Vector3.zero;
+        /// <summary>ノックバックする力</summary>
+        [SerializeField] protected float m_knockBackPower;
+        public SkinnedMeshRenderer m_meshRenderer;
+
+
+
+        /// <summary>EnemyのHPゲージImage</summary>
+        [SerializeField] Image m_enemyHpGauge;
+        /// <summary>EnemyのMaxHP</summary>
+        int m_enemyMaxHp;
+
+        virtual protected void Start()
         {
-            m_agent.isStopped = false;
+            m_atkPoint = UnityEngine.Random.Range(0.05f, 0.08f);
+            m_enemyMaxHp = m_hp;
         }
-    }
 
-    /// <summary>
-    /// 自分の動きを止める
-    /// </summary>
-    protected void MoveStop()
-    {
-        Debug.Log("止まるドン");
-        m_agent.isStopped = true;
-    }
-
-    /// <summary>
-    /// 状態をidleにチェンジ
-    /// </summary>
-    protected async void EnemyStateIdle()
-    {
-        if (m_enemyState == EnemyStateType.CoolTime)
+        virtual protected void Update()
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            // playerと自分の距離を測る
+            m_distance = Vector3.Distance(transform.position, m_player.transform.position);
+
+            // ノックバックする
+            if (m_knockBackVelocity != Vector3.zero)
+            {
+                m_agent.Move(m_knockBackVelocity * Time.deltaTime);
+            }
+
+            if (m_hp <= 0)
+            {
+                m_dieEffect.transform.position = this.transform.position;
+                TimeLinePlayer.PlayTimeline(m_enemyDie);
+                /*
+                 * 死ぬ演出をさせる時にスクリプト的には非アクティブ状態にいないと動き出すため
+                 * 無理やり実装
+                 */
+                this.gameObject.SetActive(false);
+            }
+
         }
-        Debug.Log("idle");
-        m_enemyState = EnemyStateType.Idle;
-    }
 
-    /// <summary>
-    /// 状態をCoolTimeにする
-    /// </summary>
-    protected void EnemyStateCoolTime()
-    {     
-        m_enemyState = EnemyStateType.CoolTime;
-        Debug.Log(m_enemyState);
-    }
+        /// <summary>
+        /// playerを追いかける
+        /// アニメションがRunになった瞬間に呼ばれたいので
+        /// アニメションイベントで呼び出すようにする
+        /// </summary>
+        public abstract void MoveToPlayer();
 
-    /// <summary>
-    /// 滑らかにPlayerの方向を向くように
-    /// </summary>
-    protected void LookAtPlayer()
-    {
-        // ターゲット方向のベクトルを取得
-        Vector3 relativePos = m_player.transform.position - this.transform.position;
-        // 方向を、回転情報に変換
-        Quaternion rotation = Quaternion.LookRotation(relativePos);
-        // 現在の回転情報と、ターゲット方向の回転情報を補完する
-        transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, m_lookSpeed);
-    }
-    
-    /// <summary>
-    /// ダメージを受けた時にノックバックする
-    /// </summary>
-    public async void KnockBack()
-    {
-        /// 多段ヒットしないように攻撃を受けて少しの間は無敵化
-        if (m_isInvincible)
+        ///// <summary>
+        ///// 状態をidleにチェンジ
+        ///// </summary>
+        //protected async void EnemyStateIdle()
+        //{
+        //    if (m_enemyState == EnemyStateType.CoolTime)
+        //    {
+        //        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        //    }
+        //    Debug.Log("idle");
+        //    m_enemyState = EnemyStateType.Idle;
+        //}
+
+        ///// <summary>
+        ///// 状態をCoolTimeにする
+        ///// </summary>
+        //protected void EnemyStateCoolTime()
+        //{     
+        //    m_enemyState = EnemyStateType.CoolTime;
+        //    Debug.Log(m_enemyState);
+        //}
+
+        /// <summary>
+        /// 滑らかにPlayerの方向を向くように
+        /// </summary>
+        public void LookAtPlayer()
         {
-            return;
+            // ターゲット方向のベクトルを取得
+            Vector3 relativePos = m_player.transform.position - this.transform.position;
+            // 方向を、回転情報に変換
+            Quaternion rotation = Quaternion.LookRotation(relativePos);
+            // 現在の回転情報と、ターゲット方向の回転情報を補完する
+            transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, m_lookSpeed);
         }
-        m_isInvincible = true;
-        Debug.Log("ノックバック");
-        m_knockBackVelocity = -transform.forward * m_knockBackPower;
-        m_meshRenderer.material.color = Color.red;
-        m_enemyState = EnemyStateType.KnockBack;
-        m_anim.SetBool("Hit", true);
-        await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
-        m_knockBackVelocity = Vector3.zero;
-        m_meshRenderer.material.color = Color.white;
-        m_enemyState = EnemyStateType.Idle;
-        m_isInvincible = false;
-    }
 
-    /// <summary>
-    /// EnemyのHPが減少した時にHPゲージを減少させる関数
-    /// </summary>
-    public void EnemyHPDecrease()
-    {
-        int currentHp = m_hp;
-        float hpRatio = (float)currentHp / (float)m_enemyMaxHp;
-
-        m_enemyHpGauge.fillAmount = hpRatio;
-        if (m_enemyHpGauge.fillAmount <= 0.5f)
+        /// <summary>
+        /// ダメージを受けた時にノックバックする
+        /// </summary>
+        public async void KnockBack()
         {
-            m_enemyHpGauge.color = Color.yellow;
+            /// 多段ヒットしないように攻撃を受けて少しの間は無敵化
+            if (m_isInvincible)
+            {
+                return;
+            }
+            m_agent.isStopped = true;
+            m_isInvincible = true;
+            Debug.Log("ノックバック");
+            m_meshRenderer.material.color = Color.red;
+            m_anim.SetTrigger("Hit");
+            m_knockBackVelocity = -transform.forward * m_knockBackPower;
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+            m_knockBackVelocity = Vector3.zero;
+            m_meshRenderer.material.color = Color.white;
+            m_anim.SetBool("Idle", true);
+            m_isInvincible = false;
+            m_isOnDamage = false;
         }
-        if (m_enemyHpGauge.fillAmount <= 0.15f)
-        {
-            m_enemyHpGauge.color = Color.red;
-        }
-    }
 
+        /// <summary>
+        /// EnemyのHPが減少した時にHPゲージを減少させる関数
+        /// </summary>
+        public void EnemyHPDecrease()
+        {
+            int currentHp = m_hp;
+            float hpRatio = (float)currentHp / (float)m_enemyMaxHp;
+
+            m_enemyHpGauge.fillAmount = hpRatio;
+            if (m_enemyHpGauge.fillAmount <= 0.5f)
+            {
+                m_enemyHpGauge.color = Color.yellow;
+            }
+            if (m_enemyHpGauge.fillAmount <= 0.15f)
+            {
+                m_enemyHpGauge.color = Color.red;
+            }
+        }
+
+        /// <summary>
+        /// Playerに盾で弾かれたときに呼ばれる関数
+        /// </summary>
+        public abstract void Parry();
+    }
 }
 
-/// <summary>
-/// Enemyの状態を表すenum
-/// </summary>
-public enum EnemyStateType
-{
-    None, Idle, Chase, Attack, RangedATK, CoolTime, KnockBack
-}
+///// <summary>
+///// Enemyの状態を表すenum
+///// </summary>
+//public enum EnemyStateType
+//{
+//    None, Idle, Chase, Attack, RangedATK, CoolTime, KnockBack
+//}
 
-/// <summary>
-/// Enemyの種類を表すEnum
-/// </summary>
-public enum EnemyType
-{
-    PunchingBag, Spider, Golem, Goblins, Tiger
-}
+///// <summary>
+///// Enemyの種類を表すEnum
+///// </summary>
+//public enum EnemyType
+//{
+//    PunchingBag, Spider, Golem, Goblins, Tiger
+//}

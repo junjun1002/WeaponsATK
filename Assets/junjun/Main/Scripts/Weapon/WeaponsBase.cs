@@ -2,77 +2,83 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-///  武器の基底クラス
-/// </summary>
-public abstract class WeaponsBase : MonoBehaviour
+namespace Junjun
 {
-    /// <summary>武器の種類</summary>
-    [SerializeField] public WeaponsType m_weaponsType;
-    /// <summary>武器の最低攻撃力</summary>
-    [SerializeField] int m_minPower;
-    /// <summary>武器の最高攻撃力</summary>
-    [SerializeField] int m_maxPower;
-    /// <summary>武器の攻撃力</summary>
-    int m_power;
-
-    public EnemyBase enemyBase;
-
-    /// <summary>1フレーム前の位置</summary>
-    Vector3 lastPos;
-    /// <summary>Rayが当たったか</summary>
-    bool isHit;
-
-    RaycastHit hit;
-
-    private void Update()
-    {
-        Debug.DrawRay(lastPos, transform.position - lastPos, Color.red, 5);
-        
-        lastPos = this.transform.position;
-    }
     /// <summary>
-    /// Enemyにダメージを与えたときの処理
+    ///  武器の基底クラス
     /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    public abstract class WeaponsBase : MonoBehaviour
     {
-        if (other.gameObject.tag == "Enemy")
+        /// <summary>武器の最低攻撃力</summary>
+        [SerializeField] int m_minPower;
+        /// <summary>武器の最高攻撃力</summary>
+        [SerializeField] int m_maxPower;
+        /// <summary>武器の攻撃力</summary>
+        int m_power;
+
+        public EnemyBase enemyBase;
+
+        /// <summary>1フレーム前の位置</summary>
+        Vector3 lastPos;
+        /// <summary>Rayが当たったか</summary>
+        bool isHit;
+
+        RaycastHit hit;
+
+        private void Update()
         {
-            //左のコントローラーを0.5秒間振動させる
-            StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
+            Debug.DrawRay(lastPos, transform.position - lastPos, Color.red, 5);
 
-            m_power = Random.Range(m_minPower, m_maxPower);
-            enemyBase.m_hp -= m_power;
-            enemyBase.EnemyHPDecrease();
-            enemyBase.KnockBack();
-
-            isHit = Physics.Raycast(lastPos, transform.position - lastPos, out hit);
-            if (isHit)
+            lastPos = this.transform.position;
+        }
+        /// <summary>
+        /// Enemyにダメージを与えたときの処理
+        /// </summary>
+        /// <param name="other"></param>
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Enemy")
             {
-                Debug.Log(hit.point);
-                Debug.Log("hit");
-                //Instantiate(gameObject, hit.point, Quaternion.identity);
-                UIManager.Instance.m_damageText.rectTransform.position = hit.point;
-                UIManager.Instance.m_damageText.text = m_power.ToString();
-                UIManager.Instance.PopUpText();
+                //左のコントローラーを0.5秒間振動させる
+                StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
+
+                m_power = Random.Range(m_minPower, m_maxPower);
+                enemyBase.m_hp -= m_power;
+                enemyBase.EnemyHPDecrease();
+                Debug.Log($"{this.gameObject.name} が {other.gameObject.name} に接触した");
+                enemyBase.KnockBack();
+
+                isHit = Physics.Raycast(lastPos, transform.position - lastPos, out hit);
+                /* 
+                   *敵に攻撃を当てた際に一フレーム前の位置と今のフレーム位置の
+                   *真ん中の位置からダメージテキストを出すことで当たった箇所からダメージテキストが
+                   *出ているようになる
+                 */
+                if (isHit)
+                {
+                    Debug.Log(hit.point);
+                    Debug.Log("hit");
+                    UIManager.Instance.m_damageText.rectTransform.position = hit.point;
+                    UIManager.Instance.m_damageText.text = m_power.ToString();
+                    UIManager.Instance.PopUpText();
+                }
             }
         }
-    }
 
-    /// <summary>
-    /// Oculus Quest(やQuest2)のコントローラーを振動させる
-    /// </summary>
-    public static IEnumerator Vibrate(float duration = 0.1f, float frequency = 2.0f, float amplitude = 2.0f, OVRInput.Controller controller = OVRInput.Controller.Active)
-    {
-        //コントローラーを振動させる
-        OVRInput.SetControllerVibration(frequency, amplitude, controller);
+        /// <summary>
+        /// Oculus Quest(やQuest2)のコントローラーを振動させる
+        /// </summary>
+        public IEnumerator Vibrate(float duration = 0.1f, float frequency = 2.0f, float amplitude = 2.0f, OVRInput.Controller controller = OVRInput.Controller.Active)
+        {
+            //コントローラーを振動させる
+            OVRInput.SetControllerVibration(frequency, amplitude, controller);
 
-        //指定された時間待つ
-        yield return new WaitForSeconds(duration);
+            //指定された時間待つ
+            yield return new WaitForSeconds(duration);
 
-        //コントローラーの振動を止める
-        OVRInput.SetControllerVibration(0, 0, controller);
+            //コントローラーの振動を止める
+            OVRInput.SetControllerVibration(0, 0, controller);
+        }
     }
 }
 

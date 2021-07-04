@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 125147021}
   - component: {fileID: 125147020}
   m_Layer: 5
-  m_Name: BestTime
+  m_Name: BestTimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,7 +466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d1d1546f0c6344aa8527b13c62edb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bestTime: {fileID: 2072243494}
 --- !u!4 &859391492
 Transform:
   m_ObjectHideFlags: 0
@@ -685,12 +684,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_title: Title
-  m_battle: Goblins
+  m_battle: Test_Goblins
   m_gameClear: GameClear
   m_gameOver: GameOver
   m_stopTimer: 10
   m_timerText: {fileID: 0}
-  m_gameState: 0
+  m_bestTimeText: {fileID: 2072243494}
+  m_minute: 0
+  m_seconds: 0
+  m_oldSeconds: 0
 --- !u!4 &1346225975
 Transform:
   m_ObjectHideFlags: 0
@@ -920,7 +922,7 @@ GameObject:
   - component: {fileID: 2072243495}
   - component: {fileID: 2072243494}
   m_Layer: 5
-  m_Name: Time
+  m_Name: BestTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
