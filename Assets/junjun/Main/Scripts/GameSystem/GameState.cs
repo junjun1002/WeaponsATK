@@ -30,7 +30,7 @@ namespace Junjun
         {
             base.Awake();
             DontDestroyOnLoad(this);
-            stateMachine = new StateMachine<GameManager>(GameManager.Instance.gameManager, TitleState);
+            stateMachine = new StateMachine<GameManager>(GameManager.Instance.gameManager, InGameState);
         }
     }
 }
