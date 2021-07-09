@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 /// <summary>
 /// 音の管理をするクラス
@@ -8,6 +9,9 @@ using UnityEngine;
 /// </summary>
 public class SoundManager : SingletonMonoBehavior<SoundManager>
 {
+    [SerializeField] AudioSource m_audio;
+    [SerializeField] AudioMixerGroup m_bgm;
+
     protected override void Awake()
     {
         base.Awake();
@@ -15,11 +19,15 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
     }
 
     /// <summary>
-    /// SEを鳴らす関数（今のとここれで鳴らすものがない）
+    /// ゾーン状態時のAudioMixer
     /// </summary>
-    /// <param name="SE"></param>
-    //public void  PlayTigerSE(AudioClip SE)
-    //{
+    public void ZoneTime()
+    {
+        m_audio.outputAudioMixerGroup = m_bgm;
+    }
 
-    //}
+    public void ResetAudioMixer()
+    {
+        m_audio.outputAudioMixerGroup = null;
+    }
 }

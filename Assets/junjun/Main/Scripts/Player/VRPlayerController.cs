@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 namespace Junjun
 {
@@ -21,6 +22,8 @@ namespace Junjun
 
         /// <summary>スローモーションの効果時間</summary>
         [SerializeField] float m_zoneTime;
+        /// <summary>ゾーン状態の時に目の前を少し白くするためのImage</summary>
+        [SerializeField] Image m_zoneImage;
 
         /// <summary>Playerがダメージを受けた際に視界を狭めていくのに使用</summary>
         [SerializeField] Volume volume;
@@ -35,7 +38,6 @@ namespace Junjun
         {
             if (m_playerHp <= 0)
             {
-                // volume.weight = 0.8f;
                 GameManager.Instance.GameOver();
                 Debug.Log("GameOver");
             }
@@ -54,17 +56,10 @@ namespace Junjun
                     UIManager.Instance.UseSPUI(0.3f);
                     m_sp -= 30;
                     TimeState.Instance.SlowTime();
+                    m_zoneImage.gameObject.SetActive(true);
+                    SoundManager.Instance.ZoneTime();
                     Invoke("StopZone", m_zoneTime);
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (m_sp >= 30)
-                {
-                    UIManager.Instance.UseSPUI(0.3f);
-                    m_sp -= 30;
-                    TimeState.Instance.SlowTime();
-                    Invoke("StopZone", m_zoneTime);
+                    
                 }
             }
         }
@@ -75,6 +70,8 @@ namespace Junjun
         void StopZone()
         {
             TimeState.Instance.RestoredTime();
+            m_zoneImage.gameObject.SetActive(false);
+            SoundManager.Instance.ResetAudioMixer();
         }
     }
 }
