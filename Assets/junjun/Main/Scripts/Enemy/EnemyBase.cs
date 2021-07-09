@@ -99,7 +99,7 @@ namespace Junjun
         /// アニメションがRunになった瞬間に呼ばれたいので
         /// アニメションイベントで呼び出すようにする
         /// </summary>
-        public abstract void MoveToPlayer();
+        public virtual void MoveToPlayer() { }
 
         /// <summary>
         /// 滑らかにPlayerの方向を向くように
@@ -159,6 +159,6 @@ namespace Junjun
         /// <summary>
         /// Playerに盾で弾かれたときに呼ばれる関数
         /// </summary>
-        public abstract void Parry();
+        public virtual void Parry() { }
     }
 }
