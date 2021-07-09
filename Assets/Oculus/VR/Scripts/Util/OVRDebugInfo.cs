@@ -209,7 +209,7 @@ public class OVRDebugInfo : MonoBehaviour
         UpdateIPD();
         UpdateEyeHeightOffset();
 		UpdateEyeDepthOffset();
-        UpdateFOV();
+		UpdateFOV();
         UpdateResolutionEyeTexture();
         UpdateLatencyValues();
         UpdateFPS();
