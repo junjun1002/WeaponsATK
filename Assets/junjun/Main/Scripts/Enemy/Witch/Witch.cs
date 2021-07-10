@@ -16,10 +16,20 @@ namespace Junjun
         public IState<Witch> AttackState { get => attackState; }
         #endregion
 
+        /// <summary>ñÇñ@Çê∂ê¨Ç∑ÇÈèÍèä</summary>
+        [SerializeField] GameObject m_magicSpwner;
+
         protected override void Start()
         {
             base.Start();
             stateMachine = new StateMachine<Witch>(this, IdleState);
+            stateMachine.currentState.OnExecute(this);
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            stateMachine.currentState.OnExecute(this);
         }
     }
 
@@ -27,7 +37,8 @@ namespace Junjun
     {
         public void OnExecute(Witch owner)
         {
-            throw new System.NotImplementedException();
+            owner.m_anim.SetBool("Idle", false);           
+            owner.stateMachine.ChageMachine(owner.AttackState);
         }
     }
 
@@ -35,7 +46,9 @@ namespace Junjun
     {
         public void OnExecute(Witch owner)
         {
-            throw new System.NotImplementedException();
+            owner.m_anim.SetTrigger("Attack1");
+            owner.stateMachine.ChageMachine(owner.IdleState);
+            owner.m_anim.SetBool("Idle", true);
         }
     }
 }
