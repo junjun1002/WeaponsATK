@@ -18,18 +18,33 @@ namespace Junjun
 
         /// <summary>魔法を生成する場所</summary>
         [SerializeField] GameObject m_magicSpwner;
+        /// <summary>攻撃魔法のオブジェクト</summary>
+        [SerializeField] GameObject m_fire;
 
         protected override void Start()
         {
             base.Start();
             stateMachine = new StateMachine<Witch>(this, IdleState);
-            stateMachine.currentState.OnExecute(this);
         }
 
         protected override void Update()
         {
             base.Update();
             stateMachine.currentState.OnExecute(this);
+
+        }
+
+        /// <summary>
+        /// アニメーションに合わせて攻撃する関数
+        /// アニメーションイベントで呼ぶ
+        /// </summary>
+        public void OnAttack()
+        {
+            
+            m_fire.transform.position = m_magicSpwner.transform.position;
+            m_fire.gameObject.SetActive(true);
+            stateMachine.ChageMachine(IdleState);
+            m_anim.SetBool("Idle", true);
         }
     }
 
@@ -37,7 +52,8 @@ namespace Junjun
     {
         public void OnExecute(Witch owner)
         {
-            owner.m_anim.SetBool("Idle", false);           
+            owner.m_anim.SetBool("Attack1", false);
+            
             owner.stateMachine.ChageMachine(owner.AttackState);
         }
     }
@@ -46,9 +62,9 @@ namespace Junjun
     {
         public void OnExecute(Witch owner)
         {
-            owner.m_anim.SetTrigger("Attack1");
-            owner.stateMachine.ChageMachine(owner.IdleState);
-            owner.m_anim.SetBool("Idle", true);
+            owner.m_anim.SetBool("Idle", false);
+            owner.m_anim.SetBool("Attack1", true);
+            owner.LookAtPlayer();
         }
     }
 }

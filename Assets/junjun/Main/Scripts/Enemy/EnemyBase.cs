@@ -22,18 +22,18 @@ namespace Junjun
         /// <summary>EnemyのMaxHP</summary>
         int m_enemyMaxHp;
         ///<summar>HP</summar> 
-        public int m_currentHp;
+        [SerializeField, HideInInspector] public int m_currentHp;
         ///<summary> 攻撃力</summary>
-        public float m_power;
+        [SerializeField, HideInInspector] public float m_power;
 
         /// <summary>次の攻撃の種別判定</summary>
-        public int m_nextAtk;
+        [SerializeField, HideInInspector] public int m_nextAtk;
 
         ///<summary>ターゲットを見る補完スピードを決める</summary> 
         const float m_lookSpeed = 0.1f;
 
         /// <summary>PlayerとEnemyの距離 </summary>
-        public float m_distance;
+        [SerializeField, HideInInspector] public float m_distance;
 
         ///<summary> Player(ターゲット)</summary>
         [SerializeField] protected GameObject m_player;
@@ -124,7 +124,9 @@ namespace Junjun
             {
                 return;
             }
-            m_agent.isStopped = true;
+
+            // m_agent.isStopped = true;
+
             m_isInvincible = true;
             Debug.Log("ノックバック");
             m_meshRenderer.material.color = Color.red;
@@ -133,7 +135,7 @@ namespace Junjun
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             m_knockBackVelocity = Vector3.zero;
             m_meshRenderer.material.color = Color.white;
-            m_anim.SetBool("Idle", true);
+            
             m_isInvincible = false;
         }
 
