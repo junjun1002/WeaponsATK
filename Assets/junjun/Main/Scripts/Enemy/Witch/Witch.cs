@@ -25,13 +25,13 @@ namespace Junjun
         {
             base.Start();
             stateMachine = new StateMachine<Witch>(this, IdleState);
+            stateMachine.currentState.OnExecute(this);
         }
 
         protected override void Update()
         {
             base.Update();
-            stateMachine.currentState.OnExecute(this);
-
+            LookAtPlayer();
         }
 
         /// <summary>
@@ -40,11 +40,25 @@ namespace Junjun
         /// </summary>
         public void OnAttack()
         {
-            
             m_fire.transform.position = m_magicSpwner.transform.position;
             m_fire.gameObject.SetActive(true);
-            stateMachine.ChageMachine(IdleState);
-            m_anim.SetBool("Idle", true);
+        }
+
+        /// <summary>
+        /// アニメーションイベントでステートの切り替えを行う関数
+        /// </summary>
+        /// <param name="state"></param>
+        public void OnChangeState()
+        {
+            if (stateMachine.currentState == IdleState)
+            {
+                stateMachine.ChageMachine(AttackState);
+            }
+            else if (stateMachine.currentState == AttackState)
+            {
+                stateMachine.ChageMachine(IdleState);
+            }
+            stateMachine.currentState.OnExecute(this);
         }
     }
 
@@ -53,8 +67,7 @@ namespace Junjun
         public void OnExecute(Witch owner)
         {
             owner.m_anim.SetBool("Attack1", false);
-            
-            owner.stateMachine.ChageMachine(owner.AttackState);
+            owner.m_anim.SetBool("Idle", true);
         }
     }
 
@@ -64,7 +77,6 @@ namespace Junjun
         {
             owner.m_anim.SetBool("Idle", false);
             owner.m_anim.SetBool("Attack1", true);
-            owner.LookAtPlayer();
         }
     }
 }

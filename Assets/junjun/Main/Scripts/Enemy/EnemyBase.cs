@@ -125,17 +125,21 @@ namespace Junjun
                 return;
             }
 
-            // m_agent.isStopped = true;
+            if (m_agent.isOnNavMesh)
+            {
+                m_agent.isStopped = true;
+            }
 
             m_isInvincible = true;
             Debug.Log("ノックバック");
+            Debug.Log(m_meshRenderer);
             m_meshRenderer.material.color = Color.red;
-            m_anim.SetTrigger("Hit");
+            // m_anim.SetTrigger("Hit");
             m_knockBackVelocity = -transform.forward * m_knockBackPower;
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             m_knockBackVelocity = Vector3.zero;
             m_meshRenderer.material.color = Color.white;
-            
+
             m_isInvincible = false;
         }
 

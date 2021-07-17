@@ -19,8 +19,6 @@ namespace Junjun
         /// <summary>武器の攻撃力</summary>
         int m_power;
 
-        public EnemyBase enemyBase;
-
         /// <summary>1フレーム前の位置</summary>
         Vector3 lastPos;
         /// <summary>Rayが当たったか</summary>
@@ -45,7 +43,7 @@ namespace Junjun
         /// <param name="other"></param>
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Enemy")
+            if (other.gameObject.TryGetComponent<EnemyBase>(out var enemyBase))
             {
                 //左のコントローラーを0.5秒間振動させる
                 StartCoroutine(Vibrate(duration: 0.5f, controller: OVRInput.Controller.RTouch));
