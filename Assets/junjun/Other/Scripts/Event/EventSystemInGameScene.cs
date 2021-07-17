@@ -1,38 +1,18 @@
-﻿//using System;
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//public class EventSystemInGameScene : MonoBehaviour
-//{
-//    public event Action<EnemyType> EnemyEvent;
-//    public event Action GameOverEvent;
-//    public event Action GameClearEvent;
+namespace Junjun
+{
+    public class EventSystemInGameScene : MonoBehaviour
+    {
+        public event Action<EnemyType> EnemyType;
 
-//    public void ExecuteEnemyEvent(EnemyType enemyType)
-//    {
-//        if (enemyType == EnemyType.PunchingBag)
-//        {
-//            Debug.Log("私はサンドバッグ");
-//            Debug.Log("もっと殴ってぇ～～～～///");
-//        }
-//        else
-//        {
-//            EnemyEvent?.Invoke(enemyType);
-//            Debug.Log(enemyType + "を倒した");
-//            ExecuteGameClear();
-//        }
-//    }
+        public void ExecuteEnemyEvent(EnemyType enemyType)
+        {
+            
+        }
 
-//    public void ExecuteGameOver()
-//    {
-//        GameOverEvent?.Invoke();
-
-//    }
-
-//    public void ExecuteGameClear()
-//    {
-//        GameClearEvent?.Invoke();
-     
-//    }
-//}
+    }
+}
